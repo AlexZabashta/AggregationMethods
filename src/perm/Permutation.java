@@ -68,6 +68,21 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 		hashCode = Arrays.hashCode(this.permutation);
 	}
 
+	public Permutation(Integer[] permutation) {
+		int length = permutation.length;
+		boolean[] unic = new boolean[length];
+		this.permutation = new int[length];
+		for (int i = 0; i < length; i++) {
+			int j = permutation[i];
+			if (j < 0 || length <= j || unic[j]) {
+				throw new IllegalArgumentException("Error at permutation[" + i + "] = " + j);
+			}
+			this.permutation[i] = j;
+			unic[j] = true;
+		}
+		hashCode = Arrays.hashCode(this.permutation);
+	}
+
 	public Permutation(Random random, int length) {
 		permutation = new int[length];
 		for (int i = 0; i < length; i++) {
