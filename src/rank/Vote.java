@@ -1,4 +1,4 @@
-package aggr;
+package rank;
 
 import perm.Permutation;
 

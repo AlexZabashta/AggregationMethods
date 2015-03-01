@@ -1,4 +1,4 @@
-package aggr;
+package rank;
 
 public class LineBordaCount extends Aggregation {
 
