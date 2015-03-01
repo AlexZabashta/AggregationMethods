@@ -26,7 +26,7 @@ public class ImageViewer extends JFrame {
 				int tw = Math.max(32, getWidth() - 16);
 				int th = Math.max(24, getHeight() - 38);
 
-				BufferedImage temp = new BufferedImage(tw, th, BufferedImage.TYPE_INT_RGB);
+				BufferedImage temp = new BufferedImage(tw, th, BufferedImage.TYPE_INT_ARGB);
 
 				Graphics g = temp.getGraphics();
 				g.drawImage(bufferedImage, 0, 0, tw, th, null);

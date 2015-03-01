@@ -7,6 +7,7 @@ import javax.swing.WindowConstants;
 
 import perm.Permutation;
 import plot.ImageViewer;
+import plot.PlotBuilder;
 import rank.Aggregation;
 import rank.HyperbolicBordaCount;
 import rank.LineBordaCount;
@@ -42,17 +43,16 @@ public class Main {
 		// // System.out.println(hbc.aggregate(v));
 		// System.out.println(smc.aggregate(v));
 
-		BufferedImage canvas = new BufferedImage(320, 240, BufferedImage.TYPE_INT_RGB);
-		for (int i = 0; i < 320; i++) {
-			for (int j = 0; j < 240; j++) {
-				if (i == 0 || j == 0 || i == 319 || j == 239) {
-					canvas.setRGB(i, j, 0);
-				} else {
-					canvas.setRGB(i, j, (i + j + i * j) | 0x333333);
-				}
-			}
+		int n = 256;
+		double[] d = new double[n];
+
+		for (int i = 0; i < n; i++) {
+			d[i] = Math.sin(i / 20.0);
 		}
-		JFrame jf = new ImageViewer(canvas);
+
+		BufferedImage image = PlotBuilder.simpleSplot(d, 640, 480);
+
+		JFrame jf = new ImageViewer(image);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
