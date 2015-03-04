@@ -7,22 +7,25 @@ import perm.Permutation;
 
 public abstract class Aggregation {
 
-	abstract double[] getWeigh(Vote[] votes);
+	public abstract Permutation aggregate(Permutation[] permutation);
 
-	public Permutation aggregate(Vote[] votes) {
-		if (votes.length == 0) {
-			return null;
+	public int chekSizes(Permutation[] permutation) {
+		if (permutation.length == 0) {
+			throw new IllegalArgumentException("Array of permutations is empty.");
 		}
 
-		int m = votes.length;
-		int n = votes[0].permutation.length();
-		for (int i = 1; i < m; i++) {
-			if (votes[i].permutation.length() != n) {
-				throw new IllegalArgumentException("All permutations does not has the same size.");
+		int n = permutation[0].length();
+		for (int i = 1; i < permutation.length; i++) {
+			if (permutation[i].length() != n) {
+				throw new IllegalArgumentException("Perementation[" + i + "] lenght != " + n);
 			}
 		}
+		return n;
+	}
 
-		final double[] w = getWeigh(votes);
+	public Permutation aggregateByW(final double[] weigh) {
+		int n = weigh.length;
+
 		Integer[] order = new Integer[n];
 		for (int i = 0; i < n; i++) {
 			order[i] = i;
@@ -30,7 +33,7 @@ public abstract class Aggregation {
 		Arrays.sort(order, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer i, Integer j) {
-				return Double.compare(w[j], w[i]);
+				return Double.compare(weigh[j], weigh[i]);
 			}
 		});
 
