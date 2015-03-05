@@ -1,8 +1,7 @@
 package perm;
-public class CayleyDistance implements Metric {
 
-	public double distance(Permutation a, Permutation b) {
-		Permutation c = a.product(b.invert());
+public class CayleyDistance extends BiInvariantMetric {
+	public double distanceToIdentity(Permutation c) {
 		int n = c.length();
 
 		if (n <= 1) {

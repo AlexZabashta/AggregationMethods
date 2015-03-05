@@ -9,14 +9,14 @@ public abstract class Aggregation {
 
 	public abstract Permutation aggregate(Permutation[] permutation);
 
-	public int chekSizes(Permutation[] permutation) {
-		if (permutation.length == 0) {
+	public int chekSizes(Permutation[] permutations) {
+		if (permutations.length == 0) {
 			throw new IllegalArgumentException("Array of permutations is empty.");
 		}
 
-		int n = permutation[0].length();
-		for (int i = 1; i < permutation.length; i++) {
-			if (permutation[i].length() != n) {
+		int n = permutations[0].length();
+		for (int i = 1; i < permutations.length; i++) {
+			if (permutations[i].length() != n) {
 				throw new IllegalArgumentException("Perementation[" + i + "] lenght != " + n);
 			}
 		}

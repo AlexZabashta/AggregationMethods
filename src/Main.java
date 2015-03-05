@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import misc.FeatureMiner;
+import misc.SimpleMiner;
 import perm.CayleyDistance;
 import perm.KendallTau;
 import perm.LAbs;
@@ -47,6 +49,8 @@ public class Main {
 		for (Aggregation aggregation : a) {
 			System.out.println(aggregation.aggregate(permutations));
 		}
+
+		FeatureMiner miner = new SimpleMiner();
 
 		// List<Metric> metrics = new ArrayList<Metric>();
 		// metrics.add(new CayleyDistance());

@@ -2,10 +2,13 @@ package perm;
 
 import java.util.Arrays;
 
-public class LevenshteinDistance implements Metric {
+public class LevenshteinDistance extends BiInvariantMetric {
 
 	public double distance(Permutation a, Permutation b) {
-		Permutation c = a.product(b.invert());
+		return distanceToIdentity(a.product(b.invert()));
+	}
+
+	public double distanceToIdentity(Permutation c) {
 		int n = c.length();
 
 		if (n <= 1) {

@@ -1,8 +1,8 @@
 package perm;
-public class KendallTau implements Metric {
 
-	public double distance(Permutation a, Permutation b) {
-		Permutation c = a.product(b.invert());
+public class KendallTau extends BiInvariantMetric {
+
+	public double distanceToIdentity(Permutation c) {
 		int n = c.length();
 
 		if (n <= 1) {

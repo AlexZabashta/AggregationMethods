@@ -5,9 +5,9 @@ import java.util.Arrays;
 import perm.Permutation;
 
 public class Stochastic extends Aggregation {
-	public Permutation aggregate(Permutation[] permutation) {
-		int n = chekSizes(permutation);
-		int m = permutation.length;
+	public Permutation aggregate(Permutation[] permutations) {
+		int n = chekSizes(permutations);
+		int m = permutations.length;
 
 		if (n < 2) {
 			return new Permutation(n);
@@ -15,7 +15,7 @@ public class Stochastic extends Aggregation {
 
 		Permutation[] invper = new Permutation[m];
 		for (int i = 0; i < m; i++) {
-			invper[i] = permutation[i].invert();
+			invper[i] = permutations[i].invert();
 		}
 
 		double[][] markovChain = new double[n][n];
