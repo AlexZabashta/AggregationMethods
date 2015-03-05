@@ -23,8 +23,8 @@ import perm.Permutation;
 import plot.ImageViewer;
 import plot.PlotBuilder;
 import rank.Aggregation;
-import rank.HyperbolicBordaCount;
-import rank.LineBordaCount;
+import rank.BordaCount;
+import rank.BordaCount.DecreasingFunction;
 import rank.Stochastic;
 import rank.Vote;
 
@@ -44,7 +44,7 @@ public class Main {
 
 		System.out.println();
 
-		Aggregation[] a = new Aggregation[] { new HyperbolicBordaCount(), new LineBordaCount(), new Stochastic() };
+		Aggregation[] a = new Aggregation[] { new BordaCount(), new Stochastic() };
 
 		for (Aggregation aggregation : a) {
 			System.out.println(aggregation.aggregate(permutations));
