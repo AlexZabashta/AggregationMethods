@@ -27,6 +27,11 @@ public class AllPermutations implements Iterable<Permutation> {
 				return prev;
 			}
 
+			@Override
+			public void remove() {
+
+			}
+
 		};
 	}
 

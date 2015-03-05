@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 public class ImageViewer extends JFrame {
 	private static final long serialVersionUID = 1L;
 
-	public ImageViewer(BufferedImage bufferedImage) {
+	public ImageViewer(final BufferedImage bufferedImage) {
 		setLayout(null);
 		final int cw = bufferedImage.getWidth(), ch = bufferedImage.getHeight();
 
