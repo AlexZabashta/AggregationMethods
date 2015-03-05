@@ -2,7 +2,7 @@ package perm;
 
 import java.util.Arrays;
 
-public class LevenshteinDistance extends BiInvariantMetric {
+public class LevenshteinDistance extends RightInvariantMetric {
 
 	public double distance(Permutation a, Permutation b) {
 		return distanceToIdentity(a.product(b.invert()));

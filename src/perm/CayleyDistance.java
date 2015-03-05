@@ -1,6 +1,6 @@
 package perm;
 
-public class CayleyDistance extends BiInvariantMetric {
+public class CayleyDistance extends RightInvariantMetric {
 	public double distanceToIdentity(Permutation c) {
 		int n = c.length();
 

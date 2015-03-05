@@ -1,6 +1,6 @@
 package misc;
 
-import perm.BiInvariantMetric;
+import perm.RightInvariantMetric;
 import perm.CayleyDistance;
 import perm.KendallTau;
 import perm.LevenshteinDistance;
@@ -8,20 +8,23 @@ import perm.Permutation;
 
 public class SimpleMiner implements FeatureMiner {
 
-	private static final int m = 10;
+	private static final int m = 24;
 
 	public double[] mine(Permutation[] permutations) {
-		double[] feature = new double[m];
+		double[] features = new double[m];
 		int n = permutations.length;
 
 		Permutation[] invper = new Permutation[n];
-		for (int i = 1; i < n; i++) {
+		for (int i = 0; i < n; i++) {
 			invper[i] = permutations[i].invert();
 		}
 
-		BiInvariantMetric[] bim = new BiInvariantMetric[] { new KendallTau(), new CayleyDistance(), new LevenshteinDistance() };
+		RightInvariantMetric[] rim = new RightInvariantMetric[] { new KendallTau(), new CayleyDistance(),
+				new LevenshteinDistance() };
 
-		StatisticalValue[] values = new StatisticalValue[bim.length];
+		int s = rim.length;
+
+		StatisticalValue[] values = new StatisticalValue[s + 1];
 		for (int i = 0; i < values.length; i++) {
 			values[i] = new StatisticalValue();
 		}
@@ -29,13 +32,27 @@ public class SimpleMiner implements FeatureMiner {
 		for (int i = 0; i < n; i++) {
 			for (int j = i + 1; j < n; j++) {
 				Permutation p = permutations[i].product(invper[j]);
-				for (int k = 0; k < bim.length; k++) {
-					values[k].add(bim[k].distanceToIdentity(p));
+				for (int k = 0; k < s; k++) {
+					values[k].add(rim[k].distanceToIdentity(p));
 				}
+
+				for (int k = 0; k < invper[i].length(); k++) {
+					values[s].add(Math.abs(invper[i].get(k) - invper[j].get(k)));
+				}
+
 			}
 		}
 
-		return null;
+		for (int i = 0, j = 0; i <= s; i++) {
+			features[j++] = values[i].getMax();
+			features[j++] = values[i].getMin();
+			features[j++] = values[i].getMean();
+			features[j++] = values[i].getSkewness();
+			features[j++] = values[i].getKurtosis();
+			features[j++] = values[i].getStandardDeviation();
+		}
+
+		return features;
 	}
 
 	public int length() {

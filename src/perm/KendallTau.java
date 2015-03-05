@@ -1,6 +1,6 @@
 package perm;
 
-public class KendallTau extends BiInvariantMetric {
+public class KendallTau extends RightInvariantMetric {
 
 	public double distanceToIdentity(Permutation c) {
 		int n = c.length();

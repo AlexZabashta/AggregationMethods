@@ -107,6 +107,10 @@ public class StatisticalValue implements Serializable {
 		throw new IllegalArgumentException("The moment number = " + momentNumber + " is not in the interval from 0 to 4");
 	}
 
+	public double getMean() {
+		return getRawMoment(1);
+	}
+
 	public double getStandardDeviation() {
 		return Math.sqrt(getCentralMoment(2));
 	}

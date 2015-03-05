@@ -50,50 +50,11 @@ public class Main {
 			System.out.println(aggregation.aggregate(permutations));
 		}
 
+		System.out.println();
 		FeatureMiner miner = new SimpleMiner();
-
-		// List<Metric> metrics = new ArrayList<Metric>();
-		// metrics.add(new CayleyDistance());
-		// metrics.add(new KendallTau());
-		// metrics.add(new LAbs());
-		// metrics.add(new LMax());
-		// metrics.add(new LSquare());
-		// metrics.add(new LevenshteinDistance());
-		//
-		//
-		// int n = 100, w = 1280;
-		//
-		// Permutation p = new Permutation(n);
-
-		// for (Metric m : metrics) {
-		// double[] d = new double[w];
-		// for (int i = 0; i < w; i++) {
-		// d[i] = m.distance(p, new Permutation(rnd, n));
-		// }
-		//
-		// Arrays.sort(d);
-		//
-		// BufferedImage image = PlotBuilder.simpleSplot(d, 2520, 300);
-		// ImageIO.write(image, "png", new File(m.getClass().getSimpleName() +
-		// ".png"));
-		// }
-
-		// {
-		// double[] d = new double[w];
-		// for (int i = 0; i < w; i++) {
-		// d[i] = rnd.nextDouble();
-		// }
-		//
-		// Arrays.sort(d);
-		//
-		// BufferedImage image = PlotBuilder.simpleSplot(d, 2520, 300);
-		// ImageIO.write(image, "png", new File("random.png"));
-		// }
-
-		// BufferedImage image = PlotBuilder.simpleSplot(d, 640, 480);
-		// JFrame jf = new ImageViewer(image);
-		// jf.setVisible(true);
-		// jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		for (double f : miner.mine(permutations)) {
+			System.out.println(f);
+		}
 
 	}
 }
