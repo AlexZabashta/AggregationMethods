@@ -83,16 +83,6 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 		hashCode = Arrays.hashCode(this.permutation);
 	}
 
-	public Permutation(Random random, int length) {
-		permutation = new int[length];
-		for (int i = 0; i < length; i++) {
-			permutation[i] = i;
-			int j = random.nextInt(i + 1);
-			swap(permutation, i, j);
-		}
-		hashCode = Arrays.hashCode(this.permutation);
-	}
-
 	@Override
 	public int compareTo(Permutation permutation) {
 		int cmp = Integer.compare(length(), permutation.length());

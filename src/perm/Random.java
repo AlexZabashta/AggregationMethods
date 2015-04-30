@@ -15,6 +15,18 @@ public class Random {
 		this.rng = rng;
 	}
 
+	public Permutation next(int length, int numberOfSwaps) {
+		int[] permutation = new int[length];
+		for (int i = 0; i < length; i++) {
+			permutation[i] = i;
+		}
+
+		while (--numberOfSwaps >= 0) {
+			Permutation.swap(permutation, rng.nextInt(length), rng.nextInt(length));
+		}
+		return new Permutation(permutation);
+	}
+
 	public Permutation next(int length) {
 		int[] permutation = new int[length];
 		for (int i = 0; i < length; i++) {
@@ -30,10 +42,11 @@ public class Random {
 		for (int i = 0; i < length; i++) {
 			permutation[i] = i;
 
-			float scaledValue = (float) Math.abs(sigma * rng.nextGaussian());
+			float scaledValue = (float) Math.abs(length * sigma * rng.nextGaussian());
 			int j = Math.max(0, i - Math.round(scaledValue));
 			Permutation.swap(permutation, i, j);
 		}
 		return new Permutation(permutation);
 	}
+
 }

@@ -19,8 +19,7 @@ public class SimpleMiner implements FeatureMiner {
 			invper[i] = permutations[i].invert();
 		}
 
-		RightInvariantMetric[] rim = new RightInvariantMetric[] { new KendallTau(), new CayleyDistance(),
-				new LevenshteinDistance() };
+		RightInvariantMetric[] rim = new RightInvariantMetric[] { new KendallTau(), new CayleyDistance(), new LevenshteinDistance() };
 
 		int s = rim.length;
 

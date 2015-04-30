@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 
 import misc.FeatureMiner;
 import misc.SimpleMiner;
+import perm.CanberraDistance;
 import perm.CayleyDistance;
 import perm.KendallTau;
 import perm.LAbs;
@@ -25,6 +26,8 @@ import plot.PlotBuilder;
 import rank.Aggregation;
 import rank.BordaCount;
 import rank.BordaCount.DecreasingFunction;
+import rank.CopelandScore;
+import rank.CopelandScore;
 import rank.Stochastic;
 import rank.Vote;
 
@@ -32,7 +35,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		int n = 10, m = 20;
+		int n = 10, m = 8;
 		Permutation p = new Permutation(n);
 		Random rnd = new Random();
 
@@ -44,17 +47,17 @@ public class Main {
 
 		System.out.println();
 
-		Aggregation[] a = new Aggregation[] { new BordaCount(), new Stochastic() };
+		Aggregation[] a = new Aggregation[] { new CopelandScore(), new CopelandScore() };
 
 		for (Aggregation aggregation : a) {
 			System.out.println(aggregation.aggregate(permutations));
 		}
-
-		System.out.println();
-		FeatureMiner miner = new SimpleMiner();
-		for (double f : miner.mine(permutations)) {
-			System.out.println(f);
-		}
+		//
+		// System.out.println();
+		// FeatureMiner miner = new SimpleMiner();
+		// for (double f : miner.mine(permutations)) {
+		// System.out.println(f);
+		// }
 
 	}
 }

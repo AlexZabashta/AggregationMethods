@@ -4,10 +4,6 @@ import java.util.Arrays;
 
 public class LevenshteinDistance extends RightInvariantMetric {
 
-	public double distance(Permutation a, Permutation b) {
-		return distanceToIdentity(a.product(b.invert()));
-	}
-
 	public double distanceToIdentity(Permutation c) {
 		int n = c.length();
 

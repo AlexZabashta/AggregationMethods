@@ -49,7 +49,7 @@ public class Stochastic extends Aggregation {
 
 		}
 
-		markovChain = pow(markovChain, 60);
+		markovChain = pow(markovChain, 32);
 		double[] weigh = new double[n];
 
 		for (int i = 0; i < n; i++) {
