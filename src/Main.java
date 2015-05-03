@@ -10,7 +10,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import misc.ClusterGenerator;
 import misc.FeatureMiner;
+import misc.PermutationSetsGenerator;
 import misc.SimpleMiner;
 import perm.CanberraDistance;
 import perm.CayleyDistance;
@@ -35,28 +37,24 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		int n = 10, m = 8;
-		Permutation p = new Permutation(n);
-		Random rnd = new Random();
+		for (int n = 3; n < 50; n++) {
+			PermutationSetsGenerator psg = new ClusterGenerator(10, 25, new KendallTau(), n);
+			long time = System.currentTimeMillis();
+			Permutation[] q = psg.generate();
 
-		Permutation[] permutations = new Permutation[m];
-		for (int i = 0; i < m; i++) {
-			p = permutations[i] = p.swap(rnd.nextInt(n), rnd.nextInt(n));
-			System.out.println(p);
+			System.out.println(n + " " + (System.currentTimeMillis() - time) + " " + q[0]);
+
 		}
 
-		System.out.println();
-
-		Aggregation[] a = new Aggregation[] { new CopelandScore(), new CopelandScore() };
-
-		for (Aggregation aggregation : a) {
-			System.out.println(aggregation.aggregate(permutations));
-		}
+		// for (int r = 0; r < 10; r++) {
+		// Permutation[] q = psg.generate();
+		//
+		// for (Permutation p : q) {
+		// System.out.println(p);
+		// }
 		//
 		// System.out.println();
-		// FeatureMiner miner = new SimpleMiner();
-		// for (double f : miner.mine(permutations)) {
-		// System.out.println(f);
+		//
 		// }
 
 	}

@@ -47,7 +47,7 @@ public class Experiment6 {
 
 		int permutationsInSet = 15;
 		int permutationLength = 20;
-		int numberOfSets = 1 << 8;
+		int numberOfSets = 1 << 6;
 
 		GaussGenerator psg = new GaussGenerator(permutationsInSet, permutationLength, 1.0, rng);
 		SeveralSwapsGenerator ssg = new SeveralSwapsGenerator(permutationsInSet, permutationLength, 1.0, rng);
@@ -55,7 +55,7 @@ public class Experiment6 {
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 
 		aggregations.add(new BordaCount());
-		aggregations.add(new PickAPerm(metric));
+		 aggregations.add(new PickAPerm(metric));
 		aggregations.add(new CopelandScore());
 		aggregations.add(new Stochastic());
 
@@ -92,6 +92,20 @@ public class Experiment6 {
 
 		for (List<double[]> fl : features) {
 			Collections.shuffle(fl, rng);
+		}
+
+		if (n > 0) {
+
+			for (List<double[]> fl : features) {
+
+				for (int i = 0; i < numberOfSets; i++) {
+					System.out.printf("%4.2f ", fl.get(i)[0]);
+
+				}
+				System.out.println();
+			}
+
+			return;
 		}
 
 		String[] cn = new String[m];
