@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 
 import misc.ClusterGenerator;
 import misc.FeatureMiner;
+import misc.FirstMinGenerator;
 import misc.PermutationSetsGenerator;
 import misc.SimpleMiner;
 import perm.CanberraDistance;
@@ -37,25 +38,14 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		for (int n = 3; n < 50; n++) {
-			PermutationSetsGenerator psg = new ClusterGenerator(10, 25, new KendallTau(), n);
-			long time = System.currentTimeMillis();
-			Permutation[] q = psg.generate();
+		perm.Random rpg = new perm.Random();
 
-			System.out.println(n + " " + (System.currentTimeMillis() - time) + " " + q[0]);
-
+		for (double sigma = 0.1; sigma < 4; sigma += 0.1) {
+			
+//			System.out.println(rpg.nextGaussian(25, sigma));
 		}
-
-		// for (int r = 0; r < 10; r++) {
-		// Permutation[] q = psg.generate();
-		//
-		// for (Permutation p : q) {
-		// System.out.println(p);
-		// }
-		//
-		// System.out.println();
-		//
-		// }
+		System.out.println(rpg.nextGaussian(25, 0.5));
 
 	}
+
 }

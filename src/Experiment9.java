@@ -8,6 +8,7 @@ import java.util.List;
 import misc.ClassifierCollection;
 import misc.ClusterGenerator;
 import misc.FeatureMiner;
+import misc.FirstMinGenerator;
 import misc.GaussGenerator;
 import misc.Painter;
 import misc.PermutationSetsGenerator;
@@ -41,10 +42,10 @@ public class Experiment9 {
 
 		java.util.Random rng = new java.util.Random();
 
-		int permInSet = 10;
-		int permLength = 20;
+		int permInSet = 5;
+		int permLength = 1000;
 		int numberOfSets = 1 << 8;
-		int bs = 128;
+		int bs = 40;
 
 		PermutationSetsGenerator psg = new ClusterGenerator(permInSet, permLength, new CanberraDistance(), bs, rng);
 		FeatureMiner miner = new SimpleMiner();
@@ -52,10 +53,10 @@ public class Experiment9 {
 		Metric metric = new CanberraDistance();
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 
-		aggregations.add(new BordaCount());
+		//aggregations.add(new BordaCount());
 		aggregations.add(new PickAPerm(metric));
 		aggregations.add(new CopelandScore());
-		aggregations.add(new Stochastic());
+		//aggregations.add(new Stochastic());
 
 		int n = miner.length();
 		int m = aggregations.size();
@@ -74,6 +75,10 @@ public class Experiment9 {
 			Permutation[] p = psg.generate();
 
 			int color = painter.getColor(p);
+
+			if (color == -1) {
+				continue;
+			}
 
 			if (features[color].size() < numberOfSets) {
 				features[color].add(miner.mine(p));

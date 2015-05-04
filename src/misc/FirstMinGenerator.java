@@ -1,5 +1,7 @@
 package misc;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 
@@ -8,7 +10,7 @@ import perm.Metric;
 import perm.Permutation;
 import perm.Random;
 
-public class ClusterGenerator implements PermutationSetsGenerator {
+public class FirstMinGenerator implements PermutationSetsGenerator {
 
 	private Random rpg;
 
@@ -18,19 +20,19 @@ public class ClusterGenerator implements PermutationSetsGenerator {
 
 	private Stack<Permutation[]> buffer;
 
-	public ClusterGenerator(int permutationsInSet, int permutationLength, Metric metric, java.util.Random rng) {
+	public FirstMinGenerator(int permutationsInSet, int permutationLength, Metric metric, java.util.Random rng) {
 		this(permutationsInSet, permutationLength, metric, 128, new java.util.Random());
 	}
 
-	public ClusterGenerator(int permutationsInSet, int permutationLength, Metric metric) {
+	public FirstMinGenerator(int permutationsInSet, int permutationLength, Metric metric) {
 		this(permutationsInSet, permutationLength, metric, new java.util.Random());
 	}
 
-	public ClusterGenerator(int permutationsInSet, int permutationLength, Metric metric, int bufferSize) {
+	public FirstMinGenerator(int permutationsInSet, int permutationLength, Metric metric, int bufferSize) {
 		this(permutationsInSet, permutationLength, metric, bufferSize, new java.util.Random());
 	}
 
-	public ClusterGenerator(int permutationsInSet, int permutationLength, Metric metric, int bufferSize, java.util.Random rng) {
+	public FirstMinGenerator(int permutationsInSet, int permutationLength, Metric metric, int bufferSize, java.util.Random rng) {
 
 		if (permutationsInSet <= 1) {
 			throw new IllegalArgumentException("Number of permutations in set = " + permutationsInSet + " <= 1");
@@ -45,44 +47,43 @@ public class ClusterGenerator implements PermutationSetsGenerator {
 	}
 
 	public void updateBuffer() {
-		int[] size = new int[bufferSize];
 		Permutation[][] p = new Permutation[bufferSize][permutationsInSet];
 
 		for (int i = 0; i < bufferSize; i++) {
-			p[i][0] = rpg.next(permutationLength, permutationLength/2);
-			size[i] = 1;
+			p[i][0] = rpg.nextGaussian(permutationLength, 0.5);
 		}
 
 		int m = bufferSize * (permutationsInSet - 1);
 
 		Permutation[] free = new Permutation[m];
 		for (int i = 0; i < m; i++) {
-			free[i] = rpg.next(permutationLength, permutationLength/2);
+			free[i] = rpg.nextGaussian(permutationLength, 0.5);
 		}
 
-		int start = 0, finish = bufferSize + m + 1;
-
-		List<Edge>[] graph = MinCostFlow.createGraph(finish + 1);
-
-		for (int i = 1; i <= bufferSize; i++) {
-			MinCostFlow.addEdge(graph, start, i, permutationsInSet - 1, 0);
-		}
-
-		for (int j = 1; j <= m; j++) {
-			for (int i = 1; i <= bufferSize; i++) {
-				int cost = Math.round(m * (float) metric.distance(p[i - 1][0], free[j - 1]));
-				MinCostFlow.addEdge(graph, i, j + bufferSize, 1, Math.max(cost, 0));
-			}
-			MinCostFlow.addEdge(graph, j + bufferSize, finish, 1, 0);
-		}
-
-		MinCostFlow.minCostFlow(graph, start, finish, bufferSize * (m + 1));
+		final Integer[][] order = new Integer[bufferSize][m];
+		final double[][] dist = new double[bufferSize][m];
 
 		for (int i = 0; i < bufferSize; i++) {
-			for (Edge edge : graph[i + 1]) {
-				if (edge.f == 1) {
-					p[i][size[i]++] = free[edge.to - 1 - bufferSize];
+			for (int j = 0; j < m; j++) {
+				order[i][j] = j;
+				dist[i][j] = metric.distance(p[i][0], free[j]);
+			}
+			final int fi = i;
+			Arrays.sort(order[i], new Comparator<Integer>() {
+				public int compare(Integer x, Integer y) {
+					return Double.compare(dist[fi][x], dist[fi][y]);
 				}
+			});
+		}
+
+		int[] pointer = new int[bufferSize];
+		for (int k = 1; k < permutationsInSet; k++) {
+			for (int i = 0; i < bufferSize; i++) {
+				while (free[order[i][pointer[i]]] == null) {
+					++pointer[i];
+				}
+				p[i][k] = free[order[i][pointer[i]]];
+				free[order[i][pointer[i]]] = null;
 			}
 		}
 

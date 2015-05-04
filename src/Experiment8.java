@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import misc.ClusterGenerator;
+import misc.FirstMinGenerator;
 import misc.GaussGenerator;
 import misc.Painter;
 import misc.PermutationSetsGenerator;
@@ -34,8 +35,8 @@ public class Experiment8 {
 		metrics.add(new CayleyDistance());
 		metrics.add(new LSquare());
 
-		{
-			Metric metric = new CanberraDistance();
+		for (Metric metric : metrics) {
+
 			String meticName = metric.getClass().getSimpleName();
 
 			List<Aggregation> aggregations = new ArrayList<Aggregation>();
@@ -51,10 +52,10 @@ public class Experiment8 {
 				for (Metric cm : metrics) {
 					out.println(cm.getClass().getSimpleName());
 					System.out.println(cm.getClass().getSimpleName());
-					for (int bufferSize = 10; bufferSize <= 100; bufferSize += 10) {
+					for (int bufferSize = 10; bufferSize <= 500; bufferSize += 37) {
 						out.print("    " + bufferSize + ":");
 
-						PermutationSetsGenerator psg = new ClusterGenerator(10, 25, cm, bufferSize);
+						PermutationSetsGenerator psg = new FirstMinGenerator(10, 25, cm, bufferSize);
 
 						int[] d = painter.getColorDistribution(psg, 100);
 

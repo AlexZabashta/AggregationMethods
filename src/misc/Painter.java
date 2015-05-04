@@ -1,6 +1,7 @@
 package misc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import perm.Metric;
@@ -37,11 +38,9 @@ public class Painter {
 				color = j;
 			}
 		}
+
 		return color;
 	}
-	
-	
-	
 
 	public int[] getColorDistribution(PermutationSetsGenerator psg) {
 		return getColorDistribution(psg, 32 * n);
@@ -51,7 +50,11 @@ public class Painter {
 		int[] distribution = new int[n];
 
 		while (--numberOfSets >= 0) {
-			++distribution[getColor(psg.generate())];
+			int color = getColor(psg.generate());
+			if (color == -1) {
+				continue;
+			}
+			++distribution[color];
 		}
 
 		return distribution;

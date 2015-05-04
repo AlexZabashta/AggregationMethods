@@ -41,7 +41,6 @@ public class Random {
 		int[] permutation = new int[length];
 		for (int i = 0; i < length; i++) {
 			permutation[i] = i;
-
 			float scaledValue = (float) Math.abs(length * sigma * rng.nextGaussian());
 			int j = Math.max(0, i - Math.round(scaledValue));
 			Permutation.swap(permutation, i, j);
