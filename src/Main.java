@@ -13,6 +13,7 @@ import javax.swing.WindowConstants;
 import misc.ClusterGenerator;
 import misc.FeatureMiner;
 import misc.FirstMinGenerator;
+import misc.Painter;
 import misc.PermutationSetsGenerator;
 import misc.SimpleMiner;
 import perm.CanberraDistance;
@@ -31,6 +32,7 @@ import rank.BordaCount;
 import rank.BordaCount.DecreasingFunction;
 import rank.CopelandScore;
 import rank.CopelandScore;
+import rank.PickAPerm;
 import rank.Stochastic;
 import rank.Vote;
 
@@ -38,14 +40,29 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		perm.Random rpg = new perm.Random();
+		java.util.Random rng = new java.util.Random();
 
-		for (double sigma = 0.1; sigma < 4; sigma += 0.1) {
-			
-//			System.out.println(rpg.nextGaussian(25, sigma));
+		List<Metric> metrics = new ArrayList<Metric>();
+		metrics.add(new CanberraDistance());
+		metrics.add(new KendallTau());
+		metrics.add(new LevenshteinDistance());
+		metrics.add(new CayleyDistance());
+		metrics.add(new LSquare());
+
+		List<Aggregation> aggregations = new ArrayList<Aggregation>();
+
+		for (double d = 1; d < 10; d += 2) {
+			aggregations.add(new Stochastic(d));
 		}
-		System.out.println(rpg.nextGaussian(25, 0.5));
+
+		for (Metric metric : metrics) {
+
+			Painter painter = new Painter(aggregations, metric);
+			PermutationSetsGenerator psg = new FirstMinGenerator(10, 25, metric, 128);
+
+			System.out.println(Arrays.toString(painter.getColorDistribution(psg, 512)));
+
+		}
 
 	}
-
 }

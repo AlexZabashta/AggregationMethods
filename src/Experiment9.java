@@ -38,25 +38,24 @@ public class Experiment9 {
 	public static void main(String[] args) throws Exception {
 		List<Classifier> classifiers = ClassifierCollection.getClassifies();
 
-		int tttRatio = 5;
+		int tttRatio = 4;
 
 		java.util.Random rng = new java.util.Random();
 
 		int permInSet = 5;
-		int permLength = 1000;
-		int numberOfSets = 1 << 8;
-		int bs = 40;
+		int permLength = 25;
+		int numberOfSets = 1 << 6;
+		int bs = 16;
 
 		PermutationSetsGenerator psg = new ClusterGenerator(permInSet, permLength, new CanberraDistance(), bs, rng);
 		FeatureMiner miner = new SimpleMiner();
 
 		Metric metric = new CanberraDistance();
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
-
-		//aggregations.add(new BordaCount());
+		aggregations.add(new BordaCount());
 		aggregations.add(new PickAPerm(metric));
 		aggregations.add(new CopelandScore());
-		//aggregations.add(new Stochastic());
+		aggregations.add(new Stochastic(10));
 
 		int n = miner.length();
 		int m = aggregations.size();

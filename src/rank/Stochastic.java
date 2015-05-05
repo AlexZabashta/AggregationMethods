@@ -5,6 +5,16 @@ import java.util.Arrays;
 import perm.Permutation;
 
 public class Stochastic extends Aggregation {
+	private double p;
+
+	public Stochastic() {
+		this(1.0);
+	}
+
+	public Stochastic(double p) {
+		this.p = p;
+	}
+
 	public Permutation aggregate(Permutation[] permutations) {
 		int n = chekSizes(permutations);
 		int m = permutations.length;
@@ -34,13 +44,8 @@ public class Stochastic extends Aggregation {
 		for (int i = 0; i < n; i++) {
 			double sum = 0;
 			for (int j = 0; j < n; j++) {
+				markovChain[i][j] += p * m;
 				sum += markovChain[i][j];
-			}
-
-			if (sum == 0.0) {
-				Arrays.fill(markovChain[i], 1.0);
-				markovChain[i][i] = 0.0;
-				sum = n - 1;
 			}
 
 			for (int j = 0; j < n; j++) {
@@ -48,7 +53,6 @@ public class Stochastic extends Aggregation {
 			}
 
 		}
-
 		markovChain = pow(markovChain, 32);
 		double[] weigh = new double[n];
 
