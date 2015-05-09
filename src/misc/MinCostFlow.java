@@ -5,10 +5,10 @@ import it.unimi.dsi.fastutil.longs.LongHeapPriorityQueue;
 
 public class MinCostFlow {
 
-	static class Edge {
-		int to, f, cap, cost, rev;
+	public static class Edge {
+		public int to, f, cap, cost, rev;
 
-		Edge(int v, int cap, int cost, int rev) {
+		public Edge(int v, int cap, int cost, int rev) {
 			this.to = v;
 			this.cap = cap;
 			this.cost = cost;
