@@ -9,6 +9,11 @@ import perm.Permutation;
 
 public class LineGenerator extends BufferedGenerator {
 
+	@Override
+	public String toString() {
+		return "LineGenerator(" + metric + "_" + rpg + ")";
+	}
+
 	private Metric metric;
 	private PermutationGenerator rpg;
 
@@ -18,6 +23,7 @@ public class LineGenerator extends BufferedGenerator {
 		this.rpg = rpg;
 	}
 
+	@Override
 	public void fillBuffer(int permutationsInSet, int permutationLength, Stack<Permutation[]> buffer, int bufferSize) {
 
 		int n = permutationsInSet * bufferSize;
@@ -26,7 +32,7 @@ public class LineGenerator extends BufferedGenerator {
 		final Integer[] order = new Integer[n];
 
 		for (int i = 0; i < n; i++) {
-			free[i] = rpg.generate(permutationLength, 1.0);
+			free[i] = rpg.generate(permutationLength, 0.73);
 			dist[i] = metric.distance(free[0], free[i]);
 			order[i] = i;
 		}

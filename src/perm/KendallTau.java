@@ -1,6 +1,10 @@
 package perm;
 
 public class KendallTau extends RightInvariantMetric {
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 
 	public double distanceToIdentity(Permutation c) {
 		int n = c.length();

@@ -7,6 +7,12 @@ import perm.Permutation;
 public class GaussGenerator implements PermutationGenerator {
 
 	Random rng;
+
+	@Override
+	public String toString() {
+		return "GaussGenerator";
+	}
+
 	double scale, offset;
 
 	public GaussGenerator() {

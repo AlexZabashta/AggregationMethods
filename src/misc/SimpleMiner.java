@@ -1,5 +1,13 @@
 package misc;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import perm.CanberraDistance;
+import perm.LAbs;
+import perm.LMax;
+import perm.LSquare;
+import perm.Metric;
 import perm.RightInvariantMetric;
 import perm.CayleyDistance;
 import perm.KendallTau;
@@ -8,7 +16,26 @@ import perm.Permutation;
 
 public class SimpleMiner implements FeatureMiner {
 
-	private static final int m = 24;
+	private static final int m = 48;
+
+	Metric[] metrics;
+
+	public SimpleMiner() {
+
+		List<Metric> metricsList = new ArrayList<Metric>();
+
+		metricsList.add(new CanberraDistance());
+
+		metricsList.add(new KendallTau());
+		metricsList.add(new LevenshteinDistance());
+		metricsList.add(new CayleyDistance());
+
+		metricsList.add(new LSquare());
+		metricsList.add(new LMax());
+		metricsList.add(new LAbs());
+
+		metrics = metricsList.toArray(new Metric[0]);
+	}
 
 	public double[] mine(Permutation[] permutations) {
 		double[] features = new double[m];
@@ -19,9 +46,7 @@ public class SimpleMiner implements FeatureMiner {
 			invper[i] = permutations[i].invert();
 		}
 
-		RightInvariantMetric[] rim = new RightInvariantMetric[] { new KendallTau(), new CayleyDistance(), new LevenshteinDistance() };
-
-		int s = rim.length;
+		int s = metrics.length;
 
 		StatisticalValue[] values = new StatisticalValue[s + 1];
 		for (int i = 0; i < values.length; i++) {
@@ -30,9 +55,8 @@ public class SimpleMiner implements FeatureMiner {
 
 		for (int i = 0; i < n; i++) {
 			for (int j = i + 1; j < n; j++) {
-				Permutation p = permutations[i].product(invper[j]);
 				for (int k = 0; k < s; k++) {
-					values[k].add(rim[k].distanceToIdentity(p));
+					values[k].add(metrics[k].distance(permutations[i], permutations[j]));
 				}
 
 				for (int k = 0; k < invper[i].length(); k++) {

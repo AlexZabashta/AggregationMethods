@@ -6,6 +6,10 @@ import perm.Permutation;
 
 public class SameSigmaGenerator implements DataSetsGenerator {
 
+	public String toString() {
+		return "SameSigmaGenerator(" + rpg + ")";
+	}
+
 	PermutationGenerator rpg;
 	Random rng;
 

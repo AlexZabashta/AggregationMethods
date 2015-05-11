@@ -3,6 +3,10 @@ package perm;
 import java.util.Arrays;
 
 public class LevenshteinDistance extends RightInvariantMetric {
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 
 	public double distanceToIdentity(Permutation c) {
 		int n = c.length();

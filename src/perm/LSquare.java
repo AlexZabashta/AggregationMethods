@@ -1,5 +1,11 @@
 package perm;
+
 public class LSquare implements Metric {
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 
 	public double distance(Permutation a, Permutation b) {
 

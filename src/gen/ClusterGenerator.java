@@ -10,6 +10,11 @@ import perm.Permutation;
 
 public class ClusterGenerator extends BufferedGenerator {
 
+	@Override
+	public String toString() {
+		return "ClusterGenerator(" + metric + "_" + rpg + ")";
+	}
+
 	private PermutationGenerator rpg;
 	private Metric metric;
 
@@ -24,7 +29,7 @@ public class ClusterGenerator extends BufferedGenerator {
 		Permutation[][] p = new Permutation[bufferSize][permutationsInSet];
 
 		for (int i = 0; i < bufferSize; i++) {
-			p[i][0] = rpg.generate(permutationLength, 1.0);
+			p[i][0] = rpg.generate(permutationLength, 0.73);
 			size[i] = 1;
 		}
 
@@ -32,7 +37,7 @@ public class ClusterGenerator extends BufferedGenerator {
 
 		Permutation[] free = new Permutation[m];
 		for (int i = 0; i < m; i++) {
-			free[i] = rpg.generate(permutationLength, 1.0);
+			free[i] = rpg.generate(permutationLength, 0.73);
 		}
 
 		int start = 0, finish = bufferSize + m + 1;

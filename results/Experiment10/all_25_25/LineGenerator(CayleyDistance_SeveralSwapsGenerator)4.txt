@@ -1,0 +1,144 @@
+Bagging:
+Confusion matrix:
+37 35 32 24 
+38 46 17 27 
+36 33 39 20 
+46 22 28 32 
+
+Correctly Classified Instances         154               30.0781 %
+Incorrectly Classified Instances       358               69.9219 %
+Kappa statistic                          0.0677
+Mean absolute error                      0.3632
+Root mean squared error                  0.4375
+Relative absolute error                 96.8514 %
+Root relative squared error            101.0311 %
+Total Number of Instances              512     
+
+ClassificationViaRegression:
+Confusion matrix:
+40 32 21 35 
+25 60 24 19 
+34 44 26 24 
+32 25 25 46 
+
+Correctly Classified Instances         172               33.5938 %
+Incorrectly Classified Instances       340               66.4063 %
+Kappa statistic                          0.1146
+Mean absolute error                      0.3623
+Root mean squared error                  0.4349
+Relative absolute error                 96.6117 %
+Root relative squared error            100.4343 %
+Total Number of Instances              512     
+
+END:
+Confusion matrix:
+30 33 29 36 
+28 48 24 28 
+32 34 35 27 
+44 19 29 36 
+
+Correctly Classified Instances         149               29.1016 %
+Incorrectly Classified Instances       363               70.8984 %
+Kappa statistic                          0.0547
+Mean absolute error                      0.3623
+Root mean squared error                  0.4579
+Relative absolute error                 96.6241 %
+Root relative squared error            105.7526 %
+Total Number of Instances              512     
+
+IBk:
+Confusion matrix:
+36 33 29 30 
+27 29 37 35 
+29 33 37 29 
+45 27 24 32 
+
+Correctly Classified Instances         134               26.1719 %
+Incorrectly Classified Instances       378               73.8281 %
+Kappa statistic                          0.0156
+Mean absolute error                      0.3692
+Root mean squared error                  0.6052
+Relative absolute error                 98.4496 %
+Root relative squared error            139.7694 %
+Total Number of Instances              512     
+
+J48:
+Confusion matrix:
+38 17 38 35 
+30 31 41 26 
+34 27 40 27 
+46 22 37 23 
+
+Correctly Classified Instances         132               25.7813 %
+Incorrectly Classified Instances       380               74.2188 %
+Kappa statistic                          0.0104
+Mean absolute error                      0.3711
+Root mean squared error                  0.5811
+Relative absolute error                 98.9529 %
+Root relative squared error            134.1997 %
+Total Number of Instances              512     
+
+LogitBoost:
+Confusion matrix:
+41 33 29 25 
+30 43 33 22 
+37 36 34 21 
+46 26 31 25 
+
+Correctly Classified Instances         143               27.9297 %
+Incorrectly Classified Instances       369               72.0703 %
+Kappa statistic                          0.0391
+Mean absolute error                      0.3647
+Root mean squared error                  0.4427
+Relative absolute error                 97.2497 %
+Root relative squared error            102.2339 %
+Total Number of Instances              512     
+
+NaiveBayes:
+Confusion matrix:
+32 39 20 37 
+15 62 28 23 
+17 39 43 29 
+27 33 24 44 
+
+Correctly Classified Instances         181               35.3516 %
+Incorrectly Classified Instances       331               64.6484 %
+Kappa statistic                          0.138 
+Mean absolute error                      0.3497
+Root mean squared error                  0.4534
+Relative absolute error                 93.2528 %
+Root relative squared error            104.703  %
+Total Number of Instances              512     
+
+RotationForest:
+Confusion matrix:
+38 36 25 29 
+27 44 31 26 
+30 30 33 35 
+50 22 26 30 
+
+Correctly Classified Instances         145               28.3203 %
+Incorrectly Classified Instances       367               71.6797 %
+Kappa statistic                          0.0443
+Mean absolute error                      0.3691
+Root mean squared error                  0.4519
+Relative absolute error                 98.4224 %
+Root relative squared error            104.3625 %
+Total Number of Instances              512     
+
+SMO:
+Confusion matrix:
+22 38 23 45 
+17 57 23 31 
+16 42 41 29 
+31 29 28 40 
+
+Correctly Classified Instances         160               31.25   %
+Incorrectly Classified Instances       352               68.75   %
+Kappa statistic                          0.0833
+Mean absolute error                      0.3577
+Root mean squared error                  0.4515
+Relative absolute error                 95.3993 %
+Root relative squared error            104.2777 %
+Total Number of Instances              512     
+

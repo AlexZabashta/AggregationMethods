@@ -5,6 +5,10 @@ import perm.Permutation;
 
 public class SeveralSwapsGenerator implements PermutationGenerator {
 
+	public String toString() {
+		return "SeveralSwapsGenerator";
+	}
+
 	Random rng;
 	double scale, offset;
 

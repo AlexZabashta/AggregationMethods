@@ -1,6 +1,10 @@
 package perm;
 
 public class CanberraDistance implements Metric {
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 
 	public double distance(int i, int j) {
 		return Math.abs(i - j) / (i + j + 1.0);

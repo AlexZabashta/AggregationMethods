@@ -5,6 +5,11 @@ import perm.Permutation;
 
 public class FisherYatesShuffle implements PermutationGenerator {
 
+	@Override
+	public String toString() {
+		return "FisherYatesShuffle";
+	}
+
 	Random rng;
 	double scale, offset;
 

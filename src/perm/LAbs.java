@@ -1,5 +1,10 @@
 package perm;
+
 public class LAbs implements Metric {
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 
 	public double distance(Permutation a, Permutation b) {
 

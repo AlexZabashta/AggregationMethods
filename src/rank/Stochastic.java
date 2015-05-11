@@ -8,12 +8,14 @@ public class Stochastic extends Aggregation {
 	private double p;
 
 	public Stochastic() {
-		this(1.0);
+		this(8.3);
 	}
 
 	public Stochastic(double p) {
 		this.p = p;
 	}
+
+	public int testPow = 2;
 
 	public Permutation aggregate(Permutation[] permutations) {
 		int n = chekSizes(permutations);
@@ -53,7 +55,9 @@ public class Stochastic extends Aggregation {
 			}
 
 		}
-		markovChain = pow(markovChain, 32);
+
+		markovChain = superPow(markovChain, testPow);
+		// markovChain = pow(markovChain, 32);
 		double[] weigh = new double[n];
 
 		for (int i = 0; i < n; i++) {
@@ -63,6 +67,36 @@ public class Stochastic extends Aggregation {
 		}
 
 		return aggregateByW(weigh);
+	}
+
+	double[][] superPow(double[][] a, int m) {
+		int n = a.length;
+
+		double[][] b = new double[n][n], c;
+
+		while (--m >= 0) {
+			fillBySquare(b, a);
+			c = b;
+			b = a;
+			a = c;
+		}
+
+		return a;
+
+	}
+
+	void fillBySquare(double[][] d, double[][] s) {
+		int n = d.length;
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				d[i][j] = 0.0;
+				for (int k = 0; k < n; k++) {
+					d[i][j] += s[i][k] * s[k][j];
+				}
+			}
+		}
+
 	}
 
 	double[][] mul(double[][] a, double[][] b) {
