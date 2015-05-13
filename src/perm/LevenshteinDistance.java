@@ -28,6 +28,6 @@ public class LevenshteinDistance extends RightInvariantMetric {
 			lis = Math.max(lis, j);
 		}
 
-		return (n - lis) / (n - 1.0);
+		return (n - lis);// (n - 1.0);
 	}
 }
