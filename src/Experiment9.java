@@ -55,7 +55,7 @@ public class Experiment9 {
 		aggregations.add(new BordaCount());
 		aggregations.add(new PickAPerm(metric));
 		aggregations.add(new CopelandScore());
-		aggregations.add(new Stochastic(10));
+		aggregations.add(new Stochastic());
 
 		int n = miner.length();
 		int m = aggregations.size();

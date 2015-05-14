@@ -73,15 +73,7 @@ public class Main {
 
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 		{
-			//for (int p = 1; p <= 15; p++) {
-			for (int p = 15; p >= 1; p--) {
-				Stochastic st = new Stochastic(8.3);
-				st.testPow = p;
-				aggregations.add(st);
 
-			}
-
-			
 			// aggregations.add(new BordaCount());
 			// aggregations.add(new PickAPerm(mu));
 			// aggregations.add(new CopelandScore());

@@ -49,9 +49,9 @@ public class Presentation1 {
 		{
 
 			aggregations.add(new BordaCount());
-			//aggregations.add(new PickAPerm(mu));
+			// aggregations.add(new PickAPerm(mu));
 			aggregations.add(new CopelandScore());
-			aggregations.add(new Stochastic(10));
+			aggregations.add(new Stochastic());
 		}
 
 		for (Permutation p : data) {

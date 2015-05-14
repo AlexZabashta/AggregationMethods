@@ -5,17 +5,8 @@ import java.util.Arrays;
 import perm.Permutation;
 
 public class Stochastic extends Aggregation {
-	private double p;
-
-	public Stochastic() {
-		this(8.3);
-	}
-
-	public Stochastic(double p) {
-		this.p = p;
-	}
-
-	public int testPow = 2;
+	private double p = 0.001;
+	public int kpow = 2;
 
 	public Permutation aggregate(Permutation[] permutations) {
 		int n = chekSizes(permutations);
@@ -35,34 +26,33 @@ public class Stochastic extends Aggregation {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				for (int k = 0; k < m; k++) {
-					if (invper[k].get(i) < invper[k].get(j)) {
+					if (invper[k].get(i) > invper[k].get(j)) {
 						++markovChain[i][j];
 					}
 				}
-
 			}
 		}
 
 		for (int i = 0; i < n; i++) {
-			double sum = 0;
+			double cur = 0, sum = (1 + p) * n * m;
 			for (int j = 0; j < n; j++) {
-				markovChain[i][j] += p * m;
-				sum += markovChain[i][j];
+				if (i != j) {
+					markovChain[i][j] += p * m;
+					markovChain[i][j] /= sum;
+					cur += markovChain[i][j];
+				}
 			}
 
-			for (int j = 0; j < n; j++) {
-				markovChain[i][j] /= sum;
-			}
+			markovChain[i][i] = 1 - cur;
 
 		}
 
-		markovChain = superPow(markovChain, testPow);
-		// markovChain = pow(markovChain, 32);
+		markovChain = superPow(markovChain, kpow);
 		double[] weigh = new double[n];
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				weigh[j] -= markovChain[i][j];
+				weigh[j] += markovChain[i][j];
 			}
 		}
 

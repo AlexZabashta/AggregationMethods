@@ -7,6 +7,8 @@ import perm.KendallTau;
 import perm.LevenshteinDistance;
 import perm.Metric;
 import perm.Permutation;
+import rank.Aggregation;
+import rank.Stochastic;
 
 public class Test {
 
@@ -24,11 +26,13 @@ public class Test {
 			data[i] = rpg.generate(m, 0.3);
 		}
 
-		Permutation ans = new Permutation(m);
+		Aggregation aggregation = new Stochastic();
 
 		for (Permutation p : data) {
 			System.out.println(p);
 		}
+		System.out.println();
+		System.out.println(aggregation.aggregate(data));
 
 	}
 }
