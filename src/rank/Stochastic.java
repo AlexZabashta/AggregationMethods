@@ -5,6 +5,11 @@ import java.util.Arrays;
 import perm.Permutation;
 
 public class Stochastic extends Aggregation {
+	@Override
+	public String toString() {
+		return "Stochastic";
+	}
+
 	private double p = 0.001;
 	public int kpow = 2;
 

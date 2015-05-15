@@ -45,18 +45,11 @@ public class Experiment10 {
 	public static void main(String[] args) throws Exception {
 		List<Classifier> classifiers = ClassifierCollection.getClassifies();
 
-		for (Classifier cl : classifiers) {
-			System.out.println(cl.getClass().getSimpleName());
-		}
-		if (!classifiers.isEmpty()) {
-			return;
-		}
-
-		int trainSetSzie = 32, testSetSize = 64;
+		int trainSetSzie = 128, testSetSize = 16;
 		int numberOfTest = 5;
 
-		int permInSet = 10;
-		int permLength = 100;
+		int permInSet = 25;
+		int permLength = 25;
 
 		int maxIter = 1000000;
 
@@ -75,25 +68,9 @@ public class Experiment10 {
 		metrList.add(new CayleyDistance());
 		metrList.add(new LSquare());
 
-		List<PermutationGenerator> permGenList = new ArrayList<PermutationGenerator>();
-		{
-			// permGenList.add(new FisherYatesShuffle(1, 0.05, rng));
-			permGenList.add(new GaussGenerator(0.4, 0.05, rng));
-			// permGenList.add(new SeveralSwapsGenerator(1, 0.05, rng));
-		}
-
-		List<DataSetsGenerator> dataGenList = new ArrayList<DataSetsGenerator>();
-		{
-
-			for (PermutationGenerator permGen : permGenList) {
-				dataGenList.add(new SameSigmaGenerator(permGen, rng));
-
-				// for (Metric metric : metrList) {
-				// dataGenList.add(new LineGenerator(metric, permGen, 2048));
-				// dataGenList.add(new ClusterGenerator(metric, permGen, 64));
-				// }
-			}
-		}
+		// PermutationGenerator permGen = new GaussGenerator(0.5, 0.05, rng);
+		PermutationGenerator permGen = new FisherYatesShuffle(0.9, 0.05, rng);
+		SameSigmaGenerator dsg = new SameSigmaGenerator(permGen, rng);
 
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 		{
@@ -105,6 +82,7 @@ public class Experiment10 {
 		}
 
 		int n = miner.length();
+		// int n = 1;
 		int m = aggregations.size();
 
 		Painter painter = new Painter(aggregations, mu);
@@ -120,24 +98,24 @@ public class Experiment10 {
 		int[] colorSize = new int[m];
 
 		for (int curIter = 0, last = 0, minSize = 0; curIter < maxIter && minSize < numberOfSets; last = minSize, curIter++) {
-			for (DataSetsGenerator dsg : dataGenList) {
-				Permutation[] p = dsg.generate(permInSet, permLength);
+			double sigma = rng.nextDouble();
+			Permutation[] p = dsg.generate(permInSet, permLength, sigma);
 
-				int color = painter.getColor(p);
+			int color = painter.getColor(p, 0.0023);
 
-				if (color == -1) {
-					continue;
-				}
+			if (color == -1) {
+				continue;
+			}
 
-				debug[color] = p;
+			debug[color] = p;
 
-				++colorSize[color];
+			++colorSize[color];
 
-				if (features[color].size() < numberOfSets) {
-					features[color].add(miner.mine(p));
-				} else {
-					continue;
-				}
+			if (features[color].size() < numberOfSets) {
+				features[color].add(miner.mine(p));
+				// features[color].add(new double[] { sigma });
+			} else {
+				continue;
 			}
 			minSize = numberOfSets;
 			for (List<double[]> fl : features) {
@@ -155,17 +133,6 @@ public class Experiment10 {
 				empt = true;
 			}
 		}
-
-		// for (Permutation[] d : debug) {
-		// for (Permutation p : d) {
-		// System.out.println(p);
-		// }
-		// System.out.println();
-		// }
-		//
-		// if (!empt) {
-		// return;
-		// }
 
 		System.out.println(Arrays.toString(colorSize));
 

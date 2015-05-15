@@ -54,7 +54,7 @@ public class Painter {
 
 		}
 
-		if (min2 - min1 < eps) {
+		if (min2 - min1 < eps * p.length) {
 			return -1;
 		}
 

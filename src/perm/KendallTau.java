@@ -20,6 +20,6 @@ public class KendallTau extends RightInvariantMetric {
 			inversions += d;
 		}
 
-		return inversions ;//2 * inversions / size;
+		return 2 * inversions / size;
 	}
 }

@@ -1,0 +1,80 @@
+test #1:
+Confusion matrix:
+13 2 1 0 
+7 6 2 1 
+5 1 10 0 
+11 3 0 2 
+
+Correctly Classified Instances          31               48.4375 %
+Incorrectly Classified Instances        33               51.5625 %
+Kappa statistic                          0.3125
+Mean absolute error                      0.3167
+Root mean squared error                  0.3984
+Relative absolute error                 84.4627 %
+Root relative squared error             92.0032 %
+Total Number of Instances               64     
+
+test #2:
+Confusion matrix:
+11 4 1 0 
+3 11 2 0 
+5 0 11 0 
+10 6 0 0 
+
+Correctly Classified Instances          33               51.5625 %
+Incorrectly Classified Instances        31               48.4375 %
+Kappa statistic                          0.3542
+Mean absolute error                      0.3112
+Root mean squared error                  0.3913
+Relative absolute error                 82.9939 %
+Root relative squared error             90.3685 %
+Total Number of Instances               64     
+
+test #3:
+Confusion matrix:
+11 3 1 1 
+6 9 1 0 
+4 1 11 0 
+10 5 0 1 
+
+Correctly Classified Instances          32               50      %
+Incorrectly Classified Instances        32               50      %
+Kappa statistic                          0.3333
+Mean absolute error                      0.3063
+Root mean squared error                  0.3918
+Relative absolute error                 81.6742 %
+Root relative squared error             90.4854 %
+Total Number of Instances               64     
+
+test #4:
+Confusion matrix:
+14 1 1 0 
+6 8 2 0 
+6 1 9 0 
+8 7 1 0 
+
+Correctly Classified Instances          31               48.4375 %
+Incorrectly Classified Instances        33               51.5625 %
+Kappa statistic                          0.3125
+Mean absolute error                      0.3194
+Root mean squared error                  0.4016
+Relative absolute error                 85.1862 %
+Root relative squared error             92.7553 %
+Total Number of Instances               64     
+
+test #5:
+Confusion matrix:
+12 2 0 2 
+5 10 1 0 
+8 2 6 0 
+7 6 2 1 
+
+Correctly Classified Instances          29               45.3125 %
+Incorrectly Classified Instances        35               54.6875 %
+Kappa statistic                          0.2708
+Mean absolute error                      0.3299
+Root mean squared error                  0.4183
+Relative absolute error                 87.965  %
+Root relative squared error             96.5909 %
+Total Number of Instances               64     
+

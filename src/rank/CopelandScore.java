@@ -5,6 +5,11 @@ import java.util.Arrays;
 import perm.Permutation;
 
 public class CopelandScore extends Aggregation {
+	@Override
+	public String toString() {
+		return "CopelandScore";
+	}
+
 	public Permutation aggregate(Permutation[] permutations) {
 		int n = chekSizes(permutations);
 		int m = permutations.length;

@@ -18,6 +18,11 @@ public class BordaCount extends Aggregation {
 		});
 	}
 
+	@Override
+	public String toString() {
+		return "BordaCount";
+	}
+
 	public BordaCount(DecreasingFunction weigher) {
 		this.weigher = weigher;
 	}

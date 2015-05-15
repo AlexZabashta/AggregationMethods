@@ -12,6 +12,11 @@ public class PickAPerm extends Aggregation {
 	}
 
 	@Override
+	public String toString() {
+		return "PickAPerm (" + metric + ")";
+	}
+
+	@Override
 	public Permutation aggregate(Permutation[] permutations) {
 		int n = chekSizes(permutations);
 		int m = permutations.length;
