@@ -42,9 +42,7 @@ public class Stochastic extends Aggregation {
 					cur += markovChain[i][j];
 				}
 			}
-
 			markovChain[i][i] = 1 - cur;
-
 		}
 
 		markovChain = superPow(markovChain, kpow);

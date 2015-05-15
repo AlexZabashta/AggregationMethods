@@ -30,19 +30,30 @@ public class Example1 {
 
 		int n = 3, m = 5;
 
-		for (Permutation a = new Permutation(m); a != null; a = a.next()) {
-			for (Permutation b = a; b != null; b = b.next()) {
-				for (Permutation c = b; c != null; c = c.next()) {
-					Permutation[] data = { a, b, c };
+		// for (Permutation a = new Permutation(m); a != null; a = a.next()) {
+		// for (Permutation b = a; b != null; b = b.next()) {
+		// for (Permutation c = b; c != null; c = c.next()) {
+		// Permutation[] data = { a, b, c };
+		//
+		// int[] sum = new int[m];
+		//
+		// for (int i = 0; i < m; i++) {
+		// // sum[]
+		// }
+		//
+		// }
+		// }
+		// }
 
-					int[] sum = new int[m];
+		Permutation x = new Permutation(1, 0, 2, 3);
+		Permutation y = new Permutation(0, 3, 2, 1);
+		Permutation z = new Permutation(1, 0, 3, 2);
 
-					for (int i = 0; i < m; i++) {
-						// sum[]
-					}
+		Stochastic st = new Stochastic();
 
-				}
-			}
-		}
+		Permutation[] data = { x, y, z };
+		
+		System.out.println(st.aggregate(data));
+
 	}
 }

@@ -47,7 +47,7 @@ public class LineGenerator extends BufferedGenerator {
 		for (int i = 0, j = 0; i < bufferSize; i++) {
 			Permutation[] p = new Permutation[permutationsInSet];
 			for (int k = 0; k < permutationsInSet; k++, j++) {
-				p[k] = free[j];
+				p[k] = free[order[j]];
 			}
 			buffer.add(p);
 		}

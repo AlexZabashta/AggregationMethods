@@ -24,7 +24,10 @@ public class SameSigmaGenerator implements DataSetsGenerator {
 
 	@Override
 	public Permutation[] generate(int permutationsInSet, int permutationLength) {
-		double sigma = rng.nextDouble();
+		return generate(permutationsInSet, permutationLength, rng.nextDouble());
+	}
+
+	public Permutation[] generate(int permutationsInSet, int permutationLength, double sigma) {
 
 		Permutation[] dataSet = new Permutation[permutationsInSet];
 		for (int i = 0; i < permutationsInSet; i++) {
@@ -32,7 +35,6 @@ public class SameSigmaGenerator implements DataSetsGenerator {
 		}
 
 		return dataSet;
-
 	}
 
 }
