@@ -1,31 +1,32 @@
 package perm;
 
-public class LMax implements Metric {
-	@Override
-	public String toString() {
-		return this.getClass().getSimpleName();
+public class LMax extends Metric {
+	public double distance(int i, int j) {
+		return Math.abs(i - j);
 	}
 
-	public double distance(Permutation a, Permutation b) {
-
-		if (a.length() != b.length()) {
-			throw new IllegalArgumentException("Permutations has different size.");
-		}
-		a = a.invert();
-		b = b.invert();
-
-		int n = a.length();
+	@Override
+	public double distanceToIdentity(Permutation permutation) {
+		int n = permutation.length();
 
 		if (n <= 1) {
 			return 0.0;
 		}
 
-		int d = 0;
+		double size = n - 1.0;
+
+		double d = 0;
 
 		for (int i = 0; i < n; i++) {
-			d = Math.max(d, Math.abs(a.get(i) - b.get(i)));
+			d = Math.max(d, distance(i, permutation.get(i)));
 		}
 
-		return d / (n - 1.0);
+		return d / size;
 	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
+
 }

@@ -29,14 +29,6 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 		return true;
 	}
 
-	public static void swap(int[] array, int i, int j) {
-		if (i == j)
-			return;
-		array[i] ^= array[j];
-		array[j] ^= array[i];
-		array[i] ^= array[j];
-	}
-
 	public static Permutation random(int length, Random rng) {
 		int[] p = new int[length];
 		for (int i = 0; i < length; i++) {
@@ -44,6 +36,14 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 			swap(p, i, rng.nextInt(i + 1));
 		}
 		return new Permutation(p);
+	}
+
+	public static void swap(int[] array, int i, int j) {
+		if (i == j)
+			return;
+		array[i] ^= array[j];
+		array[j] ^= array[i];
+		array[i] ^= array[j];
 	}
 
 	private final int hashCode;

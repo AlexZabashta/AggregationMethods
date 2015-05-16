@@ -8,7 +8,6 @@ import perm.LAbs;
 import perm.LMax;
 import perm.LSquare;
 import perm.Metric;
-import perm.RightInvariantMetric;
 import perm.CayleyDistance;
 import perm.KendallTau;
 import perm.LevenshteinDistance;

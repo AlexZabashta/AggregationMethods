@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.util.Random;
 
 import misc.IOUtils;
+import perm.CanberraDistance;
+import perm.Metric;
 import perm.Permutation;
 
 public class Test {
@@ -19,12 +21,14 @@ public class Test {
 
 		String file = "sertest.obj";
 
-		//IOUtils.writeObjectToFile(file, p);
+		// IOUtils.writeObjectToFile(file, p);
 
 		Permutation[] q = (Permutation[]) IOUtils.readObjectFromFile(file);
 
-		for (Permutation x : q) {
-			System.out.println(x);
+		Metric metric = new CanberraDistance();
+
+		for (int i = 0; i < n; i++) {
+			System.out.println(metric.distance(q[i], q[(i + 1) % n]));
 		}
 
 	}

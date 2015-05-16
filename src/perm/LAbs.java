@@ -1,20 +1,13 @@
 package perm;
 
-public class LAbs implements Metric {
-	@Override
-	public String toString() {
-		return this.getClass().getSimpleName();
+public class LAbs extends Metric {
+	public double distance(int i, int j) {
+		return Math.abs(i - j);
 	}
 
-	public double distance(Permutation a, Permutation b) {
-
-		if (a.length() != b.length()) {
-			throw new IllegalArgumentException("Permutations has different size.");
-		}
-		a = a.invert();
-		b = b.invert();
-
-		int n = a.length();
+	@Override
+	public double distanceToIdentity(Permutation permutation) {
+		int n = permutation.length();
 
 		if (n <= 1) {
 			return 0.0;
@@ -22,12 +15,17 @@ public class LAbs implements Metric {
 
 		double size = ((double) n * n) - (n % 2);
 
-		long d = 0;
+		double d = 0;
 
 		for (int i = 0; i < n; i++) {
-			d += Math.abs(a.get(i) - b.get(i));
+			d += distance(i, permutation.get(i));
 		}
 
 		return 2 * d / size;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
 	}
 }

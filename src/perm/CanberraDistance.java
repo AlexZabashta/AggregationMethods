@@ -1,24 +1,14 @@
 package perm;
 
-public class CanberraDistance implements Metric {
-	@Override
-	public String toString() {
-		return this.getClass().getSimpleName();
-	}
-
+public class CanberraDistance extends Metric {
 	public double distance(int i, int j) {
 		return Math.abs(i - j) / (i + j + 1.0);
 	}
 
-	public double distance(Permutation a, Permutation b) {
+	@Override
+	public double distanceToIdentity(Permutation permutation) {
 
-		if (a.length() != b.length()) {
-			throw new IllegalArgumentException("Permutations has different size.");
-		}
-		a = a.invert();
-		b = b.invert();
-
-		int n = a.length();
+		int n = permutation.length();
 
 		if (n <= 1) {
 			return 0.0;
@@ -27,10 +17,15 @@ public class CanberraDistance implements Metric {
 		double d = 0, size = 0;
 
 		for (int i = 0; i < n; i++) {
-			d += distance(a.get(i), b.get(i));
+			d += distance(i, permutation.get(i));
 			size += distance(i, (offset + i) % n);
 		}
 
 		return d / size;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
 	}
 }

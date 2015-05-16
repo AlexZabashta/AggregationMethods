@@ -42,6 +42,7 @@ public class ColorDataGenerator {
 		Random rng = new Random();
 
 		List<Metric> metrList = new ArrayList<Metric>();
+
 		metrList.add(new CanberraDistance());
 		metrList.add(new KendallTau());
 		metrList.add(new LevenshteinDistance());
