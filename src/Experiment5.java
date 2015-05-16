@@ -3,10 +3,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import misc.GaussGenerator;
 import misc.Painter;
-import misc.PermutationSetsGenerator;
-import misc.SeveralSwapsGenerator;
 import perm.CanberraDistance;
 import perm.CayleyDistance;
 import perm.KendallTau;
@@ -66,15 +63,8 @@ public class Experiment5 {
 						for (double scale = 0.1; scale <= 1.0; scale += 0.1) {
 							out.print("| ");
 
-							PermutationSetsGenerator ssg = new SeveralSwapsGenerator(permutationsInSet, permutationLength,
-									scale, rng);
-							//PermutationSetsGenerator psg = new GaussGenerator(permutationsInSet, permutationLength, scale, rng);
-
-							int[] d = painter.getColorDistribution(ssg, 64);
-
-							for (int val : d) {
-								out.printf("%2d ", val);
-							}
+							
+							
 						}
 						out.println();
 					}

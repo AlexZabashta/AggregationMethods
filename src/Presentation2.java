@@ -32,7 +32,7 @@ public class Presentation2 {
 
 		// System.out.println(aggregation.aggregate(p));
 
-		perm.Random rpg = new perm.Random();
+		
 
 		Permutation c = new Permutation(3, 1, 2, 4, 0);
 

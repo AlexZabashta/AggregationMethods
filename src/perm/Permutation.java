@@ -8,10 +8,6 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static AllPermutations all(int length) {
-		return new AllPermutations(length);
-	}
-
 	public static boolean nextPermutation(int[] permutation) {
 		int n = permutation.length, a = n - 2;
 		while (0 <= a && permutation[a] >= permutation[a + 1]) {
@@ -39,6 +35,15 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 		array[i] ^= array[j];
 		array[j] ^= array[i];
 		array[i] ^= array[j];
+	}
+
+	public static Permutation random(int length, Random rng) {
+		int[] p = new int[length];
+		for (int i = 0; i < length; i++) {
+			p[i] = i;
+			swap(p, i, rng.nextInt(i + 1));
+		}
+		return new Permutation(p);
 	}
 
 	private final int hashCode;

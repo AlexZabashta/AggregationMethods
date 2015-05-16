@@ -1,38 +1,31 @@
+import java.io.IOException;
 import java.util.Random;
 
-import gen.FisherYatesShuffle;
-import gen.PermutationGenerator;
-import perm.CanberraDistance;
-import perm.KendallTau;
-import perm.LevenshteinDistance;
-import perm.Metric;
+import misc.IOUtils;
 import perm.Permutation;
-import rank.Aggregation;
-import rank.Stochastic;
 
 public class Test {
 
-	public static void main(String[] args) {
-
-		int n = 5, m = 13;
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 
 		Random rng = new Random();
-		PermutationGenerator rpg = new FisherYatesShuffle(rng);
+		int n = 13, m = 17;
 
-		Metric mu = new CanberraDistance();
+		Permutation[] p = new Permutation[n];
 
-		Permutation[] data = new Permutation[n];
 		for (int i = 0; i < n; i++) {
-			data[i] = rpg.generate(m, 0.3);
+			p[i] = Permutation.random(m, rng);
 		}
 
-		Aggregation aggregation = new Stochastic();
+		String file = "sertest.obj";
 
-		for (Permutation p : data) {
-			System.out.println(p);
+		//IOUtils.writeObjectToFile(file, p);
+
+		Permutation[] q = (Permutation[]) IOUtils.readObjectFromFile(file);
+
+		for (Permutation x : q) {
+			System.out.println(x);
 		}
-		System.out.println();
-		System.out.println(aggregation.aggregate(data));
 
 	}
 }
