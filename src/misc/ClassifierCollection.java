@@ -31,11 +31,11 @@ public class ClassifierCollection {
 		classifiers.add(new Bagging());
 		classifiers.add(new ClassificationViaClustering());
 		classifiers.add(new DecisionTable());
-		classifiers.add(new Decorate());
+		//classifiers.add(new Decorate());
 		classifiers.add(new END());
 		classifiers.add(new IBk());
 		classifiers.add(new J48());
-		classifiers.add(new KStar());
+		//classifiers.add(new KStar());
 		classifiers.add(new LogitBoost());
 		classifiers.add(new NaiveBayes());
 		classifiers.add(new ClassificationViaRegression());
