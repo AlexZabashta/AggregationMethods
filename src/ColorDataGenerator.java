@@ -31,7 +31,7 @@ public class ColorDataGenerator {
 	public static void main(String[] args) throws IOException {
 
 		int permInSet = 25;
-		int permLength = 25;
+		int permLength = 50;
 
 		int maxIter = 1000000;
 
@@ -52,6 +52,8 @@ public class ColorDataGenerator {
 		// PermutationGenerator permGen = new GaussGenerator(0.5, 0.05, rng);
 		PermutationGenerator permGen = new FisherYatesShuffle(0.9, 0.05, rng);
 		SameSigmaGenerator dsg = new SameSigmaGenerator(permGen, rng);
+
+		String dataPath = filePath + dsg.getClass().getSimpleName() + "09.obj";
 
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 		{
@@ -108,13 +110,13 @@ public class ColorDataGenerator {
 			}
 		}
 
+		System.out.println(Arrays.toString(colorSize));
 		if (empt) {
-			System.out.println(Arrays.toString(colorSize));
+			System.out.println("EMPTY");
 		} else {
-			IOUtils.writeObjectToFile(filePath + dsg.getClass().getSimpleName() + ".obj", data);
+			IOUtils.writeObjectToFile(dataPath, data);
 			System.out.println("OK");
 
 		}
 	}
-
 }

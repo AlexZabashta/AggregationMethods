@@ -28,20 +28,20 @@ public class ClassifierCollection {
 
 	public static ArrayList<Classifier> getClassifies() {
 		ArrayList<Classifier> classifiers = new ArrayList<Classifier>();
-		// classifiers.add(new Decorate());
-		// classifiers.add(new KStar());
 		classifiers.add(new Bagging());
-		classifiers.add(new ClassificationViaRegression());
-		// classifiers.add(new DecisionTable());
-
+		classifiers.add(new ClassificationViaClustering());
+		classifiers.add(new DecisionTable());
+		classifiers.add(new Decorate());
 		classifiers.add(new END());
 		classifiers.add(new IBk());
 		classifiers.add(new J48());
+		classifiers.add(new KStar());
 		classifiers.add(new LogitBoost());
 		classifiers.add(new NaiveBayes());
+		classifiers.add(new ClassificationViaRegression());
 		classifiers.add(new RotationForest());
 		classifiers.add(new SMO());
-	
+
 		return classifiers;
 	}
 }

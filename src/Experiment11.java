@@ -32,7 +32,10 @@ public class Experiment11 {
 		List<Classifier> classifiers = ClassifierCollection.getClassifies();
 		int numberOfClassifiers = classifiers.size();
 
-		String dataPath = "data" + File.separator + "SameSigmaGenerator.obj";
+		String dataName = "SameSigmaGenerator09";
+
+		String dataPath = "data" + File.separator + dataName + ".obj";
+		String outFileName = res + dataName + ".txt";
 
 		List<Permutation[]>[] data = (List<Permutation[]>[]) IOUtils.readObjectFromFile(dataPath);
 
@@ -70,13 +73,14 @@ public class Experiment11 {
 		Table table = new Table(numberOfClassifiers + 1, 1 + numberOfTest + 1 + 1);
 		table.setDelimiterAfterRow(0, true);
 
-		table.setDelimiterAfterColumn(0, true);
+		for (int j = numberOfTest + 1; j >= 0; j--) {
+			table.setDelimiterAfterColumn(j, true);
+		}
+
 		table.set(0, 0, "Classifier");
 
-		table.setDelimiterAfterColumn(numberOfTest + 0, true);
 		table.set(0, numberOfTest + 1, "Correct");
 
-		table.setDelimiterAfterColumn(numberOfTest + 1, true);
 		table.set(0, numberOfTest + 2, "Kappa");
 
 		for (int i = 1; i <= numberOfTest; i++) {
@@ -88,7 +92,7 @@ public class Experiment11 {
 
 			Classifier classifier = classifiers.get(cid);
 
-			String clName = classifier.getClass().getSimpleName();
+			String clName = classifier.getClass().getSimpleName().replace("ClassificationVia", "");
 
 			table.set(cid + 1, 0, clName);
 			System.out.print(clName + ":");
@@ -159,7 +163,7 @@ public class Experiment11 {
 			table.set(cid + 1, numberOfTest + 2, String.format("%5.3f", kappaSum / numberOfTest));
 		}
 
-		try (PrintWriter out = new PrintWriter(new File(res + "table.txt"))) {
+		try (PrintWriter out = new PrintWriter(new File(outFileName))) {
 			table.print(out);
 		}
 
