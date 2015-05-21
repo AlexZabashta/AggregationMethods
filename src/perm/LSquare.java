@@ -23,7 +23,7 @@ public class LSquare extends Metric {
 			d += s * s;
 		}
 
-		return 3 * d / size;
+		return Math.sqrt(3 * d / size);
 	}
 
 	@Override

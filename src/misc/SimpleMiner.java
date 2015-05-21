@@ -15,26 +15,7 @@ import perm.Permutation;
 
 public class SimpleMiner implements FeatureMiner {
 
-	private static final int m = 48;
-
-	Metric[] metrics;
-
-	public SimpleMiner() {
-
-		List<Metric> metricsList = new ArrayList<Metric>();
-
-		metricsList.add(new CanberraDistance());
-
-		metricsList.add(new KendallTau());
-		metricsList.add(new LevenshteinDistance());
-		metricsList.add(new CayleyDistance());
-
-		metricsList.add(new LSquare());
-		metricsList.add(new LMax());
-		metricsList.add(new LAbs());
-
-		metrics = metricsList.toArray(new Metric[0]);
-	}
+	private static final int m = 5;
 
 	public double[] mine(Permutation[] permutations) {
 		double[] features = new double[m];
@@ -45,34 +26,24 @@ public class SimpleMiner implements FeatureMiner {
 			invper[i] = permutations[i].invert();
 		}
 
-		int s = metrics.length;
-
-		StatisticalValue[] values = new StatisticalValue[s + 1];
-		for (int i = 0; i < values.length; i++) {
-			values[i] = new StatisticalValue();
-		}
+		StatisticalValue dist = new StatisticalValue();
 
 		for (int i = 0; i < n; i++) {
 			for (int j = i + 1; j < n; j++) {
-				for (int k = 0; k < s; k++) {
-					values[k].add(metrics[k].distance(permutations[i], permutations[j]));
-				}
-
 				for (int k = 0; k < invper[i].length(); k++) {
-					values[s].add(Math.abs(invper[i].get(k) - invper[j].get(k)));
+					dist.add(Math.abs(invper[i].get(k) - invper[j].get(k)));
 				}
-
 			}
 		}
 
-		for (int i = 0, j = 0; i <= s; i++) {
-			features[j++] = values[i].getMax();
-			features[j++] = values[i].getMin();
-			features[j++] = values[i].getMean();
-			features[j++] = values[i].getSkewness();
-			features[j++] = values[i].getKurtosis();
-			features[j++] = values[i].getStandardDeviation();
-		}
+		int fp = 0;
+
+		features[fp++] = dist.getMax();
+		// features[fp++] = dist.getMin();
+		features[fp++] = dist.getMean();
+		features[fp++] = dist.getSkewness();
+		features[fp++] = dist.getKurtosis();
+		features[fp++] = dist.getStandardDeviation();
 
 		return features;
 	}
