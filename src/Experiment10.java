@@ -45,11 +45,11 @@ public class Experiment10 {
 	public static void main(String[] args) throws Exception {
 		List<Classifier> classifiers = ClassifierCollection.getClassifies();
 
-		int trainSetSzie = 128, testSetSize = 16;
+		int trainSetSzie = 1000, testSetSize = 200;
 		int numberOfTest = 5;
 
-		int permInSet = 25;
-		int permLength = 25;
+		int permInSet = 20;
+		int permLength = 50;
 
 		int maxIter = 1000000;
 
@@ -68,8 +68,9 @@ public class Experiment10 {
 		metrList.add(new CayleyDistance());
 		metrList.add(new LSquare());
 
-		// PermutationGenerator permGen = new GaussGenerator(0.5, 0.05, rng);
-		PermutationGenerator permGen = new FisherYatesShuffle(0.9, 0.05, rng);
+		PermutationGenerator permGen = new GaussGenerator(0.5, 0.05, rng);
+		// PermutationGenerator permGen = new FisherYatesShuffle(0.9, 0.05,
+		// rng);
 		SameSigmaGenerator dsg = new SameSigmaGenerator(permGen, rng);
 
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
@@ -98,7 +99,7 @@ public class Experiment10 {
 		int[] colorSize = new int[m];
 
 		for (int curIter = 0, last = 0, minSize = 0; curIter < maxIter && minSize < numberOfSets; last = minSize, curIter++) {
-			double sigma = rng.nextDouble();
+			double sigma = 0.5;// rng.nextDouble();
 			Permutation[] p = dsg.generate(permInSet, permLength, sigma);
 
 			int color = painter.getColor(p, 0.0023);

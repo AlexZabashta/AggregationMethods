@@ -76,9 +76,9 @@ public class Experiment12 {
 
 		List<PermutationGenerator> pgl = new ArrayList<PermutationGenerator>();
 		{
-			//pgl.add(new GaussGenerator(0.4, 0.05, rng));
+			pgl.add(new GaussGenerator(0.4, 0.05, rng));
 			pgl.add(new FisherYatesShuffle(0.9, 0.05, rng));
-			//pgl.add(new SeveralSwapsGenerator(0.9, 0.05, rng));
+			pgl.add(new SeveralSwapsGenerator(0.9, 0.05, rng));
 		}
 
 		for (PermutationGenerator permGen : pgl) {
@@ -95,7 +95,7 @@ public class Experiment12 {
 				aggregations.add(new Stochastic());
 			}
 
-			int[] fsize = new int[] { 1, simminer.length(), norMiner.length(), badMiner.length() };
+			int[] fsize = new int[] { simminer.length(), norMiner.length(), badMiner.length() };
 
 			int m = aggregations.size();
 
@@ -110,7 +110,7 @@ public class Experiment12 {
 			int[] colorSize = new int[m];
 
 			for (int curIter = 0, last = 0, minSize = 0; curIter < maxIter && minSize < numberOfSets; last = minSize, curIter++) {
-				double alpha = rng.nextDouble(), beta = rng.nextDouble();
+				double alpha = 0.3, beta = 0.7;
 				Permutation[] p = dsg.generate(permInSet, permLength, alpha, beta);
 
 				int color = painter.getColor(p, 0.0023);
@@ -122,8 +122,7 @@ public class Experiment12 {
 				++colorSize[color];
 
 				if (features[color].size() < numberOfSets) {
-					features[color]
-							.add(new double[][] { { alpha, beta }, simminer.mine(p), norMiner.mine(p), badMiner.mine(p) });
+					features[color].add(new double[][] { simminer.mine(p), norMiner.mine(p), badMiner.mine(p) });
 				} else {
 					continue;
 				}
