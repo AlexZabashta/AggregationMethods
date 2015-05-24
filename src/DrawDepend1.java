@@ -1,5 +1,6 @@
 import gen.FisherYatesShuffle;
 import gen.GaussGenerator;
+import gen.HyperSigmaGenerator;
 import gen.LineSigmaGenerator;
 import gen.PermutationGenerator;
 import gen.SeveralSwapsGenerator;
@@ -35,17 +36,17 @@ public class DrawDepend1 {
 	final static String res = "results" + File.separator + DrawDepend1.class.getSimpleName() + File.separator;
 
 	public static void main(String[] args) throws Exception {
+		Random rng = new Random();
 
 		int wh = 256;
 		double dwh = wh - 1;
 		int rep = 10;
 
-		int permInSet = 15;
-		int permLength = 25;
+		int permInSet = 25;
+		int permLength = 44;
 
+		PermutationGenerator permGen = new SeveralSwapsGenerator(0.98, 0.01, rng);
 		Metric mu = new CanberraDistance();
-
-		Random rng = new Random();
 
 		List<Metric> metrList = new ArrayList<Metric>();
 		metrList.add(new CanberraDistance());
@@ -61,58 +62,64 @@ public class DrawDepend1 {
 			pgl.add(new SeveralSwapsGenerator(0.9, 0.05, rng));
 		}
 
-		for (PermutationGenerator permGen : pgl) {
+		// for (PermutationGenerator permGen : pgl) {
 
-			String outFileName = permGen + "_20_50.png";
-			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen, rng);
+		String outFileName = permGen + "line2.png";
+		LineSigmaGenerator dsg = new LineSigmaGenerator(permGen, rng);
 
-			List<Aggregation> aggregations = new ArrayList<Aggregation>();
-			{
+		List<Aggregation> aggregations = new ArrayList<Aggregation>();
+		{
 
-				aggregations.add(new BordaCount());
-				aggregations.add(new PickAPerm(mu));
-				aggregations.add(new CopelandScore());
-				// aggregations.add(new Stochastic());
-			}
-
-			int m = aggregations.size();
-
-			Painter painter = new Painter(aggregations, mu);
-
-			BufferedImage canvas = new BufferedImage(wh, wh, BufferedImage.TYPE_INT_RGB);
-
-			for (int x = 0; x < wh; x++) {
-				for (int y = 0; y < wh; y++) {
-					double alpha = x / dwh, beta = y / dwh;
-					double v = 0;
-					int[] d = new int[m];
-					for (int r = 0; r < rep; r++) {
-						Permutation[] p = dsg.generate(permInSet, permLength, alpha, beta);
-
-						int c = painter.getColor(p, 0.001);
-
-						if (c == -1) {
-							continue;
-						}
-						v = Math.max(v, ++d[c]);
-					}
-
-					int color = 0;
-
-					for (int i = 0; i < m; i++) {
-						int cur = (int) (255 * d[i] / v);
-
-						color |= cur << (i * 8);
-					}
-
-					canvas.setRGB(x, y, color);
-
-				}
-				System.out.println(x);
-			}
-
-			ImageIO.write(canvas, "png", new File(res + outFileName));
-
+			aggregations.add(new BordaCount());
+			aggregations.add(new PickAPerm(mu));
+			aggregations.add(new CopelandScore());
+			// aggregations.add(new Stochastic());
 		}
+
+		int m = aggregations.size();
+
+		Painter painter = new Painter(aggregations, mu);
+
+		BufferedImage canvas = new BufferedImage(wh, wh, BufferedImage.TYPE_INT_RGB);
+
+		for (int x = 0; x < wh; x++) {
+			for (int y = 0; y <= x; y++) {
+				double alpha = x / dwh, beta = y / dwh;
+				double v = 1;
+				int[] d = new int[m];
+				for (int r = 0; r < rep; r++) {
+					Permutation[] p = dsg.generate(permInSet, permLength, alpha, beta);
+
+					int c = painter.getColor(p, 0.001);
+
+					if (c == -1) {
+						continue;
+					}
+					v = Math.max(v, ++d[c]);
+				}
+
+				int color = 0;
+
+				for (int i = 0; i < m; i++) {
+					int cur = (int) (255 * d[i] / v);
+					if (cur > 255) {
+						cur = 255;
+					}
+					if (cur < 0) {
+						cur = 0;
+					}
+					color |= cur << (i * 8);
+				}
+
+				canvas.setRGB(x, wh - y - 1, color);
+				canvas.setRGB(y, wh - x - 1, color);
+
+			}
+			System.out.println(x);
+		}
+
+		ImageIO.write(canvas, "png", new File(res + outFileName));
+
+		// }
 	}
 }
