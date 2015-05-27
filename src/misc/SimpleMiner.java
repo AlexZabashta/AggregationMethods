@@ -38,12 +38,12 @@ public class SimpleMiner implements FeatureMiner {
 
 		int fp = 0;
 
+		features[fp++] = dist.getMean();
+		features[fp++] = dist.getStandardDeviation();
 		features[fp++] = dist.getMax();
 		// features[fp++] = dist.getMin();
-		features[fp++] = dist.getMean();
 		features[fp++] = dist.getSkewness();
 		features[fp++] = dist.getKurtosis();
-		features[fp++] = dist.getStandardDeviation();
 
 		return features;
 	}

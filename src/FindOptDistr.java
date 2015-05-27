@@ -24,6 +24,7 @@ import misc.SimpleMiner;
 import perm.CanberraDistance;
 import perm.CayleyDistance;
 import perm.KendallTau;
+import perm.LAbs;
 import perm.LSquare;
 import perm.LevenshteinDistance;
 import perm.Metric;
@@ -47,7 +48,8 @@ public class FindOptDistr {
 	public static void main(String[] args) throws Exception {
 
 		int rep = 128;
-		Metric mu = new CanberraDistance();
+		// Metric mu = new CanberraDistance();
+		Metric mu = new LAbs();
 		Random rng = new Random();
 
 		int curMaxPermInSet = 20;
@@ -76,11 +78,11 @@ public class FindOptDistr {
 
 			int tmpPermInSet = rng.nextInt(25) + 5;
 			int tmpPermLength = rng.nextInt(75) + 15;
-			double tmpSigma = rng.nextDouble() * 0.8 + 0.2;
+			double tmpSigma = 0.99;
 			// double tmpSigma = rng.nextDouble() * 0.2 + 0.1;
 			double tmpMax = rep, tmpMin = 0, sum = 0;
 
-			PermutationGenerator permGen = new SeveralSwapsGenerator(tmpSigma, 0.01, rng);
+			PermutationGenerator permGen = new FisherYatesShuffle(tmpSigma, 0.01, rng);
 			LineSigmaGenerator sigmGen = new LineSigmaGenerator(permGen, rng);
 
 			int[] distr = new int[m];
@@ -109,7 +111,8 @@ public class FindOptDistr {
 				System.out.print("maxmin ");
 				System.out.printf("%.3f in %16s", curMax, Arrays.toString(distr));
 				System.out.printf(" at %2dx%2d", curMaxPermInSet, curMaxPermLength);
-				System.out.println(" " + curMaxSigma);
+				// System.out.println(" " + curMaxSigma);
+				System.out.println();
 			}
 			if (curMin > tmpMin) {
 
@@ -121,7 +124,8 @@ public class FindOptDistr {
 				System.out.print("minmax ");
 				System.out.printf("%.3f in %16s", curMin, Arrays.toString(distr));
 				System.out.printf(" at %2dx%2d", curMinPermInSet, curMinPermLength);
-				System.out.println(" " + curMinSigma);
+				// System.out.println(" " + curMinSigma);
+				System.out.println();
 			}
 
 		}

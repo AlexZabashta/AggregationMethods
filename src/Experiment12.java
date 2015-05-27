@@ -14,9 +14,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import misc.BordaMiner;
 import misc.ClassifierCollection;
+import misc.DBordaMiner;
 import misc.FeatureMiner;
 import misc.IOUtils;
+import misc.KnnClassifierCollection;
 import misc.NormalMiner;
 import misc.Painter;
 import misc.SimpleMiner;
@@ -46,24 +49,40 @@ public class Experiment12 {
 	final static String res = "results" + File.separator + Experiment12.class.getSimpleName() + File.separator;
 
 	public static void main(String[] args) throws Exception {
-		List<Classifier> classifiers = ClassifierCollection.getClassifies();
+		List<Classifier> classifiers = new ArrayList<Classifier>();
+
+		classifiers.addAll(ClassifierCollection.getClassifies());
+		// classifiers.addAll(KnnClassifierCollection.getClassifies());
 
 		int numberOfTest = 10;
 
-		int permInSet = 20;
-		int permLength = 50;
 		int tttr = 5;
 
 		int maxIter = 1000000;
-		int maxSets = 2048;
-
-		int numberOfSets = 512;
-
-		FeatureMiner simminer = new SimpleMiner();
-		FeatureMiner badMiner = new AllMiner();
-		FeatureMiner norMiner = new NormalMiner();
 
 		Metric mu = new CanberraDistance();
+		List<Aggregation> aggregations = new ArrayList<Aggregation>();
+		{
+
+			aggregations.add(new BordaCount());
+			// aggregations.add(new PickAPerm(mu));
+			// aggregations.add(new CopelandScore());
+			aggregations.add(new Stochastic());
+		}
+		int m = aggregations.size();
+		int numberOfSets = 512;
+		int maxSets = numberOfSets * m;
+
+		FeatureMiner simminer = new SimpleMiner();
+		FeatureMiner norMiner = new NormalMiner();
+		FeatureMiner badMiner = new AllMiner();
+		FeatureMiner allminer = new AllMiner();
+		FeatureMiner borminer = new BordaMiner();
+		FeatureMiner dbominer = new DBordaMiner();
+
+		// int[] fsize = new int[] { 2, simminer.length(), norMiner.length(),
+		// badMiner.length() };
+		int[] fsize = new int[] { allminer.length(), dbominer.length(), borminer.length() };
 
 		Random rng = new Random();
 
@@ -74,30 +93,35 @@ public class Experiment12 {
 		metrList.add(new CayleyDistance());
 		metrList.add(new LSquare());
 
-		List<PermutationGenerator> pgl = new ArrayList<PermutationGenerator>();
+		int nog = 3;
+		int[] permInSet = new int[nog];
+		int[] permLength = new int[nog];
+		PermutationGenerator[] permGen = new PermutationGenerator[nog];
 		{
-			pgl.add(new GaussGenerator(0.4, 0.05, rng));
-			pgl.add(new FisherYatesShuffle(0.9, 0.05, rng));
-			pgl.add(new SeveralSwapsGenerator(0.9, 0.05, rng));
+			int i = 0;
+			{
+				permInSet[i] = 20; // 18x15
+				permLength[i] = 25; // 22x33
+				permGen[i] = new FisherYatesShuffle(0.99, 0.01, rng);
+			}
+			++i;
+			{
+				permInSet[i] = 24; // 28x77
+				permLength[i] = 55; // 25x36
+				permGen[i] = new GaussGenerator(0.43, 0.01, rng);
+			}
+			++i;
+			{
+				permInSet[i] = 20; // 25x17
+				permLength[i] = 20; // 28x20
+				permGen[i] = new SeveralSwapsGenerator(0.99, 0.01, rng);
+			}
 		}
 
-		for (PermutationGenerator permGen : pgl) {
+		for (int gid = 0; gid < 1; gid++) {
 
-			String outFileName = permGen.getClass().getSimpleName() + "_20_50.txt";
-			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen, rng);
-
-			List<Aggregation> aggregations = new ArrayList<Aggregation>();
-			{
-
-				aggregations.add(new BordaCount());
-				aggregations.add(new PickAPerm(mu));
-				aggregations.add(new CopelandScore());
-				aggregations.add(new Stochastic());
-			}
-
-			int[] fsize = new int[] { simminer.length(), norMiner.length(), badMiner.length() };
-
-			int m = aggregations.size();
+			String outFileName = permGen[gid] + ".txt";
+			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[gid], rng);
 
 			Painter painter = new Painter(aggregations, mu);
 
@@ -110,8 +134,8 @@ public class Experiment12 {
 			int[] colorSize = new int[m];
 
 			for (int curIter = 0, last = 0, minSize = 0; curIter < maxIter && minSize < numberOfSets; last = minSize, curIter++) {
-				double alpha = 0.3, beta = 0.7;
-				Permutation[] p = dsg.generate(permInSet, permLength, alpha, beta);
+				double alpha = rng.nextDouble(), beta = rng.nextDouble();
+				Permutation[] p = dsg.generate(permInSet[gid], permLength[gid], alpha, beta);
 
 				int color = painter.getColor(p, 0.0023);
 
@@ -122,7 +146,9 @@ public class Experiment12 {
 				++colorSize[color];
 
 				if (features[color].size() < numberOfSets) {
-					features[color].add(new double[][] { simminer.mine(p), norMiner.mine(p), badMiner.mine(p) });
+					// features[color] .add(new double[][] { { alpha, beta },
+					// simminer.mine(p), norMiner.mine(p), badMiner.mine(p) });
+					features[color].add(new double[][] { allminer.mine(p), dbominer.mine(p), borminer.mine(p) });
 				} else {
 					continue;
 				}

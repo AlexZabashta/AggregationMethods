@@ -89,7 +89,6 @@ public class Experiment10 {
 		Painter painter = new Painter(aggregations, mu);
 
 		List<double[]>[] features = new List[m];
-
 		for (int i = 0; i < m; i++) {
 			features[i] = new ArrayList<double[]>();
 		}

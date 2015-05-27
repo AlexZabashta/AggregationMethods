@@ -31,7 +31,9 @@ import weka.attributeSelection.CfsSubsetEval;
 import weka.attributeSelection.GainRatioAttributeEval;
 import weka.attributeSelection.GreedyStepwise;
 import weka.attributeSelection.Ranker;
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
+import weka.classifiers.lazy.IBk;
 import weka.classifiers.meta.AttributeSelectedClassifier;
 import weka.classifiers.trees.J48;
 import weka.core.Attribute;
@@ -47,7 +49,7 @@ public class AttributeSelectionTest {
 
 	public static void main(String[] args) throws Exception {
 
-		int trainSetSzie = 128, testSetSize = 16;
+		int trainSetSzie = 256, testSetSize = 32;
 
 		int permInSet = 25;
 		int permLength = 25;
@@ -76,10 +78,10 @@ public class AttributeSelectionTest {
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 		{
 
-			aggregations.add(new BordaCount());
-			aggregations.add(new PickAPerm(mu));
-			aggregations.add(new CopelandScore());
-			aggregations.add(new Stochastic());
+			 aggregations.add(new BordaCount());
+			//aggregations.add(new PickAPerm(mu));
+			//aggregations.add(new CopelandScore());
+			 aggregations.add(new Stochastic());
 		}
 
 		int n = miner.length();
@@ -178,7 +180,7 @@ public class AttributeSelectionTest {
 
 		useClassifier(data);
 
-		 useFilter(data);
+		// useFilter(data);
 
 		useLowLevel(data);
 
@@ -190,12 +192,11 @@ public class AttributeSelectionTest {
 		CfsSubsetEval eval = new CfsSubsetEval();
 		GreedyStepwise search = new GreedyStepwise();
 		search.setSearchBackwards(true);
-		J48 base = new J48();
+		Classifier base = new IBk(40);
 		classifier.setClassifier(base);
 		classifier.setEvaluator(eval);
 		classifier.setSearch(search);
 
-		
 		Evaluation evaluation = new Evaluation(data);
 		evaluation.crossValidateModel(classifier, data, 10, new Random());
 		System.out.println(evaluation.toSummaryString());
@@ -205,7 +206,7 @@ public class AttributeSelectionTest {
 	 * uses the filter
 	 */
 	protected static void useFilter(Instances data) throws Exception {
-	//	System.out.println("\n2. Filter");
+		// System.out.println("\n2. Filter");
 		weka.filters.supervised.attribute.AttributeSelection filter = new weka.filters.supervised.attribute.AttributeSelection();
 		CfsSubsetEval eval = new CfsSubsetEval();
 		GreedyStepwise search = new GreedyStepwise();
@@ -214,7 +215,7 @@ public class AttributeSelectionTest {
 		filter.setSearch(search);
 		filter.setInputFormat(data);
 		Instances newData = Filter.useFilter(data, filter);
-//		System.out.println(newData);
+		// System.out.println(newData);
 	}
 
 	/**
