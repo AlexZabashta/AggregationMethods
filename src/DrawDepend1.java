@@ -39,9 +39,9 @@ public class DrawDepend1 {
 	public static void main(String[] args) throws Exception {
 		Random rng = new Random();
 
-		int wh = 64;
+		int wh = 256;
 		double dwh = wh - 1;
-		int rep = 10;
+		int rep = 16;
 
 		int n = 3;
 
@@ -51,8 +51,8 @@ public class DrawDepend1 {
 		{
 			int i = 0;
 			{
-				permInSet[i] = 22; // 18x15
-				permLength[i] = 33; // 22x33
+				permInSet[i] = 18; // 18x15
+				permLength[i] = 15; // 22x33
 				permGen[i] = new FisherYatesShuffle(0.99, 0.01, rng);
 			}
 			++i;
@@ -63,14 +63,14 @@ public class DrawDepend1 {
 			}
 			++i;
 			{
-				permInSet[i] = 28; // 25x17
-				permLength[i] = 20; // 28x20
+				permInSet[i] = 25; // 25x17
+				permLength[i] = 17; // 28x20
 				permGen[i] = new SeveralSwapsGenerator(0.99, 0.01, rng);
 			}
 		}
 
-		// Metric mu = new CanberraDistance();
-		Metric mu = new LAbs();
+		 Metric mu = new CanberraDistance();
+	//	Metric mu = new LAbs();
 
 		List<Metric> metrList = new ArrayList<Metric>();
 		metrList.add(new CanberraDistance());
@@ -87,7 +87,7 @@ public class DrawDepend1 {
 			List<Aggregation> aggregations = new ArrayList<Aggregation>();
 			{
 
-				aggregations.add(new BordaCount());
+				// aggregations.add(new BordaCount());
 				aggregations.add(new PickAPerm(mu));
 				aggregations.add(new CopelandScore());
 				// aggregations.add(new Stochastic());
@@ -115,18 +115,23 @@ public class DrawDepend1 {
 						v = Math.max(v, ++d[c]);
 					}
 
-					int color = 0;
-
-					for (int j = 0; j < m; j++) {
-						int cur = (int) (255 * d[j] / v);
-						if (cur > 255) {
-							cur = 255;
-						}
-						if (cur < 0) {
-							cur = 0;
-						}
-						color |= cur << (j * 8);
+					int rgb = (int) (255 * d[0] / v);
+					if (rgb > 255) {
+						rgb = 255;
 					}
+
+					int color = (rgb << 0) | (rgb << 8) | (rgb << 16);
+
+					// for (int j = 0; j < m; j++) {
+					// int cur = (int) (255 * d[j] / v);
+					// if (cur > 255) {
+					// cur = 255;
+					// }
+					// if (cur < 0) {
+					// cur = 0;
+					// }
+					// color |= cur << (j * 8);
+					// }
 
 					canvas.setRGB(x, wh - y - 1, color);
 					canvas.setRGB(y, wh - x - 1, color);

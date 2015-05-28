@@ -16,7 +16,6 @@ import java.util.Random;
 
 import misc.BordaMiner;
 import misc.ClassifierCollection;
-import misc.DBordaMiner;
 import misc.FeatureMiner;
 import misc.IOUtils;
 import misc.KnnClassifierCollection;
@@ -58,19 +57,19 @@ public class Experiment12 {
 
 		int tttr = 5;
 
-		int maxIter = 1000000;
+		int maxIter = 10000000;
 
 		Metric mu = new CanberraDistance();
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 		{
 
 			aggregations.add(new BordaCount());
-			// aggregations.add(new PickAPerm(mu));
-			// aggregations.add(new CopelandScore());
+			aggregations.add(new PickAPerm(mu));
+			aggregations.add(new CopelandScore());
 			aggregations.add(new Stochastic());
 		}
 		int m = aggregations.size();
-		int numberOfSets = 512;
+		int numberOfSets = 2048;
 		int maxSets = numberOfSets * m;
 
 		FeatureMiner simminer = new SimpleMiner();
@@ -78,11 +77,11 @@ public class Experiment12 {
 		FeatureMiner badMiner = new AllMiner();
 		FeatureMiner allminer = new AllMiner();
 		FeatureMiner borminer = new BordaMiner();
-		FeatureMiner dbominer = new DBordaMiner();
+		FeatureMiner dbominer = new BordaMiner();
 
-		// int[] fsize = new int[] { 2, simminer.length(), norMiner.length(),
-		// badMiner.length() };
-		int[] fsize = new int[] { allminer.length(), dbominer.length(), borminer.length() };
+		int[] fsize = new int[] { 2, norMiner.length() };
+		// int[] fsize = new int[] { allminer.length(), dbominer.length(),
+		// borminer.length() };
 
 		Random rng = new Random();
 
@@ -100,8 +99,8 @@ public class Experiment12 {
 		{
 			int i = 0;
 			{
-				permInSet[i] = 20; // 18x15
-				permLength[i] = 25; // 22x33
+				permInSet[i] = 18; // 18x15
+				permLength[i] = 15; // 22x33
 				permGen[i] = new FisherYatesShuffle(0.99, 0.01, rng);
 			}
 			++i;
@@ -112,13 +111,13 @@ public class Experiment12 {
 			}
 			++i;
 			{
-				permInSet[i] = 20; // 25x17
-				permLength[i] = 20; // 28x20
+				permInSet[i] = 25; // 25x17
+				permLength[i] = 17; // 28x20
 				permGen[i] = new SeveralSwapsGenerator(0.99, 0.01, rng);
 			}
 		}
 
-		for (int gid = 0; gid < 1; gid++) {
+		for (int gid = 0; gid < nog; gid++) {
 
 			String outFileName = permGen[gid] + ".txt";
 			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[gid], rng);
@@ -146,9 +145,9 @@ public class Experiment12 {
 				++colorSize[color];
 
 				if (features[color].size() < numberOfSets) {
-					// features[color] .add(new double[][] { { alpha, beta },
-					// simminer.mine(p), norMiner.mine(p), badMiner.mine(p) });
-					features[color].add(new double[][] { allminer.mine(p), dbominer.mine(p), borminer.mine(p) });
+					features[color].add(new double[][] { { alpha, beta }, norMiner.mine(p) });
+					// features[color].add(new double[][] { allminer.mine(p),
+					// dbominer.mine(p), borminer.mine(p) });
 				} else {
 					continue;
 				}
@@ -158,7 +157,7 @@ public class Experiment12 {
 				}
 
 				if (last < minSize) {
-					System.out.println(minSize);
+					System.out.println("E" + gid + " " + minSize);
 				}
 			}
 
@@ -177,6 +176,7 @@ public class Experiment12 {
 			}
 			System.out.println();
 			try (PrintWriter out = new PrintWriter(new File(res + outFileName))) {
+
 				int numberOfClassifiers = classifiers.size();
 				Table total = new Table(numberOfClassifiers + 1, 1 + fsize.length);
 
@@ -209,6 +209,7 @@ public class Experiment12 {
 					total.set(0, fid + 1, "Correct #" + fid);
 
 					for (int cid = 0; cid < numberOfClassifiers; cid++) {
+						double[][] cm = new double[m][m];
 						double prSum = 0, kappaSum = 0;
 
 						Classifier classifier = classifiers.get(cid);
@@ -264,6 +265,12 @@ public class Experiment12 {
 							classifier.buildClassifier(trainSet);
 							eTest.evaluateModel(classifier, testSet);
 
+							double[][] ccm = eTest.confusionMatrix();
+							for (int x = 0; x < m; x++) {
+								for (int y = 0; y < m; y++) {
+									cm[x][y] += ccm[x][y];
+								}
+							}
 							double correct = eTest.correct();
 							double incorrect = eTest.incorrect();
 
@@ -279,6 +286,8 @@ public class Experiment12 {
 							System.out.print(test);
 						}
 						System.out.println();
+
+						out.println(clName + " " + Arrays.deepToString(cm));
 
 						table.set(cid + 1, numberOfTest + 1, String.format("%4.2f", prSum / numberOfTest));
 						table.set(cid + 1, numberOfTest + 2, String.format("%5.3f", kappaSum / numberOfTest));

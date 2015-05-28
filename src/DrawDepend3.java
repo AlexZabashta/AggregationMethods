@@ -33,20 +33,20 @@ import rank.CopelandScore;
 import rank.PickAPerm;
 import rank.Stochastic;
 
-public class DrawDepend2 {
+public class DrawDepend3 {
 
-	final static String res = "results" + File.separator + DrawDepend2.class.getSimpleName() + File.separator;
+	final static String res = "results" + File.separator + DrawDepend3.class.getSimpleName() + File.separator;
 
 	public static void main(String[] args) throws Exception {
 		Random rng = new Random();
 
-		int wh = 4096;
+		int wh = 1024;
 		double dwh = wh - 1;
 
 		int n = 3;
 
-		int numberOfSets = 1024;
-		int xid = 0, yid = 4;
+		int numberOfSets = 4096;
+		int xid = 0, yid = 3;
 
 		int[] permInSet = new int[n];
 		int[] permLength = new int[n];
@@ -82,7 +82,7 @@ public class DrawDepend2 {
 		metrList.add(new CayleyDistance());
 		metrList.add(new LSquare());
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 2; i < n; i++) {
 
 			String outFileName = permGen[i] + "_" + permInSet[i] + "x" + permLength[i] + "_" + xid + "x" + yid + "_line";
 			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[i], rng);
@@ -151,7 +151,7 @@ public class DrawDepend2 {
 				}
 
 				if (last < minSize) {
-					System.out.println(minSize);
+					System.out.println("D" + i + " " + minSize);
 				}
 			}
 
