@@ -39,7 +39,7 @@ public class DrawDepend1 {
 	public static void main(String[] args) throws Exception {
 		Random rng = new Random();
 
-		int wh = 256;
+		int wh = 512;
 		double dwh = wh - 1;
 		int rep = 16;
 
@@ -69,8 +69,8 @@ public class DrawDepend1 {
 			}
 		}
 
-		 Metric mu = new CanberraDistance();
-	//	Metric mu = new LAbs();
+		Metric mu = new CanberraDistance();
+		// Metric mu = new LAbs();
 
 		List<Metric> metrList = new ArrayList<Metric>();
 		metrList.add(new CanberraDistance());

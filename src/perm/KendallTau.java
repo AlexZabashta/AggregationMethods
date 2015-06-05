@@ -15,7 +15,8 @@ public class KendallTau extends Metric {
 			inversions += d;
 		}
 
-		return 2 * inversions / size;
+		// return 2 * inversions / size;
+		return inversions;
 	}
 
 	@Override

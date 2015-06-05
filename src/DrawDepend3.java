@@ -82,9 +82,9 @@ public class DrawDepend3 {
 		metrList.add(new CayleyDistance());
 		metrList.add(new LSquare());
 
-		for (int i = 2; i < n; i++) {
+		for (int i = 0; i < n; i++) {
 
-			String outFileName = permGen[i] + "_" + permInSet[i] + "x" + permLength[i] + "_" + xid + "x" + yid + "_line";
+			String outFileName = permGen[i] + "_" + permInSet[i] + "x" + permLength[i] + "_" + xid + "x" + yid + "_line_bold";
 			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[i], rng);
 
 			List<Aggregation> aggregations = new ArrayList<Aggregation>();
@@ -155,8 +155,13 @@ public class DrawDepend3 {
 				}
 			}
 
+			int[] ox = { 0, 0, 0, 1, -1 };
+			int[] oy = { -1, 0, 1, 0, 0 };
+
 			double lx = Double.POSITIVE_INFINITY, rx = Double.NEGATIVE_INFINITY;
 			double dy = Double.POSITIVE_INFINITY, uy = Double.NEGATIVE_INFINITY;
+
+			double[] midX = new double[m], midY = new double[m];
 
 			for (List<double[]> fl : features) {
 				for (double[] fv : fl) {
@@ -177,13 +182,33 @@ public class DrawDepend3 {
 				}
 				List<double[]> fl = features[j];
 				for (double[] fv : fl) {
+					midX[j] += fv[xid];
+					midY[j] += fv[yid];
 					int x = (int) (dwh * (fv[xid] - lx) / (rx - lx));
 					int y = (int) (dwh * (fv[yid] - dy) / (uy - dy));
-					if (0 <= x && x < wh && 0 <= y && y < wh) {
-						canvas.setRGB(x, wh - y - 1, 0);
+
+					for (int offset = 0; offset < ox.length; offset++) {
+						int tx = x + ox[offset];
+						int ty = y + oy[offset];
+						if (0 <= tx && tx < wh && 0 <= ty && ty < wh) {
+							canvas.setRGB(tx, wh - ty - 1, 0);
+						}
 					}
 				}
 				ImageIO.write(canvas, "png", new File(res + outFileName + "_" + aggregations.get(j) + ".png"));
+
+				midX[j] /= numberOfSets;
+				midY[j] /= numberOfSets;
+
+				int mx = (int) (dwh * (midX[j] - lx) / (rx - lx));
+				int my = (int) (dwh * (midY[j] - dy) / (uy - dy));
+
+				for (int xy = 0; xy < wh; xy++) {
+					canvas.setRGB(mx, wh - xy - 1, 0x858585);
+					canvas.setRGB(xy, wh - my - 1, 0x858585);
+				}
+
+				ImageIO.write(canvas, "png", new File(res + outFileName + "_" + aggregations.get(j) + "_center.png"));
 			}
 
 		}

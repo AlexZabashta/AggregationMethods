@@ -11,7 +11,7 @@ public class Stochastic extends Aggregation {
 	}
 
 	private double p = 0.001;
-	public int kpow = 2;
+	public int kpow = 32;
 
 	public Permutation aggregate(Permutation[] permutations) {
 		int n = chekSizes(permutations);

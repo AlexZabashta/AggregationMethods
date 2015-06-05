@@ -72,14 +72,14 @@ public class Experiment12 {
 		int numberOfSets = 2048;
 		int maxSets = numberOfSets * m;
 
-		FeatureMiner simminer = new SimpleMiner();
-		FeatureMiner norMiner = new NormalMiner();
-		FeatureMiner badMiner = new AllMiner();
+		// FeatureMiner simminer = new SimpleMiner();
+		FeatureMiner miner = new BordaMiner();
+		// FeatureMiner badMiner = new AllMiner();
 		FeatureMiner allminer = new AllMiner();
-		FeatureMiner borminer = new BordaMiner();
-		FeatureMiner dbominer = new BordaMiner();
+		// FeatureMiner borminer = new BordaMiner();
+		// FeatureMiner dbominer = new BordaMiner();
 
-		int[] fsize = new int[] { 2, norMiner.length() };
+		int[] fsize = new int[] { allminer.length(), miner.length() };
 		// int[] fsize = new int[] { allminer.length(), dbominer.length(),
 		// borminer.length() };
 
@@ -99,27 +99,27 @@ public class Experiment12 {
 		{
 			int i = 0;
 			{
-				permInSet[i] = 18; // 18x15
-				permLength[i] = 15; // 22x33
+				permInSet[i] = 25; // 18x15
+				permLength[i] = 36; // 22x33
 				permGen[i] = new FisherYatesShuffle(0.99, 0.01, rng);
 			}
 			++i;
 			{
-				permInSet[i] = 24; // 28x77
-				permLength[i] = 55; // 25x36
+				permInSet[i] = 25; // 28x77
+				permLength[i] = 36; // 25x36
 				permGen[i] = new GaussGenerator(0.43, 0.01, rng);
 			}
 			++i;
 			{
 				permInSet[i] = 25; // 25x17
-				permLength[i] = 17; // 28x20
+				permLength[i] = 36; // 28x20
 				permGen[i] = new SeveralSwapsGenerator(0.99, 0.01, rng);
 			}
 		}
 
-		for (int gid = 0; gid < nog; gid++) {
+		for (int gid = 2; gid < nog; gid++) {
 
-			String outFileName = permGen[gid] + ".txt";
+			String outFileName = permGen[gid] + "_allminers.txt";
 			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[gid], rng);
 
 			Painter painter = new Painter(aggregations, mu);
@@ -145,7 +145,7 @@ public class Experiment12 {
 				++colorSize[color];
 
 				if (features[color].size() < numberOfSets) {
-					features[color].add(new double[][] { { alpha, beta }, norMiner.mine(p) });
+					features[color].add(new double[][] { allminer.mine(p), miner.mine(p) });
 					// features[color].add(new double[][] { allminer.mine(p),
 					// dbominer.mine(p), borminer.mine(p) });
 				} else {

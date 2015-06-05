@@ -40,13 +40,13 @@ public class DrawDepend2 {
 	public static void main(String[] args) throws Exception {
 		Random rng = new Random();
 
-		int wh = 4096;
+		int wh = 1024;
 		double dwh = wh - 1;
 
 		int n = 3;
 
-		int numberOfSets = 1024;
-		int xid = 0, yid = 4;
+		int numberOfSets = 4096;
+		int xid = 0, yid = 3;
 
 		int[] permInSet = new int[n];
 		int[] permLength = new int[n];
@@ -82,17 +82,17 @@ public class DrawDepend2 {
 		metrList.add(new CayleyDistance());
 		metrList.add(new LSquare());
 
-		for (int i = 0; i < n; i++) {
+		for (int gid = 0; gid < n; gid++) {
 
-			String outFileName = permGen[i] + "_" + permInSet[i] + "x" + permLength[i] + "_" + xid + "x" + yid + "_line";
-			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[i], rng);
+			String outFileName = permGen[gid] + "_" + permInSet[gid] + "x" + permLength[gid] + "_" + xid + "x" + yid + "_line_color_bold";
+			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[gid], rng);
 
 			List<Aggregation> aggregations = new ArrayList<Aggregation>();
 			{
 				aggregations.add(new BordaCount());
 				aggregations.add(new PickAPerm(mu));
 				aggregations.add(new CopelandScore());
-				aggregations.add(new Stochastic());
+				// aggregations.add(new Stochastic());
 			}
 
 			int m = aggregations.size();
@@ -132,7 +132,7 @@ public class DrawDepend2 {
 			}
 
 			for (int last = 0, minSize = 0; minSize < numberOfSets; last = minSize) {
-				Permutation[] p = dsg.generate(permInSet[i], permLength[i]);
+				Permutation[] p = dsg.generate(permInSet[gid], permLength[gid]);
 
 				int c = painter.getColor(p, 0.001);
 
@@ -158,6 +158,9 @@ public class DrawDepend2 {
 			double lx = Double.POSITIVE_INFINITY, rx = Double.NEGATIVE_INFINITY;
 			double dy = Double.POSITIVE_INFINITY, uy = Double.NEGATIVE_INFINITY;
 
+			int[] ox = { 0, 0, 0, 1, -1 };
+			int[] oy = { -1, 0, 1, 0, 0 };
+
 			for (List<double[]> fl : features) {
 				for (double[] fv : fl) {
 					lx = Math.min(lx, fv[xid]);
@@ -168,23 +171,27 @@ public class DrawDepend2 {
 				}
 			}
 
-			for (int j = 0; j < m; j++) {
-				BufferedImage canvas = new BufferedImage(wh, wh, BufferedImage.TYPE_INT_RGB);
-				for (int x = 0; x < wh; x++) {
-					for (int y = 0; y < wh; y++) {
-						canvas.setRGB(x, y, -1);
-					}
-				}
-				List<double[]> fl = features[j];
-				for (double[] fv : fl) {
+			BufferedImage canvas = new BufferedImage(wh, wh, BufferedImage.TYPE_INT_RGB);
+
+			for (int i = 0; i < numberOfSets; i++) {
+				for (int j = 0; j < m; j++) {
+
+					List<double[]> fl = features[j];
+					double[] fv = fl.get(i);
+
 					int x = (int) (dwh * (fv[xid] - lx) / (rx - lx));
 					int y = (int) (dwh * (fv[yid] - dy) / (uy - dy));
-					if (0 <= x && x < wh && 0 <= y && y < wh) {
-						canvas.setRGB(x, wh - y - 1, 0);
+
+					for (int offset = 0; offset < ox.length; offset++) {
+						int tx = x + ox[offset];
+						int ty = y + oy[offset];
+						if (0 <= tx && tx < wh && 0 <= ty && ty < wh) {
+							canvas.setRGB(tx, wh - ty - 1, pal[j]);
+						}
 					}
 				}
-				ImageIO.write(canvas, "png", new File(res + outFileName + "_" + aggregations.get(j) + ".png"));
 			}
+			ImageIO.write(canvas, "png", new File(res + outFileName + ".png"));
 
 		}
 	}

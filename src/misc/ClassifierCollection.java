@@ -35,7 +35,7 @@ public class ClassifierCollection {
 		classifiers.add(new DecisionTable());
 		// classifiers.add(new Decorate());
 		classifiers.add(new END());
-		// classifiers.add(new IBk());
+		classifiers.add(new IBk(24));
 		classifiers.add(new J48());
 		// classifiers.add(new KStar());
 		classifiers.add(new LogitBoost());
