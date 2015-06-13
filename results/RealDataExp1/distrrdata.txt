@@ -1,0 +1,31 @@
+Null = mid
+	CanberraDistance
+	[42812, 0, 140, 0]
+
+	KendallTau
+	[42840, 0, 112, 28]
+
+	LevenshteinDistance
+	[42896, 0, 28, 0]
+
+	CayleyDistance
+	[42728, 84, 168, 0]
+
+	LSquare
+	[42952, 0, 0, 0]
+
+Null = 0
+	CanberraDistance
+	[10794, 0, 0, 0]
+	
+	KendallTau
+	[10787, 0, 7, 0]
+	
+	LevenshteinDistance
+	[10794, 0, 0, 0]
+	
+	CayleyDistance
+	[10794, 0, 0, 0]
+	
+	LSquare
+	[10794, 0, 0, 0]
