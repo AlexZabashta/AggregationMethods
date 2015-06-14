@@ -125,7 +125,7 @@ public class RealDataExp1 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String dataPath = "data";
+		String dataPath = "data\\agg.txt";
 		List<double[][]> data = new ArrayList<>();
 
 		int permInSet = 21;
