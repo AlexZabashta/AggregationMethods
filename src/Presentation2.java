@@ -12,6 +12,7 @@ import perm.Metric;
 import perm.Permutation;
 import rank.Aggregation;
 import rank.BordaCount;
+import rank.BruteForceSearch;
 import rank.CopelandScore;
 import rank.PickAPerm;
 import rank.Stochastic;
@@ -26,29 +27,48 @@ public class Presentation2 {
 		// Permutation(0, 4, 10, 2, 1, 5, 6, 3, 8, 12, 7, 11, 9), new
 		// Permutation(4, 11, 2, 3, 0, 5, 6, 10, 9, 7, 8, 1, 12) };
 
-		Metric metric = new LevenshteinDistance();
+		int n = 9;
+		Random rnd = new Random();
 
-		// Aggregation aggregation = new CopelandScore();
+		Metric mu = new CanberraDistance();
+		Aggregation bfs = new BruteForceSearch(mu);
 
-		// System.out.println(aggregation.aggregate(p));
+		double min = 3;
 
-		
+		while (true) {
+			Permutation a = Permutation.random(n, rnd);
+			Permutation b = Permutation.random(n, rnd);
+			Permutation c = Permutation.random(n, rnd);
 
-		Permutation c = new Permutation(3, 1, 2, 4, 0);
+			boolean nc = false;
+			for (int i = 0; i < n; i++) {
+				if (a.get(i) == b.get(i) || b.get(i) == c.get(i) || c.get(i) == a.get(i)) {
+					nc = true;
+					break;
+				}
+			}
 
-		Permutation a = new Permutation(2, 4, 0, 1, 3).product(c);
-		Permutation b = c;
+			if (nc) {
+				continue;
+			}
 
-		// System.out.println(c);
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println();
+			Permutation p = bfs.aggregate(a, b, c);
 
-		Permutation t = a.product(b.invert());
+			double cur = 0;
+			cur += mu.distance(a, p);
+			cur += mu.distance(b, p);
+			cur += mu.distance(c, p);
 
-		System.out.println(t);
-		System.out.println(metric.distance(a, b));
-		System.out.println(Arrays.toString(t.toInversions()));
+			if (cur < min) {
+				min = cur;
+
+				System.out.println(a);
+				System.out.println(b);
+				System.out.println(c);
+				System.out.println(p);
+				System.out.println();
+			}
+		}
 
 	}
 }

@@ -11,6 +11,7 @@ import perm.Metric;
 import perm.Permutation;
 import rank.Aggregation;
 import rank.BordaCount;
+import rank.BruteForceSearch;
 import rank.CopelandScore;
 import rank.PickAPerm;
 import rank.Stochastic;

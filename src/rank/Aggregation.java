@@ -7,7 +7,7 @@ import perm.Permutation;
 
 public abstract class Aggregation {
 
-	public abstract Permutation aggregate(Permutation[] permutation);
+	public abstract Permutation aggregate(Permutation... permutation);
 
 	public int chekSizes(Permutation[] permutations) {
 		if (permutations.length == 0) {
