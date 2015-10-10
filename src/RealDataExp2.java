@@ -125,7 +125,7 @@ public class RealDataExp2 {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String dataPath = "data";
+		String dataPath = "data\\agg.txt";
 		List<double[][]> data = new ArrayList<>();
 		Random rng = new Random();
 		int permInSet = 21;
@@ -143,9 +143,9 @@ public class RealDataExp2 {
 		Metric mu = new CanberraDistance();
 		List<Aggregation> aggregations = new ArrayList<Aggregation>();
 		{
-
+			//aggregations.add(new PickAPerm(mu));
 			aggregations.add(new BordaCount());
-			aggregations.add(new CopelandScore());
+			//aggregations.add(new CopelandScore());
 			aggregations.add(new Stochastic());
 		}
 		int m = aggregations.size();
@@ -158,7 +158,7 @@ public class RealDataExp2 {
 		miner[2] = new BordaMiner();
 		miner[3] = new AllMiner();
 
-		String outFileName = "4miners.txt";
+		String outFileName = "part_unorm_2.txt";
 		Painter painter = new Painter(aggregations, mu);
 
 		int[] fsize = new int[miner.length];
@@ -182,7 +182,7 @@ public class RealDataExp2 {
 				p[j] = abw.aggregateByW(al[j]);
 			}
 
-			int color = painter.getColor(p, 0.0023);
+			int color = painter.getColor(p, 0.0001);
 
 			if (color == -1) {
 				continue;
@@ -281,7 +281,7 @@ public class RealDataExp2 {
 						testSet.setClassIndex(n);
 
 						for (int i = 0; i < m; i++) {
-							for (int j = 0; j < numberOfSets; j++) {
+							for (int j = 0; j < features[i].size(); j++) {
 								Instances instances = (j % tttr == 0) ? testSet : trainSet;
 								Instance instance = new Instance(n + 1);
 

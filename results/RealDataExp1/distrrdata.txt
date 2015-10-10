@@ -29,3 +29,19 @@ Null = 0
 	
 	LSquare
 	[10794, 0, 0, 0]
+
+CanberraDistance
+[210, 1166, 164]
+
+KendallTau
+[181, 1196, 163]
+
+LevenshteinDistance
+[130, 1264, 117]
+
+CayleyDistance
+[257, 1063, 186]
+
+LSquare
+[160, 988, 123]
+
