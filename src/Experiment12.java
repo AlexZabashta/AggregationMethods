@@ -69,7 +69,7 @@ public class Experiment12 {
 			aggregations.add(new Stochastic());
 		}
 		int m = aggregations.size();
-		int numberOfSets = 2048;
+		int numberOfSets = 248;
 		int maxSets = numberOfSets * m;
 
 		// FeatureMiner simminer = new SimpleMiner();
@@ -99,8 +99,8 @@ public class Experiment12 {
 		{
 			int i = 0;
 			{
-				permInSet[i] = 25; // 18x15
-				permLength[i] = 36; // 22x33
+				permInSet[i] = 7;// 25; // 18x15
+				permLength[i] = 21;// 36; // 22x33
 				permGen[i] = new FisherYatesShuffle(0.99, 0.01, rng);
 			}
 			++i;
@@ -117,7 +117,7 @@ public class Experiment12 {
 			}
 		}
 
-		for (int gid = 2; gid < nog; gid++) {
+		for (int gid = 0; gid < 1; gid++) {
 
 			String outFileName = permGen[gid] + "_allminers.txt";
 			LineSigmaGenerator dsg = new LineSigmaGenerator(permGen[gid], rng);

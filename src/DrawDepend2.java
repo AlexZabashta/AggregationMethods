@@ -45,7 +45,7 @@ public class DrawDepend2 {
 
 		int n = 3;
 
-		int numberOfSets = 4096;
+		int numberOfSets = 1024;
 		int xid = 0, yid = 3;
 
 		int[] permInSet = new int[n];

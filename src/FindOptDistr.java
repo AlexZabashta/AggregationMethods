@@ -48,8 +48,8 @@ public class FindOptDistr {
 	public static void main(String[] args) throws Exception {
 
 		int rep = 128;
-		// Metric mu = new CanberraDistance();
-		Metric mu = new LAbs();
+		Metric mu = new CanberraDistance();
+
 		Random rng = new Random();
 
 		int curMaxPermInSet = 20;
@@ -67,7 +67,7 @@ public class FindOptDistr {
 			aggregations.add(new BordaCount());
 			aggregations.add(new PickAPerm(mu));
 			aggregations.add(new CopelandScore());
-			// aggregations.add(new Stochastic());
+			aggregations.add(new Stochastic());
 		}
 
 		int m = aggregations.size();

@@ -7,7 +7,7 @@ public class BordaCount extends Aggregation {
 		public double calculate(int n);
 	}
 
-	static DecreasingFunction weigher;
+	final DecreasingFunction weigher;
 
 	public BordaCount() {
 		this(new DecreasingFunction() {
@@ -28,7 +28,7 @@ public class BordaCount extends Aggregation {
 	}
 
 	@Override
-	public Permutation aggregate(Permutation[] permutations) {
+	public Permutation aggregate(Permutation... permutations) {
 		int n = chekSizes(permutations);
 		int m = permutations.length;
 

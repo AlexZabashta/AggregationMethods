@@ -158,7 +158,7 @@ public class Permutation implements Comparable<Permutation>, Serializable {
 		int[] a = this.permutation, b = permutation.permutation, c = new int[n];
 
 		for (int i = 0; i < n; i++) {
-			c[i] = a[b[i]];
+			c[i] = b[a[i]];
 		}
 
 		return new Permutation(c);

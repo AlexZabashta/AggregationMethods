@@ -1,6 +1,5 @@
 package rank;
 
-import perm.AllPermutations;
 import perm.Metric;
 import perm.Permutation;
 
@@ -30,7 +29,7 @@ public class BruteForceSearch extends Aggregation {
 		Permutation ans = null;
 		double aDist = 2 * m;
 
-		for (Permutation p : new AllPermutations(n)) {
+		for (Permutation p = new Permutation(n); p != null; p = p.next()) {
 			double pDist = 0;
 			for (Permutation q : permutations) {
 				pDist += metric.distance(p, q);

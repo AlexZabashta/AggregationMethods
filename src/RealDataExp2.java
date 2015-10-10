@@ -145,7 +145,7 @@ public class RealDataExp2 {
 		{
 			//aggregations.add(new PickAPerm(mu));
 			aggregations.add(new BordaCount());
-			//aggregations.add(new CopelandScore());
+			aggregations.add(new CopelandScore());
 			aggregations.add(new Stochastic());
 		}
 		int m = aggregations.size();
