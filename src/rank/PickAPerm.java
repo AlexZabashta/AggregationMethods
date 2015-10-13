@@ -1,46 +1,42 @@
 package rank;
 
-import perm.Metric;
+import perm.Disagreement;
 import perm.Permutation;
 
 public class PickAPerm extends Aggregation {
 
-	private Metric metric;
+	private final LossFunction lossFunction;
 
-	public PickAPerm(Metric metric) {
-		this.metric = metric;
+	public PickAPerm(LossFunction lossFunction) {
+		this.lossFunction = lossFunction;
 	}
 
 	@Override
-	public String toString() {
-		return "PickAPerm (" + metric + ")";
-	}
+	public Permutation aggregate(Disagreement disagreement) {
+		int n = disagreement.permutationLength;
 
-	@Override
-	public Permutation aggregate(Permutation[] permutations) {
-		int n = chekSizes(permutations);
-		int m = permutations.length;
-
-		if (n < 2) {
+		if (disagreement.size == 0 || n < 2) {
 			return new Permutation(n);
 		}
-		double[] w = new double[n];
 
 		Permutation ans = null;
-		double aDist = 2 * m;
+		double cur = 1;
 
-		for (Permutation p : permutations) {
-			double pDist = 0;
-			for (Permutation q : permutations) {
-				pDist += metric.distance(p, q);
-			}
-			if (ans == null || pDist < aDist) {
-				aDist = pDist;
+		for (Permutation p : disagreement) {
+			double tmp = lossFunction.getLoss(p, disagreement);
+
+			if (ans == null || tmp < cur) {
+				cur = tmp;
 				ans = p;
 			}
 		}
 
 		return ans;
+
 	}
 
+	@Override
+	public String toString() {
+		return "PickAPerm (" + lossFunction + ")";
+	}
 }

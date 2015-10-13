@@ -1,46 +1,42 @@
 package rank;
 
-import perm.Metric;
+import perm.Disagreement;
 import perm.Permutation;
 
 public class BruteForceSearch extends Aggregation {
 
-	private Metric metric;
+	private final LossFunction lossFunction;
 
-	public BruteForceSearch(Metric metric) {
-		this.metric = metric;
+	public BruteForceSearch(LossFunction lossFunction) {
+		this.lossFunction = lossFunction;
 	}
 
 	@Override
-	public String toString() {
-		return "PickAPerm (" + metric + ")";
-	}
+	public Permutation aggregate(Disagreement disagreement) {
+		int n = disagreement.permutationLength;
 
-	@Override
-	public Permutation aggregate(Permutation[] permutations) {
-		int n = chekSizes(permutations);
-		int m = permutations.length;
-
-		if (n < 2) {
+		if (disagreement.size == 0 || n < 2) {
 			return new Permutation(n);
 		}
-		double[] w = new double[n];
-
+		
 		Permutation ans = null;
-		double aDist = 2 * m;
+		double cur = 1;
 
 		for (Permutation p = new Permutation(n); p != null; p = p.next()) {
-			double pDist = 0;
-			for (Permutation q : permutations) {
-				pDist += metric.distance(p, q);
-			}
-			if (ans == null || pDist < aDist) {
-				aDist = pDist;
+			double tmp = lossFunction.getLoss(p, disagreement);
+
+			if (ans == null || tmp < cur) {
+				cur = tmp;
 				ans = p;
 			}
 		}
 
 		return ans;
+
 	}
 
+	@Override
+	public String toString() {
+		return "BruteForceSearch (" + lossFunction + ")";
+	}
 }

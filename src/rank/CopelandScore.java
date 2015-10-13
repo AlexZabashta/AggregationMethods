@@ -1,26 +1,20 @@
 package rank;
 
-import java.util.Arrays;
-
+import perm.Disagreement;
 import perm.Permutation;
 
 public class CopelandScore extends Aggregation {
-	@Override
-	public String toString() {
-		return "CopelandScore";
-	}
+	public Permutation aggregate(Disagreement disagreement) {
+		int n = disagreement.permutationLength;
+		int m = disagreement.size;
 
-	public Permutation aggregate(Permutation[] permutations) {
-		int n = chekSizes(permutations);
-		int m = permutations.length;
-
-		if (n < 2) {
+		if (disagreement.size == 0 || n < 2) {
 			return new Permutation(n);
 		}
 
 		Permutation[] invper = new Permutation[m];
 		for (int i = 0; i < m; i++) {
-			invper[i] = permutations[i].invert();
+			invper[i] = disagreement.get(i).invert();
 		}
 
 		int[][] v = new int[n][n], l = new int[n][n];
@@ -52,6 +46,11 @@ public class CopelandScore extends Aggregation {
 			}
 		}
 
-		return aggregateByW(weigh);
+		return aggregateByWeights(weigh);
+	}
+
+	@Override
+	public String toString() {
+		return "CopelandScore";
 	}
 }

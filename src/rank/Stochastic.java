@@ -1,29 +1,24 @@
 package rank;
 
-import java.util.Arrays;
-
+import perm.Disagreement;
 import perm.Permutation;
 
 public class Stochastic extends Aggregation {
-	@Override
-	public String toString() {
-		return "Stochastic";
-	}
-
-	private double p = 0.001;
 	public int kpow = 32;
 
-	public Permutation aggregate(Permutation[] permutations) {
-		int n = chekSizes(permutations);
-		int m = permutations.length;
+	private double p = 0.001;
+	@Override
+	public Permutation aggregate(Disagreement disagreement) {
+		int n = disagreement.permutationLength;
+		int m = disagreement.size;
 
-		if (n < 2) {
+		if (disagreement.size == 0 || n < 2) {
 			return new Permutation(n);
 		}
 
 		Permutation[] invper = new Permutation[m];
 		for (int i = 0; i < m; i++) {
-			invper[i] = permutations[i].invert();
+			invper[i] = disagreement.get(i).invert();
 		}
 
 		double[][] markovChain = new double[n][n];
@@ -59,23 +54,7 @@ public class Stochastic extends Aggregation {
 			}
 		}
 
-		return aggregateByW(weigh);
-	}
-
-	double[][] superPow(double[][] a, int m) {
-		int n = a.length;
-
-		double[][] b = new double[n][n], c;
-
-		while (--m >= 0) {
-			fillBySquare(b, a);
-			c = b;
-			b = a;
-			a = c;
-		}
-
-		return a;
-
+		return aggregateByWeights(weigh);
 	}
 
 	void fillBySquare(double[][] d, double[][] s) {
@@ -124,5 +103,26 @@ public class Stochastic extends Aggregation {
 		}
 
 		return b;
+	}
+
+	double[][] superPow(double[][] a, int m) {
+		int n = a.length;
+
+		double[][] b = new double[n][n], c;
+
+		while (--m >= 0) {
+			fillBySquare(b, a);
+			c = b;
+			b = a;
+			a = c;
+		}
+
+		return a;
+
+	}
+
+	@Override
+	public String toString() {
+		return "Stochastic";
 	}
 }

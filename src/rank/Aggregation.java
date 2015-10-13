@@ -3,28 +3,13 @@ package rank;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import perm.Disagreement;
 import perm.Permutation;
 
 public abstract class Aggregation {
 
-	public abstract Permutation aggregate(Permutation... permutation);
-
-	public int chekSizes(Permutation[] permutations) {
-		if (permutations.length == 0) {
-			throw new IllegalArgumentException("Array of permutations is empty.");
-		}
-
-		int n = permutations[0].length();
-		for (int i = 1; i < permutations.length; i++) {
-			if (permutations[i].length() != n) {
-				throw new IllegalArgumentException("Perementation[" + i + "] lenght != " + n);
-			}
-		}
-		return n;
-	}
-
-	public Permutation aggregateByW(final double[] weigh) {
-		int n = weigh.length;
+	public static Permutation aggregateByWeights(final double[] weighs) {
+		int n = weighs.length;
 
 		Integer[] order = new Integer[n];
 		for (int i = 0; i < n; i++) {
@@ -33,7 +18,7 @@ public abstract class Aggregation {
 		Arrays.sort(order, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer i, Integer j) {
-				return Double.compare(weigh[j], weigh[i]);
+				return Double.compare(weighs[j], weighs[i]);
 			}
 		});
 
@@ -41,4 +26,9 @@ public abstract class Aggregation {
 
 	}
 
+	public abstract Permutation aggregate(Disagreement disagreement);
+
+	public final Permutation aggregate(Permutation... permutations) {
+		return aggregate(new Disagreement(permutations));
+	}
 }

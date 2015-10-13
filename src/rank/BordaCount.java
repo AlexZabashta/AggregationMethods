@@ -1,5 +1,6 @@
 package rank;
 
+import perm.Disagreement;
 import perm.Permutation;
 
 public class BordaCount extends Aggregation {
@@ -18,32 +19,32 @@ public class BordaCount extends Aggregation {
 		});
 	}
 
-	@Override
-	public String toString() {
-		return "BordaCount";
-	}
-
 	public BordaCount(DecreasingFunction weigher) {
 		this.weigher = weigher;
 	}
 
 	@Override
-	public Permutation aggregate(Permutation... permutations) {
-		int n = chekSizes(permutations);
-		int m = permutations.length;
+	public Permutation aggregate(Disagreement disagreement) {
+		int n = disagreement.permutationLength;
 
-		if (n < 2) {
+		if (disagreement.size == 0 || n < 2) {
 			return new Permutation(n);
 		}
+
 		double[] w = new double[n];
 
-		for (Permutation p : permutations) {
+		for (Permutation p : disagreement) {
 			for (int i = 0; i < n; i++) {
 				w[p.get(i)] += weigher.calculate(i);
 			}
 		}
 
-		return aggregateByW(w);
+		return aggregateByWeights(w);
+	}
+
+	@Override
+	public String toString() {
+		return "BordaCount(" + weigher.getClass().getSimpleName() + ")";
 	}
 
 }
