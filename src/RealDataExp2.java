@@ -179,7 +179,7 @@ public class RealDataExp2 {
 		for (double[][] al : data) {
 			Permutation[] p = new Permutation[permInSet];
 			for (int j = 0; j < permInSet; j++) {
-				p[j] = abw.aggregateByW(al[j]);
+				p[j] = abw.aggregateByWeights(al[j]);
 			}
 
 			int color = painter.getColor(p, 0.0001);

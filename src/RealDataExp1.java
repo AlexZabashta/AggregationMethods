@@ -186,7 +186,7 @@ public class RealDataExp1 {
 					}
 				}
 
-				p[j] = abw.aggregateByW(w);
+				p[j] = abw.aggregateByWeights(w);
 			}
 
 			dataSet.add(p);
