@@ -1,18 +1,17 @@
 package gen;
 
+import java.util.Arrays;
 import java.util.Random;
 
+import perm.Disagreement;
 import perm.Permutation;
 
-public class LineSigmaGenerator implements DataSetsGenerator {
+public class LineSigmaGenerator implements DisagreementsGenerator {
 
-	public String toString() {
-		return "SameSigmaGenerator(" + rpg + ")";
-	}
+	private final double[] hidenValues;
 
-	PermutationGenerator rpg;
 	Random rng;
-
+	PermutationGenerator rpg;
 	public LineSigmaGenerator(PermutationGenerator rpg) {
 		this(rpg, new Random());
 	}
@@ -20,23 +19,33 @@ public class LineSigmaGenerator implements DataSetsGenerator {
 	public LineSigmaGenerator(PermutationGenerator rpg, Random rng) {
 		this.rpg = rpg;
 		this.rng = rng;
+		hidenValues = rpg.hidenValues();
 	}
 
 	@Override
-	public Permutation[] generate(int permutationsInSet, int permutationLength) {
+	public Disagreement generate(int permutationsInSet, int permutationLength) {
 		return generate(permutationsInSet, permutationLength, rng.nextDouble(), rng.nextDouble());
 	}
 
-	public Permutation[] generate(int permutationsInSet, int permutationLength, double alpha, double beta) {
+	public Disagreement generate(int permutationsInSet, int permutationLength, double alpha, double beta) {
 
 		double delta = (beta - alpha) / (permutationsInSet - 1);
 
-		Permutation[] dataSet = new Permutation[permutationsInSet];
+		Permutation[] permutations = new Permutation[permutationsInSet];
 		for (int i = 0; i < permutationsInSet; i++) {
-			dataSet[i] = rpg.generate(permutationLength, alpha + i * delta);
+			permutations[i] = rpg.generate(permutationLength, alpha + i * delta);
 		}
 
-		return dataSet;
+		double[] hv = Arrays.copyOf(hidenValues, hidenValues.length + 3);
+		hv[hv.length - 3] = 1;
+		hv[hv.length - 2] = alpha;
+		hv[hv.length - 1] = beta;
+
+		return new Disagreement(hv, permutations);
+	}
+
+	public String toString() {
+		return "SameSigmaGenerator(" + rpg + ")";
 	}
 
 }

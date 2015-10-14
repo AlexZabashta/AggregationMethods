@@ -1,35 +1,35 @@
 package gen;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
 import misc.MinCostFlow;
 import misc.MinCostFlow.Edge;
+import perm.Disagreement;
 import perm.Metric;
 import perm.Permutation;
 
 public class ClusterGenerator extends BufferedGenerator {
 
-	@Override
-	public String toString() {
-		return "ClusterGenerator(" + metric + "_" + rpg + ")";
-	}
-
-	private PermutationGenerator rpg;
+	private final double[] hidenValues;
 	private Metric metric;
+	private PermutationGenerator rpg;
+	private double sigma = 1;
 
 	public ClusterGenerator(Metric metric, PermutationGenerator rpg, int bufferSize) {
 		super(bufferSize);
 		this.metric = metric;
 		this.rpg = rpg;
+		hidenValues = rpg.hidenValues();
 	}
 
-	public void fillBuffer(int permutationsInSet, int permutationLength, Stack<Permutation[]> buffer, int bufferSize) {
+	public void fillBuffer(int permutationsInSet, int permutationLength, Stack<Disagreement> buffer, int bufferSize) {
 		int[] size = new int[bufferSize];
 		Permutation[][] p = new Permutation[bufferSize][permutationsInSet];
 
 		for (int i = 0; i < bufferSize; i++) {
-			p[i][0] = rpg.generate(permutationLength, 0.73);
+			p[i][0] = rpg.generate(permutationLength, sigma);
 			size[i] = 1;
 		}
 
@@ -37,7 +37,7 @@ public class ClusterGenerator extends BufferedGenerator {
 
 		Permutation[] free = new Permutation[m];
 		for (int i = 0; i < m; i++) {
-			free[i] = rpg.generate(permutationLength, 0.73);
+			free[i] = rpg.generate(permutationLength, sigma);
 		}
 
 		int start = 0, finish = bufferSize + m + 1;
@@ -64,9 +64,20 @@ public class ClusterGenerator extends BufferedGenerator {
 					p[i][size[i]++] = free[edge.to - 1 - bufferSize];
 				}
 			}
-			buffer.add(p[i]);
+
+			double[] hv = Arrays.copyOf(hidenValues, hidenValues.length + 3);
+			hv[hv.length - 3] = 3.0;
+			hv[hv.length - 2] = sigma;
+			hv[hv.length - 1] = bufferSize;
+
+			buffer.add(new Disagreement(hv, p[i]));
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return "ClusterGenerator(" + metric + ", " + rpg + ")";
 	}
 
 }

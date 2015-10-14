@@ -1,18 +1,15 @@
 package gen;
 
+import java.util.Locale;
 import java.util.Random;
+
 import perm.Permutation;
 
 public class FisherYatesShuffle implements PermutationGenerator {
 
-	@Override
-	public String toString() {
-		return "FisherYatesShuffle";
-	}
-
 	Random rng;
-	double scale, offset;
 
+	double scale, offset;
 	public FisherYatesShuffle() {
 		this(new Random());
 	}
@@ -21,14 +18,14 @@ public class FisherYatesShuffle implements PermutationGenerator {
 		this(scale, offset, new Random());
 	}
 
-	public FisherYatesShuffle(Random rng) {
-		this(1.0, 0.0, rng);
-	}
-
 	public FisherYatesShuffle(double scale, double offset, Random rng) {
 		this.rng = rng;
 		this.scale = scale;
 		this.offset = offset;
+	}
+
+	public FisherYatesShuffle(Random rng) {
+		this(1.0, 0.0, rng);
 	}
 
 	public Permutation generate(int length, double sigma) {
@@ -47,4 +44,12 @@ public class FisherYatesShuffle implements PermutationGenerator {
 		return new Permutation(permutation);
 	}
 
+	public double[] hidenValues() {
+		return new double[] { 0, scale, offset };
+	}
+
+	@Override
+	public String toString() {
+		return String.format(Locale.ENGLISH, "FisherYatesShuffle(%.2f, %.2f)", scale, offset);
+	}
 }

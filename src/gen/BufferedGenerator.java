@@ -2,22 +2,21 @@ package gen;
 
 import java.util.Stack;
 
-import perm.Permutation;
+import perm.Disagreement;
 
-public abstract class BufferedGenerator implements DataSetsGenerator {
+public abstract class BufferedGenerator implements DisagreementsGenerator {
 
+	private Stack<Disagreement> buffer = new Stack<Disagreement>();
+
+	private int bufferSize = 32;
+	private int permutationsInSet, permutationLength;
 	public BufferedGenerator(int bufferSize) {
 		this.bufferSize = bufferSize;
 	}
 
-	private int bufferSize = 32;
-	private int permutationsInSet, permutationLength;
-	private Stack<Permutation[]> buffer = new Stack<Permutation[]>();
+	public abstract void fillBuffer(int permutationsInSet, int permutationLength, Stack<Disagreement> buffer, int bufferSize);
 
-	public abstract void fillBuffer(int permutationsInSet, int permutationLength, Stack<Permutation[]> buffer, int bufferSize);
-
-	public Permutation[] generate(int permutationsInSet, int permutationLength) {
-
+	public Disagreement generate(int permutationsInSet, int permutationLength) {
 		if (buffer.isEmpty() || this.permutationLength != permutationLength || this.permutationsInSet != permutationsInSet) {
 			this.permutationLength = permutationLength;
 			this.permutationsInSet = permutationsInSet;

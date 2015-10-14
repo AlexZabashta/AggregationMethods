@@ -4,4 +4,6 @@ import perm.Permutation;
 
 public interface PermutationGenerator {
 	public Permutation generate(int permutationLength, double sigma);
+
+	public double[] hidenValues();
 }

@@ -4,27 +4,26 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
 
+import perm.Disagreement;
 import perm.Metric;
 import perm.Permutation;
 
-public class LineGenerator extends BufferedGenerator {
+public class LinerGenerator extends BufferedGenerator {
 
-	@Override
-	public String toString() {
-		return "LineGenerator(" + metric + "_" + rpg + ")";
-	}
+	private final double[] hidenValues;
 
 	private Metric metric;
 	private PermutationGenerator rpg;
-
-	public LineGenerator(Metric metric, PermutationGenerator rpg, int bufferSize) {
+	private double sigma = 1;
+	public LinerGenerator(Metric metric, PermutationGenerator rpg, int bufferSize) {
 		super(bufferSize);
 		this.metric = metric;
 		this.rpg = rpg;
+		hidenValues = rpg.hidenValues();
 	}
 
 	@Override
-	public void fillBuffer(int permutationsInSet, int permutationLength, Stack<Permutation[]> buffer, int bufferSize) {
+	public void fillBuffer(int permutationsInSet, int permutationLength, Stack<Disagreement> buffer, int bufferSize) {
 
 		int n = permutationsInSet * bufferSize;
 		final Permutation[] free = new Permutation[n];
@@ -32,7 +31,7 @@ public class LineGenerator extends BufferedGenerator {
 		final Integer[] order = new Integer[n];
 
 		for (int i = 0; i < n; i++) {
-			free[i] = rpg.generate(permutationLength, 0.73);
+			free[i] = rpg.generate(permutationLength, sigma);
 			dist[i] = metric.distance(free[0], free[i]);
 			order[i] = i;
 		}
@@ -49,8 +48,18 @@ public class LineGenerator extends BufferedGenerator {
 			for (int k = 0; k < permutationsInSet; k++, j++) {
 				p[k] = free[order[j]];
 			}
-			buffer.add(p);
+			double[] hv = Arrays.copyOf(hidenValues, hidenValues.length + 3);
+			hv[hv.length - 3] = 4.0;
+			hv[hv.length - 2] = sigma;
+			hv[hv.length - 1] = bufferSize;
+
+			buffer.add(new Disagreement(hv, p));
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return "LineGenerator(" + metric + ", " + rpg + ")";
 	}
 }

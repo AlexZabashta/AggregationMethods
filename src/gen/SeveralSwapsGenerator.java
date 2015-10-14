@@ -1,17 +1,14 @@
 package gen;
 
+import java.util.Locale;
 import java.util.Random;
 import perm.Permutation;
 
 public class SeveralSwapsGenerator implements PermutationGenerator {
 
-	public String toString() {
-		return "SeveralSwapsGenerator";
-	}
-
 	Random rng;
-	double scale, offset;
 
+	double scale, offset;
 	public SeveralSwapsGenerator() {
 		this(new Random());
 	}
@@ -20,14 +17,14 @@ public class SeveralSwapsGenerator implements PermutationGenerator {
 		this(scale, offset, new Random());
 	}
 
-	public SeveralSwapsGenerator(Random rng) {
-		this(1.0, 0.0, rng);
-	}
-
 	public SeveralSwapsGenerator(double scale, double offset, Random rng) {
 		this.rng = rng;
 		this.scale = scale;
 		this.offset = offset;
+	}
+
+	public SeveralSwapsGenerator(Random rng) {
+		this(1.0, 0.0, rng);
 	}
 
 	public Permutation generate(int length, double sigma) {
@@ -42,5 +39,14 @@ public class SeveralSwapsGenerator implements PermutationGenerator {
 			Permutation.swap(permutation, rng.nextInt(length), rng.nextInt(length));
 		}
 		return new Permutation(permutation);
+	}
+
+	public double[] hidenValues() {
+		return new double[] { 1, scale, offset };
+	}
+
+	@Override
+	public String toString() {
+		return String.format(Locale.ENGLISH, "SeveralSwapsGenerator(%.2f, %.2f)", scale, offset);
 	}
 }
