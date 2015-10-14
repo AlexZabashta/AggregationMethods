@@ -6,24 +6,34 @@ public class StatisticalValue implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	double eps = 1e-9;
+
 	private double min = Double.POSITIVE_INFINITY;
 	private double max = Double.NEGATIVE_INFINITY;
 	private double sum0, sum1, sum2, sum3, sum4;
 
 	public void add(double d) {
+		add(d, 1.0);
+	}
+
+	public void add(double d, double scale) {
+		if (scale < 2 * eps) {
+			throw new IllegalArgumentException("The scale  too small.");
+		}
+
 		min = Math.min(min, d);
 		max = Math.max(max, d);
 
 		double val = 1.0;
-		sum0 += val;
+		sum0 += val * scale;
 		val *= d;
-		sum1 += val;
+		sum1 += val * scale;
 		val *= d;
-		sum2 += val;
+		sum2 += val * scale;
 		val *= d;
-		sum3 += val;
+		sum3 += val * scale;
 		val *= d;
-		sum4 += val;
+		sum4 += val * scale;
 	}
 
 	public void add(StatisticalValue sVal) {
@@ -71,7 +81,7 @@ public class StatisticalValue implements Serializable {
 
 	public double getRawMoment(int momentNumber) {
 		try {
-			if (sum0 < 1) {
+			if (sum0 < eps) {
 				return 0.0;
 			} else {
 				return getSumOfPows(momentNumber) / sum0;
@@ -82,7 +92,7 @@ public class StatisticalValue implements Serializable {
 	}
 
 	public double getCentralMoment(int momentNumber) {
-		if (sum0 < 1 || momentNumber == 0 || momentNumber == 1) {
+		if (sum0 < eps || momentNumber == 0 || momentNumber == 1) {
 			return 0.0;
 		}
 

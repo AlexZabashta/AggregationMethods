@@ -1,8 +1,8 @@
 import gen.ClusterGenerator;
-import gen.DataSetsGenerator;
+import gen.DisagreementsGenerator;
 import gen.FisherYatesShuffle;
 import gen.GaussGenerator;
-import gen.LineGenerator;
+import gen.LinerGenerator;
 import gen.PermutationGenerator;
 import gen.SameSigmaGenerator;
 import gen.SeveralSwapsGenerator;
@@ -58,14 +58,14 @@ public class Main {
 			permGenList.add(new SeveralSwapsGenerator(0.83, 0.05, rng));
 		}
 
-		List<DataSetsGenerator> dataGenList = new ArrayList<DataSetsGenerator>();
+		List<DisagreementsGenerator> dataGenList = new ArrayList<DisagreementsGenerator>();
 		{
 
 			for (PermutationGenerator permGen : permGenList) {
 				dataGenList.add(new SameSigmaGenerator(permGen, rng));
 
 				for (Metric metric : metrList) {
-					dataGenList.add(new LineGenerator(metric, permGen, 2048));
+					dataGenList.add(new LinerGenerator(metric, permGen, 2048));
 					dataGenList.add(new ClusterGenerator(metric, permGen, 64));
 				}
 			}
@@ -84,7 +84,7 @@ public class Main {
 
 		Painter painter = new Painter(aggregations, mu);
 
-		for (DataSetsGenerator dsg : dataGenList) {
+		for (DisagreementsGenerator dsg : dataGenList) {
 
 			int[] colorSize = new int[m];
 			for (int curIter = 0; curIter < maxIter; curIter++) {

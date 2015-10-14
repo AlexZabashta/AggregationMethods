@@ -10,6 +10,7 @@ public abstract class BufferedGenerator implements DisagreementsGenerator {
 
 	private int bufferSize = 32;
 	private int permutationsInSet, permutationLength;
+
 	public BufferedGenerator(int bufferSize) {
 		this.bufferSize = bufferSize;
 	}

@@ -15,6 +15,7 @@ public class LinerGenerator extends BufferedGenerator {
 	private Metric metric;
 	private PermutationGenerator rpg;
 	private double sigma = 1;
+
 	public LinerGenerator(Metric metric, PermutationGenerator rpg, int bufferSize) {
 		super(bufferSize);
 		this.metric = metric;
@@ -51,7 +52,7 @@ public class LinerGenerator extends BufferedGenerator {
 			double[] hv = Arrays.copyOf(hidenValues, hidenValues.length + 3);
 			hv[hv.length - 3] = 4.0;
 			hv[hv.length - 2] = sigma;
-			hv[hv.length - 1] = bufferSize;
+			hv[hv.length - 1] = (1.0 * buffer.size()) / bufferSize;
 
 			buffer.add(new Disagreement(hv, p));
 		}

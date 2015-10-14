@@ -68,7 +68,7 @@ public class ClusterGenerator extends BufferedGenerator {
 			double[] hv = Arrays.copyOf(hidenValues, hidenValues.length + 3);
 			hv[hv.length - 3] = 3.0;
 			hv[hv.length - 2] = sigma;
-			hv[hv.length - 1] = bufferSize;
+			hv[hv.length - 1] = (1.0 * buffer.size()) / bufferSize;
 
 			buffer.add(new Disagreement(hv, p[i]));
 		}

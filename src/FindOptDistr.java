@@ -1,9 +1,9 @@
 import gen.ClusterGenerator;
-import gen.DataSetsGenerator;
+import gen.DisagreementsGenerator;
 import gen.FisherYatesShuffle;
 import gen.GaussGenerator;
 import gen.HyperSigmaGenerator;
-import gen.LineGenerator;
+import gen.LinerGenerator;
 import gen.LineSigmaGenerator;
 import gen.PermutationGenerator;
 import gen.SameSigmaGenerator;

@@ -1,6 +1,6 @@
-import gen.DataSetsGenerator;
+import gen.DisagreementsGenerator;
 import gen.FisherYatesShuffle;
-import gen.LineGenerator;
+import gen.LinerGenerator;
 import gen.PermutationGenerator;
 
 import java.security.AllPermission;
