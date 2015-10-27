@@ -16,7 +16,13 @@ public class BordaCount extends Aggregation {
 			public double calculate(int n) {
 				return -n;
 			}
+
+			@Override
+			public String toString() {
+				return "liner";
+			}
 		});
+
 	}
 
 	public BordaCount(DecreasingFunction weigher) {

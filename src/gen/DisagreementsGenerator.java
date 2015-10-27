@@ -3,5 +3,6 @@ package gen;
 import perm.Disagreement;
 
 public interface DisagreementsGenerator {
-	Disagreement generate(int permutationsInSet, int permutationLength);
+	public Disagreement generate(int permutationsInSet, int permutationLength);
+
 }

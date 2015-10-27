@@ -15,7 +15,7 @@ import perm.Permutation;
 import rank.Aggregation;
 import rank.BordaCount;
 
-public class BordaMiner implements FeatureMiner {
+public class BordaMiner {
 
 	private static final int m = 48;
 

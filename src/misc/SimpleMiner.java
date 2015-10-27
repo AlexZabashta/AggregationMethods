@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import perm.CanberraDistance;
+import perm.Disagreement;
 import perm.LAbs;
 import perm.LMax;
 import perm.LSquare;
@@ -12,8 +13,28 @@ import perm.CayleyDistance;
 import perm.KendallTau;
 import perm.LevenshteinDistance;
 import perm.Permutation;
+import weka.core.Attribute;
+import weka.core.Instance;
 
-public class SimpleMiner implements FeatureMiner {
+public class SimpleMiner extends AttributeMiner {
+
+	public Metric[] metric;
+	public Attribute[][] attribute;
+
+	public SimpleMiner(List<Metric> metrics) {
+		metric = metrics.toArray(new Metric[0]);
+		attribute = new Attribute[metric.length][6];
+
+		for (int i = 0; i < attribute.length; i++) {
+			String name = metric[i].toString();
+			attribute[i][0] = new Attribute(name + "Min");
+			attribute[i][1] = new Attribute(name + "Max");
+			attribute[i][2] = new Attribute(name + "Mean");
+			attribute[i][3] = new Attribute(name + "StandardDeviation");
+			attribute[i][4] = new Attribute(name + "Skewness");
+			attribute[i][5] = new Attribute(name + "Kurtosis");
+		}
+	}
 
 	private static final int m = 5;
 
@@ -50,6 +71,43 @@ public class SimpleMiner implements FeatureMiner {
 
 	public int length() {
 		return m;
+	}
+
+	@Override
+	public ArrayList<Attribute> getAttributes() {
+		ArrayList<Attribute> attributes = new ArrayList<>();
+		for (Attribute[] subArray : attribute) {
+			for (Attribute a : subArray) {
+				attributes.add(a);
+			}
+		}
+		return attributes;
+	}
+
+	@Override
+	public void mine(Instance instance, Disagreement disagreement) {
+		StatisticalValue[] val = new StatisticalValue[metric.length];
+
+		for (int i = 0; i < val.length; i++) {
+			val[i] = new StatisticalValue();
+		}
+
+		for (Permutation p : disagreement) {
+			for (Permutation q : disagreement) {
+				for (int i = 0; i < metric.length; i++) {
+					val[i].add(metric[i].distance(p, q));
+				}
+			}
+		}
+
+		for (int i = 0; i < metric.length; i++) {
+			instance.setValue(attribute[i][0], val[i].getMin());
+			instance.setValue(attribute[i][1], val[i].getMax());
+			instance.setValue(attribute[i][2], val[i].getMean());
+			instance.setValue(attribute[i][3], val[i].getStandardDeviation());
+			instance.setValue(attribute[i][4], val[i].getSkewness());
+			instance.setValue(attribute[i][5], val[i].getKurtosis());
+		}
 	}
 
 }

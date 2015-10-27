@@ -37,6 +37,6 @@ public class BruteForceSearch extends Aggregation {
 
 	@Override
 	public String toString() {
-		return "BruteForceSearch (" + lossFunction + ")";
+		return "BruteForceSearch(" + lossFunction + ")";
 	}
 }

@@ -13,7 +13,7 @@ import perm.KendallTau;
 import perm.LevenshteinDistance;
 import perm.Permutation;
 
-public class NormalMiner implements FeatureMiner {
+public class NormalMiner {
 
 	private static final int m = 24;
 

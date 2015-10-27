@@ -37,6 +37,6 @@ public class PickAPerm extends Aggregation {
 
 	@Override
 	public String toString() {
-		return "PickAPerm (" + lossFunction + ")";
+		return "PickAPerm(" + lossFunction + ")";
 	}
 }

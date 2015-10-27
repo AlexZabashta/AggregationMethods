@@ -3,7 +3,7 @@ package perm;
 public class LSquare extends Metric {
 
 	public double distance(int i, int j) {
-		return Math.abs(i - j) / (i + j + 1.0);
+		return Math.abs(i - j);
 	}
 
 	@Override
