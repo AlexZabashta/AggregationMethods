@@ -1,61 +1,21 @@
-import gen.DisagreementsGenerator;
-import gen.FisherYatesShuffle;
-import gen.LineSigmaGenerator;
-import gen.PermutationGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import misc.AttributeMiner;
-import misc.ClassMiner;
-import misc.ClassifierCollection;
-import misc.FastMiner;
-import misc.SimpleMiner;
-
-import perm.CanberraDistance;
-import perm.CayleyDistance;
-import perm.Disagreement;
-import perm.KendallTau;
-import perm.LAbs;
-import perm.LMax;
-import perm.LSquare;
-import perm.LevenshteinDistance;
-import perm.Metric;
-import rank.Aggregation;
-import rank.AverageLoss;
-import rank.BordaCount;
-import rank.CopelandScore;
-import rank.LossFunction;
-import rank.PickAPerm;
-import rank.Stochastic;
-import weka.classifiers.Classifier;
-import weka.classifiers.Evaluation;
-import weka.classifiers.functions.SMO;
-import weka.core.Attribute;
-import weka.core.DenseInstance;
-import weka.core.Instance;
-import weka.core.Instances;
+import gen.*;
+import rank.*;
+import perm.*;
+import miner.*;
+import java.util.*;
+import weka.core.*;
+import weka.classifiers.*;
+import static misc.MetricsCollection.getMetrics;
+import static misc.ClassifierCollection.getClassifies;
 
 public class TestExperement {
 
 	public static void main(String[] args) {
 
-		int n = 10, m = 20, k = 4096;
+		int n = 10, m = 20, k = 2048;
 		Random random = new Random();
 
-		List<Metric> metrics = new ArrayList<>();
-		{
-			metrics.add(new CanberraDistance());
-
-			metrics.add(new KendallTau());
-			metrics.add(new CayleyDistance());
-			metrics.add(new LevenshteinDistance());
-
-			metrics.add(new LMax());
-			metrics.add(new LAbs());
-			metrics.add(new LSquare());
-		}
+		List<Metric> metrics = getMetrics();
 
 		LossFunction lossFunction = new AverageLoss(metrics.get(0));
 
@@ -67,7 +27,7 @@ public class TestExperement {
 			aggregations.add(new PickAPerm(lossFunction));
 		}
 
-		AttributeMiner fminer = new FastMiner(metrics);
+		AttributeMiner fminer = new HidenValuesMiner(6);
 		ClassMiner cminer = new ClassMiner(aggregations, lossFunction);
 
 		ArrayList<Attribute> attributes = new ArrayList<>();
@@ -93,7 +53,7 @@ public class TestExperement {
 			instances.add(instance);
 		}
 
-		for (Classifier classifier : ClassifierCollection.getClassifies()) {
+		for (Classifier classifier : getClassifies()) {
 			System.out.println(classifier.getClass().getSimpleName());
 			try {
 
@@ -106,7 +66,7 @@ public class TestExperement {
 					}
 					System.out.println();
 				}
-				System.out.println(evaluation.kappa());
+				System.out.printf("%.4f%n%.2f%%%n%n", evaluation.kappa(), (1 - evaluation.errorRate()) * 100);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}

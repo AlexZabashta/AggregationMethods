@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import misc.ClassMiner;
-import misc.SimpleMiner;
+import miner.ClassMiner;
+import miner.SimpleMiner;
 
 import perm.CanberraDistance;
 import perm.CayleyDistance;

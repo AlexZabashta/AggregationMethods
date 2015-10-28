@@ -3,7 +3,6 @@ package miner;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import perm.Disagreement;
 import perm.Permutation;
 import rank.Aggregation;
@@ -46,6 +45,10 @@ public class ClassMiner extends AttributeMiner {
 			res[c] = aggregations.get(c).aggregate(disagreement);
 		}
 		return getClassIndex(disagreement, res, eps);
+	}
+
+	public int getClassIndex(Disagreement disagreement, Permutation[] res) {
+		return getClassIndex(disagreement, res, -1);
 	}
 
 	public int getClassIndex(Disagreement disagreement, Permutation[] res, double eps) {

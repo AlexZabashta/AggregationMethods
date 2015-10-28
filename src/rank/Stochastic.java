@@ -6,7 +6,8 @@ import perm.Permutation;
 public class Stochastic extends Aggregation {
 	public int kpow = 32;
 
-	private double p = 0.001;
+	public double p = 0.001;
+
 	@Override
 	public Permutation aggregate(Disagreement disagreement) {
 		int n = disagreement.permutationLength;
