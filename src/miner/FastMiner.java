@@ -1,7 +1,9 @@
-package misc;
+package miner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import misc.StatisticalValue;
 
 import perm.CanberraDistance;
 import perm.Disagreement;

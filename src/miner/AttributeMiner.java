@@ -1,4 +1,4 @@
-package misc;
+package miner;
 
 import java.util.ArrayList;
 

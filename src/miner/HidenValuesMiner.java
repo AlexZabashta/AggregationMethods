@@ -1,7 +1,8 @@
-package misc;
+package miner;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import perm.Disagreement;
 import weka.core.Attribute;

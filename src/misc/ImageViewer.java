@@ -1,4 +1,4 @@
-package plot;
+package misc;
 
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
