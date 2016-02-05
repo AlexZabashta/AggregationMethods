@@ -1,8 +1,11 @@
 package rank;
 
+import java.util.Locale;
+
 import perm.Disagreement;
 import perm.Permutation;
 
+@Deprecated
 public class Stochastic extends Aggregation {
 	public int kpow = 32;
 
@@ -27,7 +30,7 @@ public class Stochastic extends Aggregation {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				for (int k = 0; k < m; k++) {
-					if (invper[k].get(i) > invper[k].get(j)) {
+					if (invper[k].get(i) >= invper[k].get(j)) {
 						++markovChain[i][j];
 					}
 				}
@@ -46,6 +49,8 @@ public class Stochastic extends Aggregation {
 			markovChain[i][i] = 1 - cur;
 		}
 
+		print(markovChain);
+
 		markovChain = superPow(markovChain, kpow);
 		double[] weigh = new double[n];
 
@@ -56,6 +61,18 @@ public class Stochastic extends Aggregation {
 		}
 
 		return aggregateByWeights(weigh);
+	}
+
+	void print(double[][] f) {
+		for (double[] r : f) {
+			double s = 0;
+			for (double v : r) {
+				s += v;
+				System.out.printf(Locale.ENGLISH, "% .2f ", v);
+			}
+			System.out.printf(Locale.ENGLISH, "       % .3f%n", s);
+		}
+		System.out.println();
 	}
 
 	void fillBySquare(double[][] d, double[][] s) {

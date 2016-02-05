@@ -12,7 +12,7 @@ public class TestExperement {
 
 	public static void main(String[] args) {
 
-		int n = 10, m = 20, k = 2048;
+		int n = 28, m = 82, k = 100000;
 		Random random = new Random();
 
 		List<Metric> metrics = getMetrics();
@@ -21,13 +21,22 @@ public class TestExperement {
 
 		List<Aggregation> aggregations = new ArrayList<>();
 		{
-			aggregations.add(new BordaCount());
-			aggregations.add(new Stochastic());
+			aggregations.add(new BordaCount(0.43));
+			aggregations.add(new BordaCount(new BordaCount.DecreasingFunction() {
+				@Override
+				public double calculate(int n) {
+					return -Math.log(n + 1);
+				}
+			}));
 			aggregations.add(new CopelandScore());
 			aggregations.add(new PickAPerm(lossFunction));
+			aggregations.add(new MarkovChain(0));
+			aggregations.add(new MarkovChain(1));
+			aggregations.add(new MarkovChain(2));
 		}
 
-		AttributeMiner fminer = new HidenValuesMiner(6);
+		// AttributeMiner fminer = new HidenValuesMiner(6);
+		AttributeMiner fminer = new FastMiner(metrics);
 		ClassMiner cminer = new ClassMiner(aggregations, lossFunction);
 
 		ArrayList<Attribute> attributes = new ArrayList<>();
@@ -41,14 +50,23 @@ public class TestExperement {
 		Instances instances = new Instances("testset", attributes, k);
 		instances.setClass(cminer.getClassAttributes());
 
+		int[] distr = new int[aggregations.size()];
+
 		for (int i = 0; i < k; i++) {
 			Disagreement d = dg.generate(n, m);
+			int c = cminer.getClassIndex(d);
+			if (distr[c] > k / 150) {
+				continue;
+			}
+			++distr[c];
+
 			Instance instance = new DenseInstance(attributes.size());
 
 			instance.setDataset(instances);
 
 			fminer.mine(instance, d);
-			cminer.mine(instance, d);
+			instance.setClassValue(cminer.getClassName(c));
+			// cminer.mine(instance, d);
 
 			instances.add(instance);
 		}
@@ -58,7 +76,7 @@ public class TestExperement {
 			try {
 
 				Evaluation evaluation = new Evaluation(instances);
-				evaluation.crossValidateModel(classifier, instances, 5, random);
+				evaluation.crossValidateModel(classifier, instances, 10, random);
 				double[][] cm = evaluation.confusionMatrix();
 				for (double[] da : cm) {
 					for (double val : da) {
@@ -72,6 +90,8 @@ public class TestExperement {
 			}
 
 		}
+
+		System.out.println(Arrays.toString(distr));
 
 	}
 

@@ -88,7 +88,7 @@ public class FastMiner extends AttributeMiner {
 		return attributes;
 	}
 
-	Aggregation aggregation = new BordaCount();
+	Aggregation aggregation = new BordaCount(0.43);
 
 	@Override
 	public void mine(Instance instance, Disagreement disagreement) {

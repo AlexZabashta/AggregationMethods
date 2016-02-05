@@ -1,5 +1,7 @@
 package rank;
 
+import java.util.Locale;
+
 import perm.Disagreement;
 import perm.Permutation;
 
@@ -9,6 +11,20 @@ public class BordaCount extends Aggregation {
 	}
 
 	final DecreasingFunction weigher;
+
+	public BordaCount(double power) {
+		this(new DecreasingFunction() {
+			@Override
+			public double calculate(int n) {
+				return -Math.pow(n, power);
+			}
+
+			@Override
+			public String toString() {
+				return String.format(Locale.ENGLISH, "n pow %.2f", power);
+			}
+		});
+	}
 
 	public BordaCount() {
 		this(new DecreasingFunction() {
@@ -50,7 +66,7 @@ public class BordaCount extends Aggregation {
 
 	@Override
 	public String toString() {
-		return "BordaCount(" + weigher.getClass().getSimpleName() + ")";
+		return "BordaCount(" + weigher + ")";
 	}
 
 }

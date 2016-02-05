@@ -21,13 +21,14 @@ import rank.CopelandScore;
 import rank.LossFunction;
 import rank.PickAPerm;
 import rank.Stochastic;
+import rank.MarkovChain;
 
 public class TestDistribution {
 	public static void main(String[] args) {
 
 		LossFunction lossFunction = new AverageLoss(new CanberraDistance());
 
-		int n = 10, m = 20;
+		int n = 7, m = 17;
 		Random random = new Random();
 
 		PermutationGenerator pg = new FisherYatesShuffle(random);
@@ -36,36 +37,19 @@ public class TestDistribution {
 		List<Aggregation> aggregations = new ArrayList<>();
 
 		{
-			// aggregations.add(new BordaCount(new
-			// BordaCount.DecreasingFunction() {
-			// @Override
-			// public double calculate(int n) {
-			// return -Math.sqrt(1 + n);
-			// }
-			// }));
 
-			{
-				Stochastic s = new Stochastic();
-				s.p = 0.61;
-				s.kpow = 3;
-				aggregations.add(s);
-			}
-			{
-				Stochastic s = new Stochastic();
-				s.p = 0.61;
-				s.kpow = 9;
-				aggregations.add(s);
-			}
-			{
-				Stochastic s = new Stochastic();
-				s.p = 0.61;
-				s.kpow = 27;
-				aggregations.add(s);
-			}
-			
-
-			// aggregations.add(new CopelandScore());
-			// aggregations.add(new PickAPerm(lossFunction));
+			aggregations.add(new BordaCount(0.43));
+			aggregations.add(new BordaCount(new BordaCount.DecreasingFunction() {
+				@Override
+				public double calculate(int n) {
+					return -Math.log(n + 1);
+				}
+			}));
+			aggregations.add(new CopelandScore());
+			aggregations.add(new PickAPerm(lossFunction));
+			aggregations.add(new MarkovChain(0));
+			aggregations.add(new MarkovChain(1));
+			aggregations.add(new MarkovChain(2));
 		}
 
 		int k = aggregations.size();
@@ -76,7 +60,7 @@ public class TestDistribution {
 
 		for (int i = 0; i < 2048; i++) {
 			Disagreement d = dg.generate(n, m);
-			int c = cminer.getClassIndex(d, 0.002);
+			int c = cminer.getClassIndex(d);
 			++distribution[c + 1];
 
 		}
