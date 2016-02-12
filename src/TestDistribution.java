@@ -18,10 +18,13 @@ import rank.Aggregation;
 import rank.AverageLoss;
 import rank.BordaCount;
 import rank.CopelandScore;
+import rank.LocalKemenization;
 import rank.LossFunction;
 import rank.PickAPerm;
 import rank.Stochastic;
 import rank.MarkovChain;
+import rank.MetaBordaCount;
+import rank.MetaMarkovChain;
 
 public class TestDistribution {
 	public static void main(String[] args) {
@@ -38,18 +41,25 @@ public class TestDistribution {
 
 		{
 
-			aggregations.add(new BordaCount(0.43));
-			aggregations.add(new BordaCount(new BordaCount.DecreasingFunction() {
-				@Override
-				public double calculate(int n) {
-					return -Math.log(n + 1);
-				}
-			}));
-			aggregations.add(new CopelandScore());
+			// aggregations.add(new BordaCount(0.43));
+			// aggregations.add(new BordaCount(new
+			// BordaCount.DecreasingFunction() {
+			// @Override
+			// public double calculate(int n) {
+			// return -Math.log(n + 1);
+			// }
+			// }));
+			// aggregations.add(new LocalKemenization());
+			// aggregations.add(new PickAPerm(lossFunction));
+			// aggregations.add(new MarkovChain(0));
+			// aggregations.add(new MarkovChain(1));
+			// aggregations.add(new MarkovChain(2));
+
+			aggregations.add(new LocalKemenization());
 			aggregations.add(new PickAPerm(lossFunction));
-			aggregations.add(new MarkovChain(0));
-			aggregations.add(new MarkovChain(1));
-			aggregations.add(new MarkovChain(2));
+			aggregations.add(new MetaBordaCount(lossFunction));
+			aggregations.add(new MetaMarkovChain(lossFunction));
+
 		}
 
 		int k = aggregations.size();

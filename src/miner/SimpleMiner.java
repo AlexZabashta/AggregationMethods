@@ -94,22 +94,34 @@ public class SimpleMiner extends AttributeMiner {
 			val[i] = new StatisticalValue();
 		}
 
-		for (Permutation p : disagreement) {
-			for (Permutation q : disagreement) {
+		for (int u = 0; u < disagreement.size; u++) {
+			for (int v = u + 1; v < disagreement.size; v++) {
 				for (int i = 0; i < metric.length; i++) {
-					val[i].add(metric[i].distance(p, q));
+					val[i].add(metric[i].distance(disagreement.get(u), disagreement.get(v)));
 				}
 			}
 		}
 
 		for (int i = 0; i < metric.length; i++) {
-			instance.setValue(attribute[i][0], val[i].getMin());
-			instance.setValue(attribute[i][1], val[i].getMax());
-			instance.setValue(attribute[i][2], val[i].getMean());
-			instance.setValue(attribute[i][3], val[i].getStandardDeviation());
-			instance.setValue(attribute[i][4], val[i].getSkewness());
-			instance.setValue(attribute[i][5], val[i].getKurtosis());
+			instance.setValue(attribute[i][0], c(val[i].getMin()));
+			instance.setValue(attribute[i][1], c(val[i].getMax()));
+			instance.setValue(attribute[i][2], c(val[i].getMean()));
+			instance.setValue(attribute[i][3], c(val[i].getStandardDeviation()));
+			instance.setValue(attribute[i][4], c(val[i].getSkewness()));
+			instance.setValue(attribute[i][5], c(val[i].getKurtosis()));
 		}
+	}
+
+	double c(double val) {
+		if (Double.isNaN(val)) {
+			return 1;
+		}
+
+		if (Double.isInfinite(val)) {
+			return 0;
+		}
+
+		return val;
 	}
 
 }
