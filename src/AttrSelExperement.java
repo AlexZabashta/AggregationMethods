@@ -20,12 +20,15 @@ import weka.attributeSelection.ASEvaluation;
 import weka.attributeSelection.ASSearch;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
+import weka.attributeSelection.ConsistencySubsetEval;
 import weka.attributeSelection.CorrelationAttributeEval;
 import weka.attributeSelection.GainRatioAttributeEval;
 import weka.attributeSelection.GreedyStepwise;
 import weka.attributeSelection.InfoGainAttributeEval;
+import weka.attributeSelection.RankSearch;
 import weka.attributeSelection.Ranker;
 import weka.attributeSelection.ReliefFAttributeEval;
+import weka.attributeSelection.SignificanceAttributeEval;
 import weka.attributeSelection.WrapperSubsetEval;
 import weka.classifiers.*;
 import weka.classifiers.functions.SMO;
@@ -35,17 +38,42 @@ import static misc.ClassifierCollection.getClassifies;
 
 public class AttrSelExperement {
 
-	public static void main(String[] args) throws IOException {
+	static String slash = File.separator;
+
+	public static void main(String[] args) throws Exception {
 		Random random = new Random();
 		List<FeatureSelection> fsa = new ArrayList<FeatureSelection>();
 		// fsa.add(new IdentitySelection());
 
-		List<ASSearch> searchs = new ArrayList<ASSearch>();
 		{
 			Ranker ranker = new Ranker();
-			ranker.setNumToSelect(15);
-			searchs.add(ranker);
+			ranker.setOptions(new String[] { "-T", "0.65" });
+			SignificanceAttributeEval significanceAttributeEval = new SignificanceAttributeEval();
+			fsa.add(new EvalAndSearch(significanceAttributeEval, ranker));
+		}
+		{
+			RankSearch rankSearch = new RankSearch();
+			ConsistencySubsetEval consistencySubsetEval = new ConsistencySubsetEval();
+			// fsa.add(new EvalAndSearch(consistencySubsetEval, rankSearch));
+		}
+		{
+			RankSearch rankSearch = new RankSearch();
+			CfsSubsetEval cfsSubsetEval = new CfsSubsetEval();
+			// fsa.add(new EvalAndSearch(cfsSubsetEval, rankSearch));
 
+		}
+		List<ASSearch> searchs = new ArrayList<ASSearch>();
+		{
+			{
+				Ranker ranker = new Ranker();
+				ranker.setNumToSelect(15);
+				searchs.add(ranker);
+			}
+			{
+				Ranker ranker = new Ranker();
+				ranker.setNumToSelect(10);
+				searchs.add(ranker);
+			}
 			// searchs.add( new GreedyStepwise());
 			// searchs.add(new BestFirst());
 		}
@@ -56,7 +84,7 @@ public class AttrSelExperement {
 			evaluations.add(new GainRatioAttributeEval());
 			evaluations.add(new InfoGainAttributeEval());
 			evaluations.add(new ReliefFAttributeEval());
-			
+
 			// evaluations.add(new InfoGainAttributeEval());
 			// WrapperSubsetEval wrapperSubsetEval = new WrapperSubsetEval();
 			// wrapperSubsetEval.setClassifier(new SMO());
@@ -67,14 +95,17 @@ public class AttrSelExperement {
 
 		for (ASSearch search : searchs) {
 			for (ASEvaluation evaluation : evaluations) {
-				fsa.add(new EvalAndSearch(evaluation, search));
+				// fsa.add(new EvalAndSearch(evaluation, search));
 			}
 		}
+		// fsa.add(new EvalAndSearch(new CfsSubsetEval(), new
+		// GreedyStepwise()));
+		// fsa.add(new EvalAndSearch(new CfsSubsetEval(), new BestFirst()));
 
-		File dataFolder = new File("data\\gen");
+		File dataFolder = new File("data" + slash + "gen");
 
 		for (FeatureSelection fs : fsa) {
-			String resFolder = "results\\fsel\\" + fs.toString();
+			String resFolder = "results" + slash + "fsel_fix_rnd" + slash + fs.toString();
 			File res = new File(resFolder);
 			if (!res.exists()) {
 				res.mkdirs();
@@ -88,19 +119,24 @@ public class AttrSelExperement {
 						continue;
 					}
 
+					if (!arffFile.getName().contains("SeveralSwapsGenerator")) {
+						continue;
+					}
+
 					allAtrInstances.setClassIndex(0);
 
 					Instances instances = fs.select(allAtrInstances);
 
 					int s = instances.numClasses();
 					System.out.println(resFolder);
-					try (PrintWriter out = new PrintWriter(new File(resFolder + "\\" + arffFile.getName() + ".txt"))) {
+					try (PrintWriter out = new PrintWriter(new File(resFolder + slash + arffFile.getName() + ".txt"))) {
 
 						int na = instances.numAttributes();
 						for (int i = 0; i < na; i++) {
 							out.println(instances.attribute(i).name());
 						}
 						out.println();
+						System.out.println(arffFile.getName() + " " + na);
 
 						for (Classifier classifier : getClassifies()) {
 							String curName = classifier.getClass().getSimpleName();
@@ -109,7 +145,7 @@ public class AttrSelExperement {
 							try {
 
 								Evaluation evaluation = new Evaluation(instances);
-								evaluation.crossValidateModel(classifier, instances, 10, random);
+								evaluation.crossValidateModel(classifier, instances, 10, new Random(31415926L));
 								double[][] cm = evaluation.confusionMatrix();
 								for (double[] da : cm) {
 									for (double val : da) {

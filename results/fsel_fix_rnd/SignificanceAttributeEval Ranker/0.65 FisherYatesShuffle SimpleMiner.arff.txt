@@ -1,0 +1,109 @@
+CayleyDistanceMean
+LSquareMean
+CanberraDistanceMean
+LevenshteinDistanceMean
+KendallTauMean
+LAbsMean
+CayleyDistanceMax
+CayleyDistanceMin
+CanberraDistanceMin
+KendallTauMin
+LAbsMin
+LevenshteinDistanceMin
+CanberraDistanceMax
+CayleyDistanceStandardDeviation
+LSquareMin
+LevenshteinDistanceKurtosis
+LevenshteinDistanceStandardDeviation
+LAbsMax
+LevenshteinDistanceMax
+class
+
+Bagging
+  929    61     0    10     0     0 
+   73   830     3    47    35    12 
+  135    53   616    94    90    12 
+  135   139    63   202   373    88 
+   15   101    53   268   433   130 
+    1    18     6    32    47   896 
+0.641
+0.5812
+65.10%
+
+DecisionTable
+  930    64     1     5     0     0 
+   79   803     0    57    42    19 
+  140    60   617    56   108    19 
+  137   152    61   135   430    85 
+   23   117    45   148   522   145 
+    9    17     5    29    65   875 
+0.635
+0.5764
+64.70%
+
+IBk
+  942    57     0     1     0     0 
+  105   801     0    51    26    17 
+  137    60   621    81    91    10 
+  140   159    66   206   335    94 
+   20   111    55   268   412   134 
+    1    15     8    30    38   908 
+0.637
+0.5780
+64.83%
+
+J48
+  791    80    64    61     4     0 
+   78   694    41    96    77    14 
+  120    54   601    92   122    11 
+  109   123   106   179   405    78 
+   16    86    93   203   490   112 
+    1    16    15    67    86   815 
+0.588
+0.5140
+59.50%
+
+LogitBoost
+  918    80     0     2     0     0 
+   85   832     0    45    24    14 
+  136    60   616    65   109    14 
+  133   144    62   143   434    84 
+   19   100    45   131   572   133 
+    1    20     5    17    61   896 
+0.652
+0.5954
+66.28%
+
+NaiveBayes
+  975    24     0     1     0     0 
+  185   735     0    52    16    12 
+  152    59   643    64    70    12 
+  157   154   105   156   307   121 
+   24   134   112   153   415   162 
+    1    11    15     9    59   905 
+0.621
+0.5658
+63.82%
+
+ClassificationViaRegression
+  941    58     0     1     0     0 
+   79   841     7    29    27    17 
+  141    51   629    43   121    15 
+  139   137    69    98   451   106 
+   17   101    63   134   543   142 
+    1    18     5    12    41   923 
+0.644
+0.5950
+66.25%
+
+SMO
+  962    38     0     0     0     0 
+  151   769     0    32    28    20 
+  146    60   608    25   148    13 
+  150   147    50    71   480   102 
+   21   119    41    58   626   135 
+    1    20     4     0    52   923 
+0.649
+0.5918
+65.98%
+

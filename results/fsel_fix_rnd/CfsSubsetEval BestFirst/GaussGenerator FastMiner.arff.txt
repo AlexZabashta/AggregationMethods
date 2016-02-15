@@ -1,0 +1,107 @@
+CanberraDistanceMin
+CanberraDistanceMax
+CanberraDistanceMean
+CanberraDistanceStandardDeviation
+CanberraDistanceKurtosis
+KendallTauMean
+KendallTauStandardDeviation
+CayleyDistanceMean
+CayleyDistanceStandardDeviation
+CayleyDistanceSkewness
+LevenshteinDistanceStandardDeviation
+LevenshteinDistanceSkewness
+LevenshteinDistanceKurtosis
+LMaxStandardDeviation
+LMaxKurtosis
+LSquareStandardDeviation
+LSquareKurtosis
+class
+
+Bagging
+  566   122   116    87    87    22 
+   16   808    24    75    75     2 
+  161   165   216   177   183    98 
+  119   227   193   187   168   106 
+  115   235   199   175   178    98 
+   18    13    32    12    29   896 
+0.454
+0.3702
+47.52%
+
+DecisionTable
+  555   166   115   109    26    29 
+   14   896    23    49    18     0 
+  157   223   225   202    82   111 
+  119   269   227   198    83   104 
+  114   310   214   183    70   109 
+   37    12    40    11    30   870 
+0.442
+0.3628
+46.90%
+
+IBk
+  558   159   115    80    66    22 
+    7   858    37    48    48     2 
+  154   218   171   188   168   101 
+  103   270   198   169   152   108 
+  112   308   182   171   124   103 
+   27    11    31    13    25   893 
+0.436
+0.3546
+46.22%
+
+J48
+  476    76   146   151   125    26 
+   99   539    96   119   142     5 
+  204   124   209   185   195    83 
+  153   141   201   198   221    86 
+  157   167   193   190   210    83 
+   36     8    58    58    47   793 
+0.397
+0.2850
+40.42%
+
+LogitBoost
+  527   155   141   100    56    21 
+    0   911     9    32    45     3 
+  124   241   252   161   128    94 
+   88   288   240   163   113   108 
+   92   309   220   164   110   105 
+   30    14    30    16    24   886 
+0.452
+0.3698
+47.48%
+
+NaiveBayes
+  536   217    43   116    61    27 
+    0   930     0    12    53     5 
+  123   313    36   224   154   150 
+   86   389    31   200   150   144 
+   93   387    28   193   155   144 
+   41    11     3     2    24   919 
+0.435
+0.3552
+46.27%
+
+ClassificationViaRegression
+  611   168    85    72    38    26 
+    2   907    15    63    10     3 
+  192   247   192   165    72   132 
+  160   273   175   188    75   129 
+  150   315   197   142    73   123 
+   29    18    24     3     8   918 
+0.450
+0.3778
+48.15%
+
+SMO
+  579   173    49    87    84    28 
+    0   935     0    26    36     3 
+  164   252    89   155   211   129 
+  114   301    87   163   210   125 
+  117   327    93   156   183   124 
+   27    12    12     6    24   919 
+0.448
+0.3736
+47.80%
+

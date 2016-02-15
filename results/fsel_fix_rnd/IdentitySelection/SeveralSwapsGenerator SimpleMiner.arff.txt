@@ -1,0 +1,132 @@
+class
+CanberraDistanceMin
+CanberraDistanceMax
+CanberraDistanceMean
+CanberraDistanceStandardDeviation
+CanberraDistanceSkewness
+CanberraDistanceKurtosis
+KendallTauMin
+KendallTauMax
+KendallTauMean
+KendallTauStandardDeviation
+KendallTauSkewness
+KendallTauKurtosis
+CayleyDistanceMin
+CayleyDistanceMax
+CayleyDistanceMean
+CayleyDistanceStandardDeviation
+CayleyDistanceSkewness
+CayleyDistanceKurtosis
+LevenshteinDistanceMin
+LevenshteinDistanceMax
+LevenshteinDistanceMean
+LevenshteinDistanceStandardDeviation
+LevenshteinDistanceSkewness
+LevenshteinDistanceKurtosis
+LMaxMin
+LMaxMax
+LMaxMean
+LMaxStandardDeviation
+LMaxSkewness
+LMaxKurtosis
+LAbsMin
+LAbsMax
+LAbsMean
+LAbsStandardDeviation
+LAbsSkewness
+LAbsKurtosis
+LSquareMin
+LSquareMax
+LSquareMean
+LSquareStandardDeviation
+LSquareSkewness
+LSquareKurtosis
+
+Bagging
+  787   187     4    15     7     0 
+  224   605     0    56    86    29 
+   37    35   783    73    47    25 
+   82   167    89   271   300    91 
+   33   149    58   276   315   169 
+    4    29    18    61    59   829 
+0.590
+0.5180
+59.83%
+
+DecisionTable
+  829   159     2     4     6     0 
+  281   563     2    48    73    33 
+   43    41   779    74    41    22 
+   90   192   102   234   278   104 
+   28   196    70   213   298   195 
+    9    37    18    40    73   823 
+0.576
+0.5052
+58.77%
+
+IBk
+  809   175     4     5     7     0 
+  288   575     0    52    57    28 
+   34    45   790    72    40    19 
+   92   196    95   289   247    81 
+   37   187    61   309   232   174 
+    4    27    19    35    77   838 
+0.577
+0.5066
+58.88%
+
+J48
+  647   230    22    67    33     1 
+  254   435    26   140   114    31 
+   30    33   747    85    84    21 
+   83   139   116   286   283    93 
+   40   130    99   294   276   161 
+    4    31    30    81   119   735 
+0.517
+0.4252
+52.10%
+
+LogitBoost
+  812   171     4     8     5     0 
+  276   593     0    38    72    21 
+   37    36   799    59    46    23 
+   90   192    92   264   278    84 
+   31   194    61   279   277   158 
+    3    32    14    28    96   827 
+0.585
+0.5144
+59.53%
+
+NaiveBayes
+  771   218     4     5     2     0 
+  300   619     0    33    38    10 
+   37    55   762    89    29    28 
+   89   249    71   342   159    90 
+   32   251    48   310   185   174 
+    2    38     9    17   134   800 
+0.574
+0.4958
+57.98%
+
+ClassificationViaRegression
+  790   176     3    11    19     1 
+  253   574     7    63    69    34 
+   39    32   782    75    45    27 
+  101   162    99   300   245    93 
+   39   160    70   314   243   174 
+    3    33    20    37    68   839 
+0.577
+0.5056
+58.80%
+
+SMO
+  878   106     4    12     0     0 
+  386   498     0    62    34    20 
+   42    35   800    77    23    23 
+  112   177    93   358   169    91 
+   41   185    70   338   193   173 
+    3    37    18    18    85   839 
+0.582
+0.5132
+59.43%
+

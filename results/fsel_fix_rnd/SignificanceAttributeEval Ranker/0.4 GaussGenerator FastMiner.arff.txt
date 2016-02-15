@@ -1,0 +1,112 @@
+LSquareStandardDeviation
+KendallTauStandardDeviation
+LMaxStandardDeviation
+CanberraDistanceMean
+CanberraDistanceMin
+LAbsStandardDeviation
+CanberraDistanceStandardDeviation
+KendallTauMin
+LAbsMin
+LSquareMin
+LSquareMean
+LAbsMean
+LevenshteinDistanceMean
+LMaxMin
+KendallTauMean
+LMaxMean
+KendallTauKurtosis
+LevenshteinDistanceMin
+LAbsKurtosis
+LSquareKurtosis
+CayleyDistanceMean
+CanberraDistanceKurtosis
+class
+
+Bagging
+  550   119   120    97    89    25 
+   12   793    42    75    76     2 
+  161   160   235   193   168    83 
+  125   205   213   210   153    94 
+  113   244   190   182   172    99 
+   23    13    24    19    24   897 
+0.457
+0.3714
+47.62%
+
+DecisionTable
+  551   168   126    86    36    33 
+    4   895    10    59    29     3 
+  144   228   245   169    99   115 
+  103   291   218   183    98   107 
+  112   310   190   161   112   115 
+   43    14    36    12    21   874 
+0.454
+0.3720
+47.67%
+
+IBk
+  558   157   120    82    65    18 
+    1   884    25    46    43     1 
+  148   229   220   185   125    93 
+  104   274   190   191   140   101 
+  132   299   175   169   125   100 
+   26    13    26    16    25   894 
+0.455
+0.3744
+47.87%
+
+J48
+  455    83   178   134   119    31 
+   71   549    99   115   158     8 
+  173   124   231   212   189    71 
+  160   144   195   198   224    79 
+  168   161   214   197   178    82 
+   36    10    76    49    47   782 
+0.393
+0.2786
+39.88%
+
+LogitBoost
+  565   158   131    89    41    16 
+    3   916    10    37    30     4 
+  154   243   251   174    87    91 
+  114   284   202   190   105   105 
+  108   305   186   192   108   101 
+   35    14    29    19    16   887 
+0.463
+0.3834
+48.62%
+
+NaiveBayes
+  545   210    37   157    14    37 
+    0   932     0    43    22     3 
+  132   303    31   328    41   165 
+   93   368    25   313    43   158 
+  100   386    26   281    44   163 
+   51    10     1     9    14   915 
+0.432
+0.3560
+46.33%
+
+ClassificationViaRegression
+  608   170    83    90    24    25 
+    1   929    11    46    11     2 
+  202   248   204   161    69   116 
+  149   271   195   202    70   113 
+  149   322   200   159    53   117 
+   27    17    21     9     5   921 
+0.452
+0.3834
+48.62%
+
+SMO
+  597   171    49    67    94    22 
+    0   936     0    21    40     3 
+  173   250    88   125   236   128 
+  124   293    80   136   244   123 
+  125   333    86   109   229   118 
+   31    13     6     5    27   918 
+0.455
+0.3808
+48.40%
+

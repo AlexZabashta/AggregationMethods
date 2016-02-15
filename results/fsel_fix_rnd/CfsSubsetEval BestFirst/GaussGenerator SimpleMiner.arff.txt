@@ -1,0 +1,108 @@
+CanberraDistanceMin
+CanberraDistanceMax
+CanberraDistanceStandardDeviation
+CanberraDistanceSkewness
+CanberraDistanceKurtosis
+KendallTauMean
+KendallTauKurtosis
+CayleyDistanceSkewness
+CayleyDistanceKurtosis
+LevenshteinDistanceStandardDeviation
+LevenshteinDistanceSkewness
+LevenshteinDistanceKurtosis
+LMaxMean
+LMaxStandardDeviation
+LMaxSkewness
+LMaxKurtosis
+LAbsStandardDeviation
+LAbsSkewness
+class
+
+Bagging
+  533   171   114    89    74    19 
+    8   843    38    45    65     1 
+  147   209   218   185   160    81 
+  120   286   185   174   144    91 
+  123   295   203   134   153    92 
+   22    12    35    20    23   888 
+0.448
+0.3618
+46.82%
+
+DecisionTable
+  559   176   105    83    56    21 
+   10   886    16    46    41     1 
+  160   253   220   153   105   109 
+  127   332   163   171    98   109 
+  129   332   162   174    93   110 
+   42    14    38    15    19   872 
+0.441
+0.3602
+46.68%
+
+IBk
+  561   175   118    69    63    14 
+    2   888    29    31    50     0 
+  148   248   253   139   133    79 
+  106   295   198   189   123    89 
+  114   314   195   162   119    96 
+   24    11    34    24    10   897 
+0.463
+0.3814
+48.45%
+
+J48
+  460    89   160   147   122    22 
+  102   470   124   148   151     5 
+  188   123   244   209   168    68 
+  183   141   211   200   192    73 
+  168   172   216   182   189    73 
+   26     7    59    57    42   809 
+0.391
+0.2744
+39.53%
+
+LogitBoost
+  514   182   115    88    82    19 
+    0   923    22    26    28     1 
+  115   251   207   186   155    86 
+   81   319   183   178   145    94 
+   78   338   178   165   150    91 
+   22    12    44     9    33   880 
+0.457
+0.3704
+47.53%
+
+NaiveBayes
+  574   244    40    90    35    17 
+    0   962     0    16    21     1 
+  155   375    46   189   125   110 
+  114   432    39   202   102   111 
+  113   442    43   172   121   109 
+   19    13    11     6    32   919 
+0.446
+0.3648
+47.07%
+
+ClassificationViaRegression
+  601   192    98    66    28    15 
+    2   954    10    13    19     2 
+  196   266   244   105    87   102 
+  152   337   208   111    89   103 
+  132   344   207   109    92   116 
+   27    12    37     2    12   910 
+0.456
+0.3824
+48.53%
+
+SMO
+  574   200    52   108    46    20 
+    0   951     0    20    29     0 
+  159   281   107   219   133   101 
+  109   345    78   222   138   108 
+  109   368    87   191   137   108 
+   19    13    19     9    25   915 
+0.461
+0.3812
+48.43%
+
