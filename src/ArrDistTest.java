@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import gen.DisagreementsGenerator;
 import gen.FisherYatesShuffle;
 import gen.LineSigmaGenerator;
@@ -35,7 +33,7 @@ public class ArrDistTest {
 
 		List<Aggregation> aggregations = new ArrayList<>();
 		{
-			 aggregations.add(new BordaCount(0.43));
+			aggregations.add(new BordaCount(0.43));
 			// aggregations.add(new CopelandScore());
 			// aggregations.add(new PickAPerm(lossFunction));
 

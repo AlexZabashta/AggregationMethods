@@ -1,0 +1,170 @@
+FastMinerCanberraDistanceMin
+FastMinerCanberraDistanceMax
+FastMinerCanberraDistanceMean
+FastMinerCanberraDistanceStandardDeviation
+FastMinerCanberraDistanceKurtosis
+FastMinerKendallTauMin
+FastMinerKendallTauMax
+FastMinerKendallTauMean
+FastMinerKendallTauStandardDeviation
+FastMinerKendallTauKurtosis
+FastMinerCayleyDistanceMin
+FastMinerCayleyDistanceMax
+FastMinerCayleyDistanceMean
+FastMinerLevenshteinDistanceMin
+FastMinerLevenshteinDistanceMax
+FastMinerLevenshteinDistanceMean
+FastMinerLevenshteinDistanceStandardDeviation
+FastMinerLMaxMin
+FastMinerLMaxMax
+FastMinerLMaxMean
+FastMinerLMaxStandardDeviation
+FastMinerLMaxKurtosis
+FastMinerLAbsMin
+FastMinerLAbsMax
+FastMinerLAbsMean
+FastMinerLAbsStandardDeviation
+FastMinerLAbsKurtosis
+FastMinerLSquareMin
+FastMinerLSquareMax
+FastMinerLSquareMean
+FastMinerLSquareStandardDeviation
+FastMinerLSquareKurtosis
+HidenValuesMinerhv4
+HidenValuesMinerhv5
+LMinerMax
+LMinerMean
+LMinerStandardDeviation
+LMinerSkewness
+LMinerKurtosis
+SimpleMinerCanberraDistanceMin
+SimpleMinerCanberraDistanceMax
+SimpleMinerCanberraDistanceMean
+SimpleMinerCanberraDistanceStandardDeviation
+SimpleMinerCanberraDistanceSkewness
+SimpleMinerCanberraDistanceKurtosis
+SimpleMinerKendallTauMin
+SimpleMinerKendallTauMax
+SimpleMinerKendallTauMean
+SimpleMinerKendallTauStandardDeviation
+SimpleMinerKendallTauSkewness
+SimpleMinerKendallTauKurtosis
+SimpleMinerCayleyDistanceMin
+SimpleMinerCayleyDistanceMax
+SimpleMinerCayleyDistanceMean
+SimpleMinerCayleyDistanceStandardDeviation
+SimpleMinerCayleyDistanceSkewness
+SimpleMinerCayleyDistanceKurtosis
+SimpleMinerLevenshteinDistanceMin
+SimpleMinerLevenshteinDistanceMax
+SimpleMinerLevenshteinDistanceMean
+SimpleMinerLevenshteinDistanceStandardDeviation
+SimpleMinerLevenshteinDistanceSkewness
+SimpleMinerLevenshteinDistanceKurtosis
+SimpleMinerLMaxMin
+SimpleMinerLMaxMax
+SimpleMinerLMaxMean
+SimpleMinerLMaxStandardDeviation
+SimpleMinerLMaxKurtosis
+SimpleMinerLAbsMin
+SimpleMinerLAbsMax
+SimpleMinerLAbsMean
+SimpleMinerLAbsStandardDeviation
+SimpleMinerLAbsSkewness
+SimpleMinerLAbsKurtosis
+SimpleMinerLSquareMin
+SimpleMinerLSquareMax
+SimpleMinerLSquareMean
+SimpleMinerLSquareStandardDeviation
+SimpleMinerLSquareSkewness
+SimpleMinerLSquareKurtosis
+class
+
+Bagging
+  874    77     3    21    25     0 
+  136   701     0    56    74    33 
+   38    24   792    77    52    17 
+   96   120    88   302   308    86 
+   41   121    60   298   314   166 
+    2    29    13    48    53   855 
+0.629
+0.5676
+63.97%
+
+DecisionTable
+  830   142     1    13    14     0 
+  258   589     2    61    54    36 
+   54    35   780    75    39    17 
+  102   155    94   261   298    90 
+   52   146    71   243   311   177 
+   21    40    16    43    88   792 
+0.584
+0.5126
+59.38%
+
+IBk
+  850   122     4    12    12     0 
+  256   594     1    68    55    26 
+   32    42   790    81    38    17 
+   94   172    98   312   237    87 
+   36   174    65   296   254   175 
+    3    29    16    47    60   845 
+0.596
+0.5290
+60.75%
+
+J48
+  710   151    25    84    30     0 
+  154   564    20   138    97    27 
+   32    33   718   112    82    23 
+   99   137   130   284   280    70 
+   46   120    93   294   300   147 
+    2    40    29    90   145   694 
+0.544
+0.4540
+54.50%
+
+LogitBoost
+  836   119     3    20    22     0 
+  173   698     0    49    56    24 
+   37    36   798    64    40    25 
+   93   145    90   280   311    81 
+   34   152    61   270   316   167 
+    3    31    14    32    80   840 
+0.617
+0.5536
+62.80%
+
+NaiveBayes
+  524   460     4    10     2     0 
+  158   760     0    29    41    12 
+   17    70   789    66    33    25 
+   53   266    91   277   213   100 
+   15   262    66   221   248   188 
+    1    38    15     6   121   819 
+0.573
+0.4834
+56.95%
+
+ClassificationViaRegression
+  863    81     4    28    23     1 
+  128   705     5    59    75    28 
+   38    28   772    88    56    18 
+  102   109    81   319   318    71 
+   42   120    66   290   343   139 
+    0    35    15    43    62   845 
+0.633
+0.5694
+64.12%
+
+SMO
+  884    87     2    21     6     0 
+  196   698     0    33    47    26 
+   36    40   796    74    37    17 
+  103   158    93   313   255    78 
+   40   163    61   280   292   164 
+    4    25    15    16    62   878 
+0.631
+0.5722
+64.35%
+

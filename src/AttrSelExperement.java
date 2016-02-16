@@ -54,12 +54,12 @@ public class AttrSelExperement {
 		{
 			RankSearch rankSearch = new RankSearch();
 			ConsistencySubsetEval consistencySubsetEval = new ConsistencySubsetEval();
-			// fsa.add(new EvalAndSearch(consistencySubsetEval, rankSearch));
+		//	fsa.add(new EvalAndSearch(consistencySubsetEval, rankSearch));
 		}
 		{
 			RankSearch rankSearch = new RankSearch();
 			CfsSubsetEval cfsSubsetEval = new CfsSubsetEval();
-			// fsa.add(new EvalAndSearch(cfsSubsetEval, rankSearch));
+		//	fsa.add(new EvalAndSearch(cfsSubsetEval, rankSearch));
 
 		}
 		List<ASSearch> searchs = new ArrayList<ASSearch>();
@@ -102,10 +102,10 @@ public class AttrSelExperement {
 		// GreedyStepwise()));
 		// fsa.add(new EvalAndSearch(new CfsSubsetEval(), new BestFirst()));
 
-		File dataFolder = new File("data" + slash + "gen");
+		File dataFolder = new File("data" + slash + "genm");
 
 		for (FeatureSelection fs : fsa) {
-			String resFolder = "results" + slash + "fsel_fix_rnd" + slash + fs.toString();
+			String resFolder = "results" + slash + "fsel_mdata" + slash + fs.toString();
 			File res = new File(resFolder);
 			if (!res.exists()) {
 				res.mkdirs();
@@ -119,7 +119,7 @@ public class AttrSelExperement {
 						continue;
 					}
 
-					if (!arffFile.getName().contains("SeveralSwapsGenerator")) {
+					if (!arffFile.getName().contains("FisherYatesShuffle")) {
 						continue;
 					}
 
